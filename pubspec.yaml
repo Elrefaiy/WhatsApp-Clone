@@ -33,11 +33,41 @@ dependencies:
     sdk: flutter
 
   firebase_core: ^2.3.0  
+  flutter_native_splash: ^2.2.16
+  flutter_launcher_icons: ^0.11.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
+
+
+flutter_native_splash:
+ color: "#ffffff"
+ image: assets/icons/whatsapp.png
+ color_dark: "#131A22"
+ android: true
+ ios: true
+ web: true
+
+flutter_icons:
+ android: "launcher_icon"
+ ios: true
+ image_path: "assets/icons/icon.png"
+ web:
+  generate: true
+  image_path: "assets/icons/icon.png"
+ windows:
+  generate: true
+  image_path: "assets/icons/icon.png"
+  icon_size: 48
+ macos:
+  generate: true
+  image_path: "assets/icons/icon.png"
+
+  #flutter pub run flutter_native_splash:create
+  #flutter pub run flutter_launcher_icons:main
 
 dev_dependencies:
   flutter_test:
