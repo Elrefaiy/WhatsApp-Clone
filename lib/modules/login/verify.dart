@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/modules/login/profile_info.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class VerifyingScreen extends StatelessWidget {
@@ -55,11 +56,18 @@ class VerifyingScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileInfoScreen(),
+                      ),
+                    );
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 10,
+                      horizontal: 24,
+                      vertical: 14,
                     ),
                     decoration: BoxDecoration(
                       color: c2(),

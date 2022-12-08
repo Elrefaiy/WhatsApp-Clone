@@ -111,8 +111,8 @@ class LoginScreen extends StatelessWidget {
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 10,
+                      horizontal: 24,
+                      vertical: 14,
                     ),
                     decoration: BoxDecoration(
                       color: c2(),

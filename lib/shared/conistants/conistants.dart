@@ -19,7 +19,7 @@ ThemeData lightTheme() => ThemeData(
           fontWeight: FontWeight.bold,
         ),
         bodyText2: TextStyle(
-          color: Colors.grey[700],
+          color: Colors.grey[600],
           fontSize: 14,
         ),
       ),
