@@ -1,11 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/modules/login/login_cubit/login_cubit.dart';
 import 'package:whatsapp_clone/modules/welcome/welcome.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
+import 'cubit/bloc_observer.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -17,10 +21,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme(),
-      home: const WelcomeScreen(),
+    return BlocProvider(
+      create: (context) => LoginCubit(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: lightTheme(),
+        home: const WelcomeScreen(),
+      ),
     );
   }
 }
