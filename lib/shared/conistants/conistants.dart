@@ -5,16 +5,16 @@ import 'package:flutter/services.dart';
 ThemeData lightTheme() => ThemeData(
       primarySwatch: Colors.teal,
       scaffoldBackgroundColor: Colors.white,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
+          statusBarColor: c1(),
         ),
-        color: Color(0xff25d366),
+        color: c1(),
         titleSpacing: 20,
       ),
       textTheme: TextTheme(
         headline1: TextStyle(
-          color: c2(),
+          color: c1(),
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
@@ -49,7 +49,7 @@ ThemeData darkTheme() => ThemeData(
     );
 
 // Application Color Pallet
-Color c1() => const Color(0xff075e54);
+Color c1() => const Color(0xff008069);
 Color c2() => const Color(0xff128c7e);
 Color c3() => const Color(0xff25d366);
 Color c4() => const Color(0xffdcf8c6);

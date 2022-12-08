@@ -5,6 +5,27 @@ class MobileLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+          // bottom: TabBar(
+          //   controller: TabController(
+          //     length: 1,
+          //     vsync: ,
+          //   ),
+          //   tabs: const [
+          //     Text('aaa'),
+          //     Text('aaa'),
+          //     Text('aaa'),
+          //   ],
+          // ),
+          ),
+      body: Container(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(
+          Icons.message,
+        ),
+      ),
+    );
   }
 }
