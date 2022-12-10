@@ -40,9 +40,7 @@ class LoginScreen extends StatelessWidget {
                         elevation: 0,
                         borderRadius: BorderRadius.circular(5),
                         autofocus: true,
-                        onChanged: (value) {
-                          print(value);
-                        },
+                        onChanged: (value) {},
                         items: const [
                           DropdownMenuItem(
                             value: 20,

@@ -39,7 +39,7 @@ ThemeData darkTheme() => ThemeData(
         headline1: TextStyle(
           color: c2(),
           fontSize: 20,
-          fontWeight: FontWeight.bold,
+          //fontWeight: FontWeight.bold,
         ),
         bodyText2: TextStyle(
           color: Colors.grey[700],

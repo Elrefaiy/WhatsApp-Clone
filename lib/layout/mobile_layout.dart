@@ -5,25 +5,62 @@ class MobileLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          // bottom: TabBar(
-          //   controller: TabController(
-          //     length: 1,
-          //     vsync: ,
-          //   ),
-          //   tabs: const [
-          //     Text('aaa'),
-          //     Text('aaa'),
-          //     Text('aaa'),
-          //   ],
-          // ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'WhatsApp',
+            style: Theme.of(context)
+                .textTheme
+                .headline1!
+                .copyWith(color: Colors.white),
           ),
-      body: Container(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(
-          Icons.message,
+          bottom: const TabBar(
+            indicatorColor: Colors.white,
+            tabs: [
+              SizedBox(
+                height: 30,
+                child: Text('Status'),
+              ),
+              SizedBox(
+                height: 30,
+                child: Text('Status'),
+              ),
+              SizedBox(
+                height: 30,
+                child: Text('Status'),
+              ),
+            ],
+          ),
+        ),
+        body: const TabBarView(
+          children: [
+            Center(
+              child: Text(
+                '111111',
+                textScaleFactor: 2,
+              ),
+            ),
+            Center(
+              child: Text(
+                '222222',
+                textScaleFactor: 2,
+              ),
+            ),
+            Center(
+              child: Text(
+                '33333',
+                textScaleFactor: 2,
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(
+            Icons.message,
+          ),
         ),
       ),
     );
