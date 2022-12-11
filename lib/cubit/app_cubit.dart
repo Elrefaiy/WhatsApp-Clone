@@ -1,7 +1,71 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
   static AppCubit get(context) => BlocProvider.of(context);
+
+  late String verificationId;
+
+  Future<void> submitPhoneNumber({
+    required String phoneNumber,
+    required String country,
+  }) async {
+    emit(SubmitPhoneNumberLoadingState());
+
+    FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '+$country$phoneNumber',
+      timeout: const Duration(seconds: 15),
+      verificationCompleted: verificationCompleted,
+      verificationFailed: verificationFailed,
+      codeSent: codeSent,
+      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+    );
+  }
+
+  void verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
+    print('Verification Completed');
+    await signIn(phoneAuthCredential);
+  }
+
+  void verificationFailed(error) {
+    print('Verification Faild');
+    emit(SubmitPhoneNumberErrorState(error.toString()));
+  }
+
+  void codeSent(String verificationId, int? resendToken) {
+    this.verificationId = verificationId;
+    emit(SubmitPhoneNumberSuccessState());
+  }
+
+  void codeAutoRetrievalTimeout(String verificationId) {
+    print('Code Auto Retrieval Timeout');
+  }
+
+  Future<void> submitOTP(String otpCode) async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: verificationId,
+      smsCode: otpCode,
+    );
+    await signIn(credential);
+  }
+
+  Future<void> signIn(PhoneAuthCredential credential) async {
+    emit(SignInLoadingState());
+    try {
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      emit(SignInSuccessState());
+    } catch (error) {
+      emit(SignInErrorState(error.toString()));
+    }
+  }
+
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
+  // User getUserData() {
+  //   return FirebaseAuth.instance.currentUser!;
+  // }
 }
