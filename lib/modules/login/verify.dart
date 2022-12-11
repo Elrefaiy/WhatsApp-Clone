@@ -56,10 +56,31 @@ class VerifyingScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text(
-                      'Waiting to automatically detect an SMS sent to $phoneNumber. Wrong number?',
-                      style: Theme.of(context).textTheme.bodyText2,
+                    RichText(
                       textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          TextSpan(
+                            text:
+                                'Waiting to automatically detect an SMS sent to',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                          TextSpan(
+                            text: ' $phoneNumber.',
+                            style:
+                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                          ),
+                          TextSpan(
+                            text: ' Wrong number?',
+                            style:
+                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                      color: Colors.blue,
+                                    ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -94,6 +115,16 @@ class VerifyingScreen extends StatelessWidget {
                     Text(
                       'Enter 6-digit code',
                       style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Didn\'t receive code?',
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                     ),
                     const Spacer(),
                     InkWell(

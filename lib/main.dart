@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
-import 'package:whatsapp_clone/layout/layout.dart';
 import 'package:whatsapp_clone/modules/welcome/welcome.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'cubit/bloc_observer.dart';
@@ -25,10 +24,9 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => AppCubit(),
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme(),
-        home: const Layout(),
-      ),
+          debugShowCheckedModeBanner: false,
+          theme: lightTheme(),
+          home: const WelcomeScreen()),
     );
   }
 }

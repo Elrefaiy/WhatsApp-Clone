@@ -24,8 +24,8 @@ ThemeData lightTheme() => ThemeData(
           fontWeight: FontWeight.w500,
         ),
         bodyText2: TextStyle(
-          color: Colors.grey[600],
-          fontSize: 14,
+          color: Colors.grey[800],
+          fontSize: 13,
         ),
       ),
     );
@@ -48,7 +48,7 @@ ThemeData darkTheme() => ThemeData(
         ),
         bodyText2: TextStyle(
           color: Colors.grey[700],
-          fontSize: 14,
+          fontSize: 12,
         ),
       ),
     );

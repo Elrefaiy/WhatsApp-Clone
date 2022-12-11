@@ -52,10 +52,38 @@ class WelcomeScreen extends StatelessWidget {
                         const SizedBox(
                           height: 120,
                         ),
-                        Text(
-                          'Read our Privacy Policy. Tap "Agree and continue" to accept the Terms of Service.',
-                          style: Theme.of(context).textTheme.bodyText2,
+                        RichText(
                           textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Read our',
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                              TextSpan(
+                                text: ' Privacy Policy.',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(
+                                      color: Colors.blue,
+                                    ),
+                              ),
+                              TextSpan(
+                                text: ' Tap "Agree and continue" to accept the',
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                              TextSpan(
+                                text: ' Terms of Service.',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(
+                                      color: Colors.blue,
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 25,

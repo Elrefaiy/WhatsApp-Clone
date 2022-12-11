@@ -58,10 +58,26 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 30,
                       ),
-                      Text(
-                        'WhatsApp will need to verify your phone number. What\'s my number?',
-                        style: Theme.of(context).textTheme.bodyText2,
+                      RichText(
                         textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  'WhatsApp will need to verify your phone number.',
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                            TextSpan(
+                              text: ' What\'s my number?',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(
+                                    color: Colors.blue,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
