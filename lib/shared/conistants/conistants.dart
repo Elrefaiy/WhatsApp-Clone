@@ -15,12 +15,13 @@ ThemeData lightTheme() => ThemeData(
       textTheme: TextTheme(
         headline1: TextStyle(
           color: c1(),
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
+          fontSize: 22,
+          fontWeight: FontWeight.w500,
         ),
         headline2: const TextStyle(
           color: Colors.black,
-          fontSize: 19,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
         ),
         bodyText2: TextStyle(
           color: Colors.grey[600],

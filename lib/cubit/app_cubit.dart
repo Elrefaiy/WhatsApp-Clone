@@ -65,7 +65,9 @@ class AppCubit extends Cubit<AppStates> {
     await FirebaseAuth.instance.signOut();
   }
 
-  // User getUserData() {
-  //   return FirebaseAuth.instance.currentUser!;
-  // }
+  int currentIndex = 0;
+  void changeCurrentIndex(int index) {
+    currentIndex = index;
+    emit(ChangeCurrentIndexState());
+  }
 }

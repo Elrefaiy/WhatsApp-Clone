@@ -19,3 +19,5 @@ class SignInErrorState extends AppStates {
   String error;
   SignInErrorState(this.error);
 }
+
+class ChangeCurrentIndexState extends AppStates {}

@@ -44,10 +44,13 @@ class MobileLayout extends StatelessWidget {
                   ),
                 ),
               ],
-              bottom: const TabBar(
+              bottom: TabBar(
                 indicatorColor: Colors.white,
                 indicatorWeight: 4,
-                tabs: [
+                onTap: (index) {
+                  AppCubit.get(context).changeCurrentIndex(index);
+                },
+                tabs: const [
                   Tab(
                     child: Text(
                       'CHATS',
@@ -67,8 +70,9 @@ class MobileLayout extends StatelessWidget {
               ),
             ),
             body: const TabBarView(
+              physics: NeverScrollableScrollPhysics(),
               children: [
-                MobileChatsScreen(),
+                MobileChats(),
                 Center(
                   child: Text('Status'),
                 ),
@@ -80,8 +84,12 @@ class MobileLayout extends StatelessWidget {
             floatingActionButton: FloatingActionButton(
               onPressed: () {},
               backgroundColor: c2(),
-              child: const Icon(
-                Icons.message,
+              child: Icon(
+                AppCubit.get(context).currentIndex == 0
+                    ? Icons.message
+                    : AppCubit.get(context).currentIndex == 1
+                        ? Icons.camera_alt
+                        : Icons.call,
               ),
             ),
           ),

@@ -42,26 +42,32 @@ Widget chatItem(context) => Row(
                     child: Text(
                       'General Chat',
                       style: Theme.of(context).textTheme.headline2,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const Text('02:41'),
+                  Text(
+                    '02:41',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
                 ],
               ),
               const SizedBox(
                 height: 5,
               ),
               Row(
-                children: const [
-                  Icon(
+                children: [
+                  const Icon(
                     Icons.done_all,
                     color: Colors.blue,
                     size: 18,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 3,
                   ),
                   Text(
                     'Hello Ahmed',
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ],
               ),

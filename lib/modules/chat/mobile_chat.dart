@@ -7,8 +7,8 @@ import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
 
-class MobileChatsScreen extends StatelessWidget {
-  const MobileChatsScreen({super.key});
+class MobileChats extends StatelessWidget {
+  const MobileChats({super.key});
 
   @override
   Widget build(BuildContext context) {
