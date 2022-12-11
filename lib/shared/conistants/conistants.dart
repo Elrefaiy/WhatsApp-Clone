@@ -18,6 +18,10 @@ ThemeData lightTheme() => ThemeData(
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
+        headline2: const TextStyle(
+          color: Colors.black,
+          fontSize: 19,
+        ),
         bodyText2: TextStyle(
           color: Colors.grey[600],
           fontSize: 14,
@@ -27,7 +31,7 @@ ThemeData lightTheme() => ThemeData(
 
 ThemeData darkTheme() => ThemeData(
       primarySwatch: Colors.teal,
-      scaffoldBackgroundColor: c6(),
+      scaffoldBackgroundColor: c3(),
       appBarTheme: const AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.white,
@@ -51,7 +55,4 @@ ThemeData darkTheme() => ThemeData(
 // Application Color Pallet
 Color c1() => const Color(0xff008069);
 Color c2() => const Color(0xff128c7e);
-Color c3() => const Color(0xff25d366);
-Color c4() => const Color(0xffdcf8c6);
-Color c5() => const Color(0xffece5dd);
-Color c6() => const Color(0xff131A22);
+Color c3() => const Color(0xff131A22);
