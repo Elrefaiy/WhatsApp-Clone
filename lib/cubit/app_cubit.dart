@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
@@ -55,6 +56,8 @@ class AppCubit extends Cubit<AppStates> {
     emit(SignInLoadingState());
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
+      print(credential.token);
+      CacheHelper.putData(key: 'token', value: credential.token);
       emit(SignInSuccessState());
     } catch (error) {
       emit(SignInErrorState(error.toString()));
