@@ -56,8 +56,10 @@ class AppCubit extends Cubit<AppStates> {
     emit(SignInLoadingState());
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
-      print(credential.token);
-      CacheHelper.putData(key: 'token', value: credential.token);
+      CacheHelper.putData(
+        key: 'token',
+        value: credential.token,
+      );
       emit(SignInSuccessState());
     } catch (error) {
       emit(SignInErrorState(error.toString()));
@@ -65,6 +67,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   Future<void> logout() async {
+    CacheHelper.removeData(key: 'token');
     await FirebaseAuth.instance.signOut();
   }
 

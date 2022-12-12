@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
+import 'package:whatsapp_clone/layout/layout.dart';
 import 'package:whatsapp_clone/modules/welcome/welcome.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
@@ -15,11 +16,26 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  print('Your Token: $token');
+  token = CacheHelper.getData(key: 'token') ?? '';
+
+  Widget widget = const WelcomeScreen();
+
+  if (token != '') {
+    print('Your Token: $token');
+    widget = const Layout();
+  }
+
+  runApp(MyApp(startWidget: widget));
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  Widget startWidget;
+  MyApp({
+    required this.startWidget,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +44,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: lightTheme(),
-        home: const WelcomeScreen(),
+        home: startWidget,
       ),
     );
   }
