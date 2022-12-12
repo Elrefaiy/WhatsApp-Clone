@@ -58,7 +58,7 @@ class AppCubit extends Cubit<AppStates> {
       await FirebaseAuth.instance.signInWithCredential(credential);
       CacheHelper.putData(
         key: 'token',
-        value: credential.token,
+        value: credential.token.toString(),
       );
       emit(SignInSuccessState());
     } catch (error) {

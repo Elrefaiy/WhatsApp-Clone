@@ -16,13 +16,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print('Your Token: $token');
   token = CacheHelper.getData(key: 'token') ?? '';
-
   Widget widget = const WelcomeScreen();
-
   if (token != '') {
-    print('Your Token: $token');
     widget = const Layout();
   }
 
