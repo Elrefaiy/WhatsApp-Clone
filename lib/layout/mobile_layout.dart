@@ -80,16 +80,39 @@ class MobileLayout extends StatelessWidget {
                 ),
               ],
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {},
-              backgroundColor: c2(),
-              child: Icon(
-                AppCubit.get(context).currentIndex == 0
-                    ? Icons.message
-                    : AppCubit.get(context).currentIndex == 1
-                        ? Icons.camera_alt
-                        : Icons.call,
-              ),
+            floatingActionButton: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AppCubit.get(context).currentIndex == 1
+                    ? FloatingActionButton(
+                        heroTag: null,
+                        mini: true,
+                        onPressed: () {},
+                        backgroundColor: Colors.grey[100],
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.grey[600],
+                        ),
+                      )
+                    : Container(
+                        width: 0,
+                      ),
+                const SizedBox(
+                  height: 10,
+                ),
+                FloatingActionButton(
+                  heroTag: null,
+                  onPressed: () {},
+                  backgroundColor: c2(),
+                  child: Icon(
+                    AppCubit.get(context).currentIndex == 0
+                        ? Icons.message
+                        : AppCubit.get(context).currentIndex == 1
+                            ? Icons.camera_alt
+                            : Icons.call,
+                  ),
+                ),
+              ],
             ),
           ),
         );
