@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/modules/status/mobile_status_scree.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class MobileStatus extends StatelessWidget {
@@ -93,7 +94,14 @@ class MobileStatus extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MobileStatusScreen(),
+                  ),
+                );
+              },
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Row(
