@@ -31,7 +31,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+    
+  story_view: ^0.14.0
   shared_preferences: ^2.0.15
   firebase_core: ^2.3.0 
   firebase_auth: ^4.2.0 
