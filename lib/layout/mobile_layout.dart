@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/chat/mobile_chat.dart';
+import 'package:whatsapp_clone/modules/status/mobile_status.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class MobileLayout extends StatelessWidget {
@@ -73,9 +74,7 @@ class MobileLayout extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               children: [
                 MobileChats(),
-                Center(
-                  child: Text('Status'),
-                ),
+                MobileStatus(),
                 Center(
                   child: Text('Calls'),
                 ),
