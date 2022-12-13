@@ -88,6 +88,10 @@ class LoginScreen extends StatelessWidget {
                           children: [
                             DropdownButtonFormField(
                               elevation: 0,
+                              dropdownColor: AppCubit.get(context).isDark
+                                  ? c4()
+                                  : Colors.grey,
+                              style: Theme.of(context).textTheme.headline2,
                               borderRadius: BorderRadius.circular(5),
                               autofocus: true,
                               onChanged: (value) {
@@ -116,6 +120,12 @@ class LoginScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: TextFormField(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(
+                                          fontSize: 16,
+                                        ),
                                     controller: countryController,
                                     readOnly: true,
                                     validator: (value) {
@@ -126,8 +136,16 @@ class LoginScreen extends StatelessWidget {
                                     },
                                     keyboardType: TextInputType.phone,
                                     textAlign: TextAlign.center,
-                                    decoration: const InputDecoration(
-                                      prefix: Text('+'),
+                                    decoration: InputDecoration(
+                                      prefix: Text(
+                                        '+',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2!
+                                            .copyWith(
+                                              fontSize: 16,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -137,6 +155,12 @@ class LoginScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 5,
                                   child: TextFormField(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(
+                                          fontSize: 16,
+                                        ),
                                     controller: phoneController,
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -147,8 +171,14 @@ class LoginScreen extends StatelessWidget {
                                       return null;
                                     },
                                     keyboardType: TextInputType.phone,
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                       hintText: 'phone number',
+                                      hintStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2!
+                                          .copyWith(
+                                            fontSize: 16,
+                                          ),
                                     ),
                                   ),
                                 ),

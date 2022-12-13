@@ -89,6 +89,9 @@ class VerifyingScreen extends StatelessWidget {
                       height: 40,
                       width: 170,
                       child: TextFormField(
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              fontSize: 16,
+                            ),
                         controller: otpCodeController,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -100,12 +103,12 @@ class VerifyingScreen extends StatelessWidget {
                         },
                         keyboardType: TextInputType.phone,
                         textAlign: TextAlign.center,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: '_ _ _  _ _ _',
-                          hintStyle: TextStyle(
-                            fontSize: 30,
-                            color: Colors.grey,
-                          ),
+                          hintStyle:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    fontSize: 16,
+                                  ),
                         ),
                       ),
                     ),

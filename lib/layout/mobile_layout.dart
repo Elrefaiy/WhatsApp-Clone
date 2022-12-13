@@ -27,7 +27,9 @@ class MobileLayout extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AppCubit.get(context).logout();
+                  },
                   icon: const Icon(
                     Icons.camera_alt_outlined,
                   ),
@@ -39,7 +41,9 @@ class MobileLayout extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AppCubit.get(context).changeMode();
+                  },
                   icon: const Icon(
                     Icons.more_vert,
                   ),

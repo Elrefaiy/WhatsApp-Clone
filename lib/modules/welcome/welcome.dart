@@ -40,8 +40,10 @@ class WelcomeScreen extends StatelessWidget {
                           height: 120,
                         ),
                         CircleAvatar(
-                          backgroundImage: const AssetImage(
-                            'assets/images/welcome-light.jpg',
+                          backgroundImage: AssetImage(
+                            AppCubit.get(context).isDark
+                                ? 'assets/images/welcome-dark.jpg'
+                                : 'assets/images/welcome-light.jpg',
                           ),
                           radius:
                               MediaQuery.of(context).size.width.toInt() >= 560

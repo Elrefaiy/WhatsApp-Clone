@@ -21,3 +21,5 @@ class SignInErrorState extends AppStates {
 }
 
 class ChangeCurrentIndexState extends AppStates {}
+
+class ChangeThemeModeState extends AppStates {}

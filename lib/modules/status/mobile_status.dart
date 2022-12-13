@@ -34,7 +34,9 @@ class MobileStatus extends StatelessWidget {
                           decoration: BoxDecoration(
                             border: Border.all(
                               width: 2,
-                              color: Colors.white,
+                              color: AppCubit.get(context).isDark
+                                  ? c3()
+                                  : Colors.white,
                             ),
                             shape: BoxShape.circle,
                             color: c1(),
@@ -75,7 +77,8 @@ class MobileStatus extends StatelessWidget {
                       onPressed: () {},
                       icon: Icon(
                         Icons.more_horiz,
-                        color: c1(),
+                        color:
+                            AppCubit.get(context).isDark ? Colors.white : c1(),
                       ),
                     ),
                   ],
@@ -83,9 +86,12 @@ class MobileStatus extends StatelessWidget {
               ),
             ),
             Container(
-              color: Colors.grey[300],
+              color: Colors.grey.withOpacity(.2),
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 5,
+              ),
               child: const Text(
                 'Recent updates',
                 style: TextStyle(

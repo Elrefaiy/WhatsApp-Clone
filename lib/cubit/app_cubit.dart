@@ -76,4 +76,10 @@ class AppCubit extends Cubit<AppStates> {
     currentIndex = index;
     emit(ChangeCurrentIndexState());
   }
+
+  bool isDark = true;
+  void changeMode() {
+    isDark = !isDark;
+    emit(ChangeThemeModeState());
+  }
 }
