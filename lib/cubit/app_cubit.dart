@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -60,6 +62,7 @@ class AppCubit extends Cubit<AppStates> {
         key: 'token',
         value: credential.token.toString(),
       );
+      setUser();
       emit(SignInSuccessState());
     } catch (error) {
       emit(SignInErrorState(error.toString()));
@@ -81,5 +84,29 @@ class AppCubit extends Cubit<AppStates> {
   void changeMode() {
     isDark = !isDark;
     emit(ChangeThemeModeState());
+  }
+
+  late UserModel userModel;
+  void setUser() {
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    userModel = UserModel(
+      name: 'username',
+      phone: currentUser.phoneNumber!,
+      about: 'about',
+      image: 'image',
+      uId: currentUser.uid,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .set(
+          userModel.toMap(),
+        )
+        .then((value) {
+      emit(SetUserSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(SetUserErrorState(error.toString()));
+    });
   }
 }
