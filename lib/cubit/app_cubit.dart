@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/user.dart';
+import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -64,6 +65,7 @@ class AppCubit extends Cubit<AppStates> {
       );
       setUser();
       emit(SignInSuccessState());
+      getUser();
     } catch (error) {
       emit(SignInErrorState(error.toString()));
     }
@@ -87,6 +89,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   late UserModel userModel;
+
   void setUser() {
     User currentUser = FirebaseAuth.instance.currentUser!;
     userModel = UserModel(
@@ -105,8 +108,26 @@ class AppCubit extends Cubit<AppStates> {
         .then((value) {
       emit(SetUserSuccessState());
     }).catchError((error) {
-      print(error.toString());
       emit(SetUserErrorState(error.toString()));
     });
+  }
+
+  dynamic user;
+
+  void getUser() {
+    token = CacheHelper.getData(key: 'token') ?? '';
+    if (token != '') {
+      User currentUser = FirebaseAuth.instance.currentUser!;
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .get()
+          .then((value) {
+        user = value.data();
+        emit(GetUserSuccessState());
+      }).catchError((error) {
+        emit(GetUserErrorState(error.toString()));
+      });
+    }
   }
 }

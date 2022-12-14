@@ -13,7 +13,7 @@ class UserModel {
     required this.uId,
   });
 
-  UserModel.fromJson(Map json) {
+  UserModel.fromJson(json) {
     name = json['name'];
     phone = json['phone'];
     about = json['about'];

@@ -30,3 +30,10 @@ class SetUserErrorState extends AppStates {
   String error;
   SetUserErrorState(this.error);
 }
+
+class GetUserSuccessState extends AppStates {}
+
+class GetUserErrorState extends AppStates {
+  String error;
+  GetUserErrorState(this.error);
+}

@@ -44,10 +44,15 @@ class ProfileInfoScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         scaffoldKey.currentState!.showBottomSheet(
+                          backgroundColor: AppCubit.get(context).isDark
+                              ? c3()
+                              : Colors.white,
                           (context) => Container(
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: AppCubit.get(context).isDark
+                                  ? c4()
+                                  : Colors.white,
                               boxShadow: [
                                 BoxShadow(
                                   spreadRadius: 10,
@@ -156,6 +161,14 @@ class ProfileInfoScreen extends StatelessWidget {
                       },
                       child: const CircleAvatar(
                         radius: 65,
+                        child: ClipOval(
+                          child: Image(
+                            image: AssetImage(
+                              'assets/images/user-avatar.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -168,14 +181,17 @@ class ProfileInfoScreen extends StatelessWidget {
                           height: 40,
                           width: 250,
                           child: TextFormField(
+                            style: Theme.of(context).textTheme.headline2,
+                            autofocus: true,
                             maxLength: 25,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               hintText: 'User Name',
+                              hintStyle: Theme.of(context).textTheme.headline2,
                             ),
                           ),
                         ),
                         const SizedBox(
-                          width: 10,
+                          width: 15,
                         ),
                         const Icon(
                           Icons.tag_faces_sharp,

@@ -27,6 +27,14 @@ Widget chatItem(context) => Row(
       children: [
         const CircleAvatar(
           radius: 28,
+          child: ClipOval(
+            child: Image(
+              image: AssetImage(
+                'assets/images/user-avatar.jpg',
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
         const SizedBox(
           width: 15,
