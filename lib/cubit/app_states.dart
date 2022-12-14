@@ -23,3 +23,10 @@ class SignInErrorState extends AppStates {
 class ChangeCurrentIndexState extends AppStates {}
 
 class ChangeThemeModeState extends AppStates {}
+
+class SetUserSuccessState extends AppStates {}
+
+class SetUserErrorState extends AppStates {
+  String error;
+  SetUserErrorState(this.error);
+}
