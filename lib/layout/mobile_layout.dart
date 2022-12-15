@@ -22,7 +22,7 @@ class MobileLayout extends StatelessWidget {
               title: Text(
                 'WhatsApp',
                 style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: Colors.white,
+                      color: AppCubit.get(context).isDark ? c5() : Colors.white,
                     ),
               ),
               actions: [
@@ -30,45 +30,88 @@ class MobileLayout extends StatelessWidget {
                   onPressed: () {
                     AppCubit.get(context).logout();
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.camera_alt_outlined,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.search,
+                    color: AppCubit.get(context).isDark ? c5() : Colors.white,
                   ),
                 ),
                 IconButton(
                   onPressed: () {
                     AppCubit.get(context).changeMode();
                   },
-                  icon: const Icon(
-                    Icons.more_vert,
+                  icon: Icon(
+                    Icons.search,
+                    color: AppCubit.get(context).isDark ? c5() : Colors.white,
                   ),
+                ),
+                PopupMenuButton(
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: AppCubit.get(context).isDark ? c5() : Colors.white,
+                  ),
+                  color: AppCubit.get(context).isDark
+                      ? const Color.fromARGB(255, 50, 65, 73)
+                      : Colors.grey[100],
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: SizedBox(
+                        width: 120,
+                        child: Text(
+                          'Settings',
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    fontSize: 16,
+                                    color: AppCubit.get(context).isDark
+                                        ? Colors.white
+                                        : Colors.grey[800],
+                                  ),
+                        ),
+                      ),
+                      onTap: () {},
+                    ),
+                  ],
                 ),
               ],
               bottom: TabBar(
                 indicatorColor: Colors.white,
                 indicatorWeight: 4,
+                unselectedLabelColor:
+                    AppCubit.get(context).isDark ? c5() : Colors.white70,
+                labelColor: AppCubit.get(context).isDark ? c2() : Colors.white,
+                indicator: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: AppCubit.get(context).isDark ? c2() : Colors.white,
+                      width: 4,
+                    ),
+                  ),
+                ),
                 onTap: (index) {
                   AppCubit.get(context).changeCurrentIndex(index);
                 },
                 tabs: const [
                   Tab(
                     child: Text(
-                      'CHATS',
+                      'Chats',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                   Tab(
                     child: Text(
-                      'STATUS',
+                      'Status',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                   Tab(
                     child: Text(
-                      'CALLLS',
+                      'Calls',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ],
@@ -93,9 +136,9 @@ class MobileLayout extends StatelessWidget {
                         mini: true,
                         onPressed: () {},
                         backgroundColor: Colors.grey[100],
-                        child: Icon(
+                        child: const Icon(
                           Icons.edit,
-                          color: Colors.grey[600],
+                          color: Colors.blueGrey,
                         ),
                       )
                     : Container(

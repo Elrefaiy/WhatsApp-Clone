@@ -65,7 +65,6 @@ class AppCubit extends Cubit<AppStates> {
       );
       setUser();
       emit(SignInSuccessState());
-      getUser();
     } catch (error) {
       emit(SignInErrorState(error.toString()));
     }
@@ -107,6 +106,7 @@ class AppCubit extends Cubit<AppStates> {
         )
         .then((value) {
       emit(SetUserSuccessState());
+      getUser();
     }).catchError((error) {
       emit(SetUserErrorState(error.toString()));
     });
