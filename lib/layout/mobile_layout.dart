@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/chat/mobile_chat.dart';
+import 'package:whatsapp_clone/modules/settings/mobile_settings.dart';
 import 'package:whatsapp_clone/modules/status/mobile_status.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
@@ -27,18 +28,14 @@ class MobileLayout extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  onPressed: () {
-                    AppCubit.get(context).logout();
-                  },
+                  onPressed: () {},
                   icon: Icon(
                     Icons.camera_alt_outlined,
                     color: AppCubit.get(context).isDark ? c5() : Colors.white,
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    AppCubit.get(context).changeMode();
-                  },
+                  onPressed: () {},
                   icon: Icon(
                     Icons.search,
                     color: AppCubit.get(context).isDark ? c5() : Colors.white,
@@ -54,20 +51,31 @@ class MobileLayout extends StatelessWidget {
                       : Colors.grey[100],
                   itemBuilder: (context) => [
                     PopupMenuItem(
-                      child: SizedBox(
-                        width: 120,
-                        child: Text(
-                          'Settings',
-                          style:
-                              Theme.of(context).textTheme.bodyText2!.copyWith(
-                                    fontSize: 16,
-                                    color: AppCubit.get(context).isDark
-                                        ? Colors.white
-                                        : Colors.grey[800],
-                                  ),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const MobileSettingsScreen(),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 50),
+                          child: Text(
+                            'Settings',
+                            style:
+                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                      fontSize: 16,
+                                      color: AppCubit.get(context).isDark
+                                          ? Colors.white
+                                          : Colors.grey[800],
+                                    ),
+                          ),
                         ),
                       ),
-                      onTap: () {},
                     ),
                   ],
                 ),

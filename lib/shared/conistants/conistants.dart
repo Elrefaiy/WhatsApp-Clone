@@ -25,6 +25,11 @@ ThemeData lightTheme() => ThemeData(
           fontSize: 18,
           fontWeight: FontWeight.w500,
         ),
+        bodyText1: const TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.w400,
+        ),
         bodyText2: const TextStyle(
           color: Colors.blueGrey,
           fontSize: 13,
@@ -42,20 +47,26 @@ ThemeData darkTheme() => ThemeData(
         color: c4(),
         titleSpacing: 20,
       ),
-      textTheme: const TextTheme(
-        headline1: TextStyle(
+      textTheme: TextTheme(
+        headline1: const TextStyle(
           color: Colors.white,
           fontSize: 23,
           fontWeight: FontWeight.w500,
         ),
-        headline2: TextStyle(
+        headline2: const TextStyle(
           color: Colors.white,
           fontSize: 18,
           fontWeight: FontWeight.w500,
         ),
+        bodyText1: const TextStyle(
+          color: Colors.white,
+          fontSize: 17,
+          fontWeight: FontWeight.w400,
+        ),
         bodyText2: TextStyle(
-          color: Colors.blueGrey,
+          color: Colors.blueGrey[400],
           fontSize: 13,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );

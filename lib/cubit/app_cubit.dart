@@ -91,10 +91,11 @@ class AppCubit extends Cubit<AppStates> {
 
   void setUser() {
     User currentUser = FirebaseAuth.instance.currentUser!;
+
     userModel = UserModel(
       name: 'username',
       phone: currentUser.phoneNumber!,
-      about: 'about',
+      about: 'bio ...',
       image: 'image',
       uId: currentUser.uid,
     );

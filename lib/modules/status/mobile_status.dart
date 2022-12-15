@@ -24,9 +24,25 @@ class MobileStatus extends StatelessWidget {
                     Stack(
                       alignment: Alignment.bottomRight,
                       children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.grey,
+                        CircleAvatar(
                           radius: 28,
+                          child: AppCubit.get(context).user['image'] == 'image'
+                              ? const ClipOval(
+                                  child: Image(
+                                    image: AssetImage(
+                                      'assets/images/user-avatar.jpg',
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : ClipOval(
+                                  child: Image(
+                                    image: NetworkImage(
+                                      AppCubit.get(context).user['image'],
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                         ),
                         Container(
                           width: 25,
