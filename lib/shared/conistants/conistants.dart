@@ -25,47 +25,45 @@ ThemeData lightTheme() => ThemeData(
           fontSize: 18,
           fontWeight: FontWeight.w500,
         ),
-        bodyText2: TextStyle(
-          color: Colors.grey[800],
+        bodyText2: const TextStyle(
+          color: Colors.blueGrey,
           fontSize: 13,
         ),
       ),
     );
 
 ThemeData darkTheme() => ThemeData(
-      primarySwatch: Colors.teal,
+      primarySwatch: Colors.blueGrey,
       scaffoldBackgroundColor: c3(),
       appBarTheme: AppBarTheme(
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
         ),
-        color: c3(),
+        color: c4(),
         titleSpacing: 20,
       ),
-      textTheme: TextTheme(
-        headline1: const TextStyle(
+      textTheme: const TextTheme(
+        headline1: TextStyle(
           color: Colors.white,
-          fontSize: 22,
+          fontSize: 23,
           fontWeight: FontWeight.w500,
         ),
-        headline2: const TextStyle(
+        headline2: TextStyle(
           color: Colors.white,
           fontSize: 18,
           fontWeight: FontWeight.w500,
         ),
         bodyText2: TextStyle(
-          color: Colors.grey[300],
+          color: Colors.blueGrey,
           fontSize: 13,
         ),
       ),
     );
 
 // Application Color Pallet
-
-//light
 Color c1() => const Color(0xff008069);
-Color c2() => const Color(0xff128c7e);
+Color c2() => const Color(0xff00A884);
 
-//dark
-Color c3() => const Color(0xff131A22);
-Color c4() => Color.fromARGB(255, 25, 34, 44);
+Color c3() => const Color(0xff111B21);
+Color c4() => const Color(0xff233138);
+Color c5() => const Color(0xff8696A0);
