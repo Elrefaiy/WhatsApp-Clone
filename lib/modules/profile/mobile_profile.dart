@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class MobileProfile extends StatelessWidget {
@@ -12,18 +11,33 @@ class MobileProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is UpdateUserLoadingState) {
+          showLoadingDialog(context);
+        } else if (state is UpdateUserSuccessState) {
+          Navigator.pop(context);
+        } else if (state is UpdateUserErrorState) {
+          Navigator.pop(context);
+          snackBar(content: 'some thing went wrong, please try again');
+        }
+      },
       builder: (context, state) {
+        var scaffoldKey = GlobalKey<ScaffoldState>();
         var user = AppCubit.get(context).user;
-        print(user);
+        var nameController = TextEditingController();
+        var aboutController = TextEditingController();
+
+        nameController.text = user['name'];
+        aboutController.text = user['about'];
         return Scaffold(
+          key: scaffoldKey,
           appBar: AppBar(
             title: const Text('Profile'),
           ),
           body: Column(
             children: [
               const SizedBox(
-                height: 15,
+                height: 25,
               ),
               Stack(
                 alignment: Alignment.bottomRight,
@@ -54,14 +68,130 @@ class MobileProfile extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: c1(),
+                      color: c2(),
                     ),
                     child: IconButton(
                       icon: const Icon(
                         Icons.camera_alt,
                         color: Colors.white,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        scaffoldKey.currentState!.showBottomSheet(
+                          backgroundColor: AppCubit.get(context).isDark
+                              ? c3()
+                              : Colors.white,
+                          (context) => Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: AppCubit.get(context).isDark
+                                  ? c4()
+                                  : Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  spreadRadius: 10,
+                                  blurRadius: 20,
+                                  color: Colors.black.withOpacity(.1),
+                                ),
+                              ],
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Profile photo',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline1!
+                                          .copyWith(
+                                            color: Colors.grey[600],
+                                          ),
+                                    ),
+                                    const Spacer(),
+                                    const Icon(
+                                      Icons.delete,
+                                      color: Colors.grey,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Row(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    Colors.grey.withOpacity(.3),
+                                                width: 1,
+                                              )),
+                                          child: IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              Icons.camera_alt,
+                                              color: Colors.teal,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          'Camera',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2,
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color:
+                                                    Colors.grey.withOpacity(.3),
+                                                width: 1,
+                                              )),
+                                          child: IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              Icons.image_rounded,
+                                              color: Colors.teal,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          'Gallery',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -70,7 +200,94 @@ class MobileProfile extends StatelessWidget {
                 height: 15,
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  scaffoldKey.currentState!.showBottomSheet(
+                    backgroundColor:
+                        AppCubit.get(context).isDark ? c3() : Colors.white,
+                    (context) => Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color:
+                            AppCubit.get(context).isDark ? c4() : Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            spreadRadius: 10,
+                            blurRadius: 20,
+                            color: Colors.black.withOpacity(.1),
+                          ),
+                        ],
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Enter your name',
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SizedBox(
+                                  height: 40,
+                                  child: TextFormField(
+                                    controller: nameController,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                    autofocus: true,
+                                    maxLength: 25,
+                                    decoration: InputDecoration(
+                                      hintText: 'Name',
+                                      hintStyle:
+                                          Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              const Icon(
+                                Icons.tag_faces_sharp,
+                                color: Colors.grey,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Spacer(),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  AppCubit.get(context).updateName(
+                                    name: nameController.text,
+                                  );
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Save'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 30,
@@ -129,7 +346,93 @@ class MobileProfile extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  scaffoldKey.currentState!.showBottomSheet(
+                    backgroundColor:
+                        AppCubit.get(context).isDark ? c3() : Colors.white,
+                    (context) => Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color:
+                            AppCubit.get(context).isDark ? c4() : Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            spreadRadius: 10,
+                            blurRadius: 20,
+                            color: Colors.black.withOpacity(.1),
+                          ),
+                        ],
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Add About',
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SizedBox(
+                                  height: 40,
+                                  child: TextFormField(
+                                    controller: aboutController,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                    autofocus: true,
+                                    maxLength: 140,
+                                    decoration: InputDecoration(
+                                      hintText: 'About',
+                                      hintStyle:
+                                          Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              const Icon(
+                                Icons.tag_faces_sharp,
+                                color: Colors.grey,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Spacer(),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Cancel'),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  AppCubit.get(context).updateAbout(
+                                    about: aboutController.text,
+                                  );
+                                },
+                                child: const Text('Save'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 30,
@@ -210,7 +513,7 @@ class MobileProfile extends StatelessWidget {
                               height: 2,
                             ),
                             Text(
-                              user['phone'].toString(),
+                              user['phone'],
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                           ],

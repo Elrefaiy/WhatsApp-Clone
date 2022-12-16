@@ -33,6 +33,7 @@ ThemeData lightTheme() => ThemeData(
         bodyText2: const TextStyle(
           color: Colors.blueGrey,
           fontSize: 13,
+          fontWeight: FontWeight.w400,
         ),
       ),
     );
@@ -60,7 +61,7 @@ ThemeData darkTheme() => ThemeData(
         ),
         bodyText1: const TextStyle(
           color: Colors.white,
-          fontSize: 17,
+          fontSize: 16,
           fontWeight: FontWeight.w400,
         ),
         bodyText2: TextStyle(

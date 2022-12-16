@@ -131,4 +131,30 @@ class AppCubit extends Cubit<AppStates> {
       });
     }
   }
+
+  void updateName({required String name}) {
+    emit(UpdateUserLoadingState());
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    FirebaseFirestore.instance.collection('users').doc(currentUser.uid).update({
+      'name': name,
+    }).then((value) {
+      emit(UpdateUserSuccessState());
+      getUser();
+    }).catchError((error) {
+      emit(UpdateUserErrorState(error.toString()));
+    });
+  }
+
+  void updateAbout({required String about}) {
+    emit(UpdateUserLoadingState());
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    FirebaseFirestore.instance.collection('users').doc(currentUser.uid).update({
+      'about': about,
+    }).then((value) {
+      emit(UpdateUserSuccessState());
+      getUser();
+    }).catchError((error) {
+      emit(UpdateUserErrorState(error.toString()));
+    });
+  }
 }
