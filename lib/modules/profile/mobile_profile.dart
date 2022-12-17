@@ -47,14 +47,23 @@ class MobileProfile extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 80,
                       child: user['image'] == 'image'
-                          ? const ClipOval(
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/user-avatar.jpg',
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            )
+                          ? AppCubit.get(context).profileImage.path != ''
+                              ? ClipOval(
+                                  child: Image(
+                                    image: FileImage(
+                                      AppCubit.get(context).profileImage,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : const ClipOval(
+                                  child: Image(
+                                    image: AssetImage(
+                                      'assets/images/user-avatar.jpg',
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
                           : ClipOval(
                               child: Image(
                                 image: NetworkImage(
@@ -135,7 +144,10 @@ class MobileProfile extends StatelessWidget {
                                                 width: 1,
                                               )),
                                           child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              AppCubit.get(context)
+                                                  .getCameraImage(context);
+                                            },
                                             icon: const Icon(
                                               Icons.camera_alt,
                                               color: Colors.teal,
@@ -167,7 +179,10 @@ class MobileProfile extends StatelessWidget {
                                                 width: 1,
                                               )),
                                           child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              AppCubit.get(context)
+                                                  .getGalleryImage(context);
+                                            },
                                             icon: const Icon(
                                               Icons.image_rounded,
                                               color: Colors.teal,

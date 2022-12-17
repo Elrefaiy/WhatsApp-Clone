@@ -46,3 +46,15 @@ class UpdateUserErrorState extends AppStates {
   String error;
   UpdateUserErrorState(this.error);
 }
+
+class GetProfileImageSuccessState extends AppStates {}
+
+class GetProfileImageErrorState extends AppStates {}
+
+class UploadProfileImageSuccessState extends AppStates {}
+
+class UploadProfileImageErrorState extends AppStates {}
+
+class CropProfileImageSuccessState extends AppStates {}
+
+class CropProfileImageErrorState extends AppStates {}

@@ -1,10 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:image_cropper/image_cropper.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
@@ -81,7 +87,7 @@ class AppCubit extends Cubit<AppStates> {
     emit(ChangeCurrentIndexState());
   }
 
-  bool isDark = true;
+  bool isDark = false;
   void changeMode() {
     isDark = !isDark;
     emit(ChangeThemeModeState());
@@ -153,6 +159,94 @@ class AppCubit extends Cubit<AppStates> {
     }).then((value) {
       emit(UpdateUserSuccessState());
       getUser();
+    }).catchError((error) {
+      emit(UpdateUserErrorState(error.toString()));
+    });
+  }
+
+  File profileImage = File('');
+  ImagePicker picker = ImagePicker();
+  dynamic pickedFile;
+
+  Future<void> getGalleryImage(context) async {
+    pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedFile != null) {
+      profileImage = File(pickedFile.path);
+      cropImage(context);
+      emit(GetProfileImageSuccessState());
+    } else {
+      emit(GetProfileImageErrorState());
+    }
+  }
+
+  Future<void> getCameraImage(context) async {
+    pickedFile = await picker.pickImage(
+      source: ImageSource.camera,
+    );
+    if (pickedFile != null) {
+      cropImage(context);
+      emit(GetProfileImageSuccessState());
+    } else {
+      emit(GetProfileImageErrorState());
+    }
+  }
+
+  Future<void> cropImage(context) async {
+    CroppedFile? croppedImage = await ImageCropper().cropImage(
+      sourcePath: pickedFile.path,
+      uiSettings: [
+        AndroidUiSettings(
+          statusBarColor: Colors.black,
+          toolbarColor: Colors.black,
+          hideBottomControls: true,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.square,
+          lockAspectRatio: true,
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    );
+    if (croppedImage != null) {
+      profileImage = File(croppedImage.path);
+      emit(CropProfileImageSuccessState());
+      uploadProfilePicture();
+    } else {
+      print('Image not Successfully set');
+      emit(CropProfileImageErrorState());
+    }
+  }
+
+  void updateProfileImage({required String image}) {
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    FirebaseFirestore.instance.collection('users').doc(currentUser.uid).update({
+      'image': image,
+    }).then((value) {
+      emit(UpdateUserSuccessState());
+      getUser();
+    }).catchError((error) {
+      emit(UpdateUserErrorState(error.toString()));
+    });
+  }
+
+  void uploadProfilePicture() {
+    emit(UpdateUserLoadingState());
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('users/${Uri.file(profileImage.path).pathSegments.last}')
+        .putFile(profileImage)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        updateProfileImage(image: value);
+      }).catchError((error) {
+        emit(UploadProfileImageErrorState());
+      });
     }).catchError((error) {
       emit(UpdateUserErrorState(error.toString()));
     });
