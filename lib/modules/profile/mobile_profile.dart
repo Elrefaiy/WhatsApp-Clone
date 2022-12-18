@@ -122,9 +122,18 @@ class MobileProfile extends StatelessWidget {
                                           ),
                                     ),
                                     const Spacer(),
-                                    const Icon(
-                                      Icons.delete,
-                                      color: Colors.grey,
+                                    IconButton(
+                                      onPressed: () {
+                                        AppCubit.get(context)
+                                            .updateProfileImage(
+                                          image: 'image',
+                                        );
+                                        AppCubit.get(context).getUser();
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ],
                                 ),

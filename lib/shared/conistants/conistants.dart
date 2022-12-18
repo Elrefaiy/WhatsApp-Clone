@@ -8,6 +8,7 @@ ThemeData lightTheme() => ThemeData(
       primarySwatch: Colors.teal,
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
+        elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
         ),
@@ -27,7 +28,7 @@ ThemeData lightTheme() => ThemeData(
         ),
         bodyText1: const TextStyle(
           color: Colors.black,
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: FontWeight.w400,
         ),
         bodyText2: const TextStyle(
@@ -42,6 +43,7 @@ ThemeData darkTheme() => ThemeData(
       primarySwatch: Colors.blueGrey,
       scaffoldBackgroundColor: c3(),
       appBarTheme: AppBarTheme(
+        elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
         ),

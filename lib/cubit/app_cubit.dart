@@ -236,10 +236,12 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void uploadProfilePicture() {
+    User currentUser = FirebaseAuth.instance.currentUser!;
     emit(UpdateUserLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('users/${Uri.file(profileImage.path).pathSegments.last}')
+        .child(
+            'users/${currentUser.uid}/${Uri.file(profileImage.path).pathSegments.last}')
         .putFile(profileImage)
         .then((value) {
       value.ref.getDownloadURL().then((value) {

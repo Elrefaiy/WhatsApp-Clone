@@ -15,6 +15,11 @@ class ProfileInfoScreen extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {},
       builder: (context, state) {
+        var user = AppCubit.get(context).user;
+        var nameController = TextEditingController();
+
+        nameController.text = user['name'] ?? 'Name';
+
         return SafeArea(
           child: Scaffold(
             key: scaffoldKey,
@@ -80,9 +85,18 @@ class ProfileInfoScreen extends StatelessWidget {
                                           ),
                                     ),
                                     const Spacer(),
-                                    const Icon(
-                                      Icons.delete,
-                                      color: Colors.grey,
+                                    IconButton(
+                                      onPressed: () {
+                                        AppCubit.get(context)
+                                            .updateProfileImage(
+                                          image: 'image',
+                                        );
+                                        AppCubit.get(context).getUser();
+                                      },
+                                      icon: const Icon(
+                                        Icons.delete,
+                                        color: Colors.grey,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -102,7 +116,10 @@ class ProfileInfoScreen extends StatelessWidget {
                                                 width: 1,
                                               )),
                                           child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              AppCubit.get(context)
+                                                  .getCameraImage(context);
+                                            },
                                             icon: const Icon(
                                               Icons.camera_alt,
                                               color: Colors.teal,
@@ -134,7 +151,10 @@ class ProfileInfoScreen extends StatelessWidget {
                                                 width: 1,
                                               )),
                                           child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              AppCubit.get(context)
+                                                  .getGalleryImage(context);
+                                            },
                                             icon: const Icon(
                                               Icons.image_rounded,
                                               color: Colors.teal,
@@ -159,16 +179,34 @@ class ProfileInfoScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      child: const CircleAvatar(
+                      child: CircleAvatar(
                         radius: 65,
-                        child: ClipOval(
-                          child: Image(
-                            image: AssetImage(
-                              'assets/images/user-avatar.jpg',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                        child: user['image'] == 'image'
+                            ? AppCubit.get(context).profileImage.path != ''
+                                ? ClipOval(
+                                    child: Image(
+                                      image: FileImage(
+                                        AppCubit.get(context).profileImage,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : const ClipOval(
+                                    child: Image(
+                                      image: AssetImage(
+                                        'assets/images/user-avatar.jpg',
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                            : ClipOval(
+                                child: Image(
+                                  image: NetworkImage(
+                                    user['image'],
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                       ),
                     ),
                     const SizedBox(
@@ -181,9 +219,15 @@ class ProfileInfoScreen extends StatelessWidget {
                           height: 40,
                           width: 250,
                           child: TextFormField(
+                            controller: nameController,
                             style: Theme.of(context).textTheme.headline2,
                             autofocus: true,
                             maxLength: 25,
+                            onFieldSubmitted: (value) {
+                              AppCubit.get(context).updateName(
+                                name: value,
+                              );
+                            },
                             decoration: InputDecoration(
                               hintText: 'User Name',
                               hintStyle: Theme.of(context).textTheme.headline2,
