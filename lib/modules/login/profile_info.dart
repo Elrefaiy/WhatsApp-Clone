@@ -15,11 +15,9 @@ class ProfileInfoScreen extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var user = AppCubit.get(context).user;
         var nameController = TextEditingController();
-
-        nameController.text = user['name'] ?? 'Name';
-
+        String image = AppCubit.get(context).user['image'] ?? 'image';
+        nameController.text = AppCubit.get(context).user['name'];
         return SafeArea(
           child: Scaffold(
             key: scaffoldKey,
@@ -181,28 +179,19 @@ class ProfileInfoScreen extends StatelessWidget {
                       },
                       child: CircleAvatar(
                         radius: 65,
-                        child: user['image'] == 'image'
-                            ? AppCubit.get(context).profileImage.path != ''
-                                ? ClipOval(
-                                    child: Image(
-                                      image: FileImage(
-                                        AppCubit.get(context).profileImage,
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                : const ClipOval(
-                                    child: Image(
-                                      image: AssetImage(
-                                        'assets/images/user-avatar.jpg',
-                                      ),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
+                        child: image == 'image'
+                            ? const ClipOval(
+                                child: Image(
+                                  image: AssetImage(
+                                    'assets/images/user-avatar.jpg',
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              )
                             : ClipOval(
                                 child: Image(
                                   image: NetworkImage(
-                                    user['image'],
+                                    image,
                                   ),
                                   fit: BoxFit.cover,
                                 ),
@@ -220,8 +209,7 @@ class ProfileInfoScreen extends StatelessWidget {
                           width: 250,
                           child: TextFormField(
                             controller: nameController,
-                            style: Theme.of(context).textTheme.headline2,
-                            autofocus: true,
+                            style: Theme.of(context).textTheme.bodyText1,
                             maxLength: 25,
                             onFieldSubmitted: (value) {
                               AppCubit.get(context).updateName(
@@ -230,7 +218,7 @@ class ProfileInfoScreen extends StatelessWidget {
                             },
                             decoration: InputDecoration(
                               hintText: 'User Name',
-                              hintStyle: Theme.of(context).textTheme.headline2,
+                              hintStyle: Theme.of(context).textTheme.bodyText1,
                             ),
                           ),
                         ),

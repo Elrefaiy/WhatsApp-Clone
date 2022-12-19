@@ -47,23 +47,14 @@ class MobileProfile extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 80,
                       child: user['image'] == 'image'
-                          ? AppCubit.get(context).profileImage.path != ''
-                              ? ClipOval(
-                                  child: Image(
-                                    image: FileImage(
-                                      AppCubit.get(context).profileImage,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : const ClipOval(
-                                  child: Image(
-                                    image: AssetImage(
-                                      'assets/images/user-avatar.jpg',
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
+                          ? const ClipOval(
+                              child: Image(
+                                image: AssetImage(
+                                  'assets/images/user-avatar.jpg',
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            )
                           : ClipOval(
                               child: Image(
                                 image: NetworkImage(

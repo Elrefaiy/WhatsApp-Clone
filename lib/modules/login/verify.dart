@@ -21,13 +21,14 @@ class VerifyingScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is SignInLoadingState) {
           showLoadingDialog(context);
-        } else if (state is SignInSuccessState) {
+        } else if (state is GetUserSuccessState) {
           Navigator.pop(context);
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
               builder: (context) => const ProfileInfoScreen(),
             ),
+            (route) => false,
           );
         } else if (state is SignInErrorState) {
           Navigator.pop(context);
@@ -103,6 +104,7 @@ class VerifyingScreen extends StatelessWidget {
                         },
                         keyboardType: TextInputType.phone,
                         textAlign: TextAlign.center,
+                        autofocus: true,
                         decoration: InputDecoration(
                           hintText: '_ _ _  _ _ _',
                           hintStyle:

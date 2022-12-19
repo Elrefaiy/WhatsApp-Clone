@@ -20,6 +20,10 @@ class SignInErrorState extends AppStates {
   SignInErrorState(this.error);
 }
 
+class LogoutLoadingState extends AppStates {}
+
+class LogoutSuccessState extends AppStates {}
+
 class ChangeCurrentIndexState extends AppStates {}
 
 class ChangeThemeModeState extends AppStates {}

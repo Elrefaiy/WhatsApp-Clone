@@ -40,7 +40,7 @@ ThemeData lightTheme() => ThemeData(
     );
 
 ThemeData darkTheme() => ThemeData(
-      primarySwatch: Colors.blueGrey,
+      primarySwatch: Colors.teal,
       scaffoldBackgroundColor: c3(),
       appBarTheme: AppBarTheme(
         elevation: 0,

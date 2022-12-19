@@ -33,7 +33,8 @@ class LoginScreen extends StatelessWidget {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
             snackBar(
-              content: 'Something went wrong, please try again',
+              content:
+                  'you have logged in more than many times in short time, you have to wait few minutes before you login again.',
             ),
           );
         }
@@ -90,8 +91,8 @@ class LoginScreen extends StatelessWidget {
                               elevation: 0,
                               dropdownColor: AppCubit.get(context).isDark
                                   ? c4()
-                                  : Colors.grey,
-                              style: Theme.of(context).textTheme.headline2,
+                                  : Colors.grey[100],
+                              style: Theme.of(context).textTheme.bodyText1,
                               borderRadius: BorderRadius.circular(5),
                               autofocus: true,
                               onChanged: (value) {
@@ -120,12 +121,8 @@ class LoginScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: TextFormField(
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2!
-                                        .copyWith(
-                                          fontSize: 16,
-                                        ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
                                     controller: countryController,
                                     readOnly: true,
                                     validator: (value) {
@@ -141,10 +138,7 @@ class LoginScreen extends StatelessWidget {
                                         '+',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText2!
-                                            .copyWith(
-                                              fontSize: 16,
-                                            ),
+                                            .bodyText1,
                                       ),
                                     ),
                                   ),
@@ -155,12 +149,8 @@ class LoginScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 5,
                                   child: TextFormField(
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2!
-                                        .copyWith(
-                                          fontSize: 16,
-                                        ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
                                     controller: phoneController,
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -173,12 +163,8 @@ class LoginScreen extends StatelessWidget {
                                     keyboardType: TextInputType.phone,
                                     decoration: InputDecoration(
                                       hintText: 'phone number',
-                                      hintStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyText2!
-                                          .copyWith(
-                                            fontSize: 16,
-                                          ),
+                                      hintStyle:
+                                          Theme.of(context).textTheme.bodyText1,
                                     ),
                                   ),
                                 ),

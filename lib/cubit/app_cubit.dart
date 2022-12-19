@@ -77,8 +77,10 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   Future<void> logout() async {
+    emit(LogoutLoadingState());
     CacheHelper.removeData(key: 'token');
     await FirebaseAuth.instance.signOut();
+    emit(LogoutSuccessState());
   }
 
   int currentIndex = 0;
@@ -132,6 +134,7 @@ class AppCubit extends Cubit<AppStates> {
           .then((value) {
         user = value.data();
         emit(GetUserSuccessState());
+        // emit(SetUserSuccessState());
       }).catchError((error) {
         emit(GetUserErrorState(error.toString()));
       });

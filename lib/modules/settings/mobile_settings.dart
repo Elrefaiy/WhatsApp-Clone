@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/modules/login/login.dart';
 import 'package:whatsapp_clone/modules/profile/mobile_profile.dart';
+import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class MobileSettingsScreen extends StatelessWidget {
@@ -11,7 +13,20 @@ class MobileSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is LogoutLoadingState) {
+          showLoadingDialog(context);
+        } else if (state is LogoutSuccessState) {
+          Navigator.pop(context);
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginScreen(),
+            ),
+            (route) => false,
+          );
+        }
+      },
       builder: (context, state) {
         var user = AppCubit.get(context).user;
 
