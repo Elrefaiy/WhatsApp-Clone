@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
+import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 SnackBar snackBar({required String content}) => SnackBar(
       duration: const Duration(seconds: 4),
@@ -99,5 +100,154 @@ Widget chatItem(context) => InkWell(
             ),
           ],
         ),
+      ),
+    );
+
+Widget myMesseageItem({
+  String message = 'my friend ! 😄😄',
+  time,
+  isRead,
+}) =>
+    Align(
+      alignment: Alignment.topRight,
+      child: Stack(
+        alignment: AlignmentDirectional.topEnd,
+        children: [
+          Container(
+            width: 20,
+            height: 15,
+            margin: const EdgeInsets.only(right: 10),
+            decoration: BoxDecoration(
+              color: c1(),
+              borderRadius: const BorderRadius.only(
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(right: 15, left: 80),
+            constraints: const BoxConstraints(
+              minWidth: 100,
+              minHeight: 30,
+              maxHeight: double.infinity,
+              maxWidth: 200,
+            ),
+            decoration: BoxDecoration(
+              color: c1(),
+              borderRadius: const BorderRadius.only(
+                bottomRight: Radius.circular(13),
+                bottomLeft: Radius.circular(13),
+                topLeft: Radius.circular(13),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    message,
+                    softWrap: true,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 2, 0, 3),
+                  child: Text(
+                    '12:00',
+                    style: TextStyle(color: Colors.blueGrey[100]),
+                  ),
+                ),
+                const SizedBox(
+                  width: 3,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 2, 3, 3),
+                  child: Icon(
+                    Icons.done_all_outlined,
+                    color: Colors.blue[300],
+                    size: 16,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+Widget frienMessageItem() => Align(
+      alignment: Alignment.topLeft,
+      child: Stack(
+        alignment: AlignmentDirectional.topStart,
+        children: [
+          Container(
+            width: 20,
+            height: 15,
+            margin: const EdgeInsets.only(left: 10),
+            decoration: BoxDecoration(
+              color: c4(),
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 15, right: 80),
+            constraints: const BoxConstraints(
+              minWidth: 100,
+              minHeight: 30,
+              maxHeight: double.infinity,
+              maxWidth: 200,
+            ),
+            decoration: BoxDecoration(
+              color: c4(),
+              borderRadius: const BorderRadius.only(
+                bottomRight: Radius.circular(13),
+                bottomLeft: Radius.circular(13),
+                topRight: Radius.circular(13),
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(3, 2, 0, 3),
+                  child: Icon(
+                    Icons.done_all_outlined,
+                    color: Colors.blue[300],
+                    size: 16,
+                  ),
+                ),
+                const SizedBox(
+                  width: 3,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(3, 2, 0, 3),
+                  child: Text(
+                    '12:00',
+                    style: TextStyle(color: Colors.blueGrey[100]),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    'my friend ! 😄😄',
+                    softWrap: true,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/login/login.dart';
@@ -273,6 +274,39 @@ class MobileSettingsScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                'from',
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      fontSize: 16,
+                    ),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(
+                    FontAwesomeIcons.meta,
+                    color: AppCubit.get(context).isDark
+                        ? Colors.white
+                        : Colors.black,
+                    size: 16,
+                  ),
+                  Text(
+                    ' Meta',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: AppCubit.get(context).isDark
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                  )
+                ],
+              )
             ],
           ),
         );

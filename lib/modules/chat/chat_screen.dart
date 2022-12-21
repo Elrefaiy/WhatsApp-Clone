@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -58,6 +60,14 @@ class ChatScreen extends StatelessWidget {
             ),
             child: Column(
               children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                myMesseageItem(),
+                const SizedBox(
+                  height: 8,
+                ),
+                frienMessageItem(),
                 const Spacer(),
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -87,8 +97,8 @@ class ChatScreen extends StatelessWidget {
                           children: [
                             IconButton(
                               onPressed: () {},
-                              icon: const Icon(
-                                Icons.tag_faces,
+                              icon: const FaIcon(
+                                FontAwesomeIcons.faceGrin,
                                 color: Colors.grey,
                               ),
                             ),
@@ -107,8 +117,9 @@ class ChatScreen extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {},
-                              icon: const Icon(
-                                Icons.attach_file,
+                              icon: const FaIcon(
+                                FontAwesomeIcons.paperclip,
+                                size: 22,
                                 color: Colors.grey,
                               ),
                             ),
