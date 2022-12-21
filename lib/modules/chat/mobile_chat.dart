@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
@@ -23,14 +24,18 @@ class MobileChats extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) => chatItem(context),
-                itemCount: 9,
+                itemCount: 2,
               ),
-              const Divider(),
+              Divider(
+                color: Colors.blueGrey.withOpacity(.3),
+                thickness: 1,
+                height: 35,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
-                    Icons.lock,
+                  const FaIcon(
+                    FontAwesomeIcons.lock,
                     size: 14,
                     color: Colors.blueGrey,
                   ),

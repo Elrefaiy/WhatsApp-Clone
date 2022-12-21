@@ -102,7 +102,7 @@ class MobileStatus extends StatelessWidget {
               ),
             ),
             Container(
-              color: Colors.grey.withOpacity(.2),
+              color: Colors.blueGrey.withOpacity(.2),
               width: double.infinity,
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,

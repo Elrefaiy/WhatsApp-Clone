@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
@@ -104,6 +105,7 @@ Widget chatItem(context) => InkWell(
     );
 
 Widget myMesseageItem({
+  required context,
   String message = 'my friend ! 😄😄',
   time,
   isRead,
@@ -118,7 +120,8 @@ Widget myMesseageItem({
             height: 15,
             margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
-              color: c1(),
+              color:
+                  AppCubit.get(context).isDark ? c1() : Colors.lightGreen[200],
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(20),
               ),
@@ -133,7 +136,8 @@ Widget myMesseageItem({
               maxWidth: 200,
             ),
             decoration: BoxDecoration(
-              color: c1(),
+              color:
+                  AppCubit.get(context).isDark ? c1() : Colors.lightGreen[200],
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(13),
                 bottomLeft: Radius.circular(13),
@@ -149,8 +153,10 @@ Widget myMesseageItem({
                   child: Text(
                     message,
                     softWrap: true,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: AppCubit.get(context).isDark
+                          ? Colors.white
+                          : Colors.black,
                       fontSize: 15,
                     ),
                   ),
@@ -159,7 +165,11 @@ Widget myMesseageItem({
                   padding: const EdgeInsets.fromLTRB(0, 2, 0, 3),
                   child: Text(
                     '12:00',
-                    style: TextStyle(color: Colors.blueGrey[100]),
+                    style: TextStyle(
+                      color: AppCubit.get(context).isDark
+                          ? Colors.grey[100]
+                          : Colors.grey[700],
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -180,7 +190,7 @@ Widget myMesseageItem({
       ),
     );
 
-Widget frienMessageItem() => Align(
+Widget frienMessageItem(context) => Align(
       alignment: Alignment.topLeft,
       child: Stack(
         alignment: AlignmentDirectional.topStart,
@@ -190,7 +200,7 @@ Widget frienMessageItem() => Align(
             height: 15,
             margin: const EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
-              color: c4(),
+              color: AppCubit.get(context).isDark ? c4() : Colors.white,
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(20),
               ),
@@ -205,7 +215,7 @@ Widget frienMessageItem() => Align(
               maxWidth: 200,
             ),
             decoration: BoxDecoration(
-              color: c4(),
+              color: AppCubit.get(context).isDark ? c4() : Colors.white,
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(13),
                 bottomLeft: Radius.circular(13),
@@ -231,16 +241,22 @@ Widget frienMessageItem() => Align(
                   padding: const EdgeInsets.fromLTRB(3, 2, 0, 3),
                   child: Text(
                     '12:00',
-                    style: TextStyle(color: Colors.blueGrey[100]),
+                    style: TextStyle(
+                      color: AppCubit.get(context).isDark
+                          ? Colors.grey[100]
+                          : Colors.grey[700],
+                    ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8),
+                Padding(
+                  padding: const EdgeInsets.all(8),
                   child: Text(
                     'my friend ! 😄😄',
                     softWrap: true,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppCubit.get(context).isDark
+                          ? Colors.white
+                          : Colors.black,
                       fontSize: 15,
                     ),
                   ),

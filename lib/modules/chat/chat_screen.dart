@@ -63,11 +63,28 @@ class ChatScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                myMesseageItem(),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppCubit.get(context).isDark ? c4() : Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    'July 24, 2022',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                myMesseageItem(context: context),
                 const SizedBox(
                   height: 8,
                 ),
-                frienMessageItem(),
+                frienMessageItem(context),
                 const Spacer(),
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -83,22 +100,13 @@ class ChatScreen extends StatelessWidget {
                               ? c4()
                               : Colors.white,
                           borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 3,
-                              spreadRadius: 2,
-                              color: Colors.grey.withOpacity(
-                                .2,
-                              ),
-                            )
-                          ],
                         ),
                         child: Row(
                           children: [
                             IconButton(
                               onPressed: () {},
                               icon: const FaIcon(
-                                FontAwesomeIcons.faceGrin,
+                                FontAwesomeIcons.solidFaceGrin,
                                 color: Colors.grey,
                               ),
                             ),
