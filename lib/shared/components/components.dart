@@ -104,6 +104,82 @@ Widget chatItem(context) => InkWell(
       ),
     );
 
+Widget webChatItem(context) => InkWell(
+      onTap: () {},
+      child: Container(
+        color: c6(),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 10,
+        ),
+        child: Row(
+          children: [
+            const CircleAvatar(
+              radius: 22,
+              child: ClipOval(
+                child: Image(
+                  image: AssetImage(
+                    'assets/images/user-avatar.jpg',
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'General Chat',
+                          style: Theme.of(context).textTheme.bodyText1,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Text(
+                        '02:41',
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              fontSize: 12,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.done_all,
+                        color: Colors.blue,
+                        size: 18,
+                      ),
+                      const SizedBox(
+                        width: 3,
+                      ),
+                      Text(
+                        'Hello Ahmed',
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                              fontSize: 12,
+                            ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
 Widget myMesseageItem({
   required context,
   String message = 'my friend ! 😄😄',
@@ -121,7 +197,7 @@ Widget myMesseageItem({
             margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
               color:
-                  AppCubit.get(context).isDark ? c1() : Colors.lightGreen[200],
+                  AppCubit.get(context).isDark ? c1() : const Color(0xffd9fdd3),
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(20),
               ),
@@ -137,7 +213,7 @@ Widget myMesseageItem({
             ),
             decoration: BoxDecoration(
               color:
-                  AppCubit.get(context).isDark ? c1() : Colors.lightGreen[200],
+                  AppCubit.get(context).isDark ? c1() : const Color(0xffd9fdd3),
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(13),
                 bottomLeft: Radius.circular(13),
@@ -157,7 +233,7 @@ Widget myMesseageItem({
                       color: AppCubit.get(context).isDark
                           ? Colors.white
                           : Colors.black,
-                      fontSize: 15,
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -166,6 +242,7 @@ Widget myMesseageItem({
                   child: Text(
                     '12:00',
                     style: TextStyle(
+                      fontSize: 10,
                       color: AppCubit.get(context).isDark
                           ? Colors.grey[100]
                           : Colors.grey[700],
@@ -227,28 +304,6 @@ Widget frienMessageItem(context) => Align(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(3, 2, 0, 3),
-                  child: Icon(
-                    Icons.done_all_outlined,
-                    color: Colors.blue[300],
-                    size: 16,
-                  ),
-                ),
-                const SizedBox(
-                  width: 3,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(3, 2, 0, 3),
-                  child: Text(
-                    '12:00',
-                    style: TextStyle(
-                      color: AppCubit.get(context).isDark
-                          ? Colors.grey[100]
-                          : Colors.grey[700],
-                    ),
-                  ),
-                ),
-                Padding(
                   padding: const EdgeInsets.all(8),
                   child: Text(
                     'my friend ! 😄😄',
@@ -257,7 +312,19 @@ Widget frienMessageItem(context) => Align(
                       color: AppCubit.get(context).isDark
                           ? Colors.white
                           : Colors.black,
-                      fontSize: 15,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 3, 6, 3),
+                  child: Text(
+                    '12:00',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: AppCubit.get(context).isDark
+                          ? Colors.grey[100]
+                          : Colors.grey[700],
                     ),
                   ),
                 ),

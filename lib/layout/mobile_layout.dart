@@ -161,7 +161,7 @@ class MobileLayout extends StatelessWidget {
                   backgroundColor: c2(),
                   child: Icon(
                     AppCubit.get(context).currentIndex == 0
-                        ? Icons.message
+                        ? Icons.chat
                         : AppCubit.get(context).currentIndex == 1
                             ? Icons.camera_alt
                             : Icons.call,

@@ -81,3 +81,4 @@ Color c2() => const Color(0xff00A884);
 Color c3() => const Color(0xff111B21);
 Color c4() => const Color(0xff233138);
 Color c5() => const Color(0xff8696A0);
+Color c6() => const Color(0xfff0f2f5);
