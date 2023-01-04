@@ -14,6 +14,7 @@ class MobileChats extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {},
       builder: (context, state) {
+        List users = AppCubit.get(context).users;
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -23,8 +24,11 @@ class MobileChats extends StatelessWidget {
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemBuilder: (context, index) => chatItem(context),
-                itemCount: 2,
+                itemBuilder: (context, index) => chatItem(
+                  context,
+                  users[index],
+                ),
+                itemCount: users.length,
               ),
               Divider(
                 color: Colors.blueGrey.withOpacity(.3),

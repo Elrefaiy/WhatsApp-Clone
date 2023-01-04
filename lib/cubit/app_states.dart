@@ -62,3 +62,10 @@ class UploadProfileImageErrorState extends AppStates {}
 class CropProfileImageSuccessState extends AppStates {}
 
 class CropProfileImageErrorState extends AppStates {}
+
+class GetAllUsersSuccessState extends AppStates {}
+
+class GetAllUsersErrorState extends AppStates {
+  String error;
+  GetAllUsersErrorState(this.error);
+}

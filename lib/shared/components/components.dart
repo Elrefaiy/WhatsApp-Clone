@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
+import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
@@ -26,7 +27,11 @@ showLoadingDialog(context) {
   );
 }
 
-Widget chatItem(context) => InkWell(
+Widget chatItem(
+  context,
+  UserModel model,
+) =>
+    InkWell(
       onTap: () {
         Navigator.push(
           context,
@@ -42,16 +47,25 @@ Widget chatItem(context) => InkWell(
         ),
         child: Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 28,
-              child: ClipOval(
-                child: Image(
-                  image: AssetImage(
-                    'assets/images/user-avatar.jpg',
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              child: model.image == 'image'
+                  ? const ClipOval(
+                      child: Image(
+                        image: AssetImage(
+                          'assets/images/user-avatar.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : ClipOval(
+                      child: Image(
+                        image: NetworkImage(
+                          model.image,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
             ),
             const SizedBox(
               width: 15,
@@ -65,7 +79,7 @@ Widget chatItem(context) => InkWell(
                     children: [
                       Expanded(
                         child: Text(
-                          'General Chat',
+                          model.name,
                           style: Theme.of(context).textTheme.headline2,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

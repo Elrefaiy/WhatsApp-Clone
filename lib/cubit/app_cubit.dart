@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/models/message.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
@@ -35,12 +36,12 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
-    print('Verification Completed');
+    debugPrint('Verification Completed');
     await signIn(phoneAuthCredential);
   }
 
   void verificationFailed(error) {
-    print('Verification Faild');
+    debugPrint('Verification Faild');
     emit(SubmitPhoneNumberErrorState(error.toString()));
   }
 
@@ -50,7 +51,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void codeAutoRetrievalTimeout(String verificationId) {
-    print('Code Auto Retrieval Timeout');
+    debugPrint('Code Auto Retrieval Timeout');
   }
 
   Future<void> submitOTP(String otpCode) async {
@@ -220,7 +221,7 @@ class AppCubit extends Cubit<AppStates> {
       emit(CropProfileImageSuccessState());
       uploadProfilePicture();
     } else {
-      print('Image not Successfully set');
+      debugPrint('Image not Successfully set');
       emit(CropProfileImageErrorState());
     }
   }
@@ -254,5 +255,59 @@ class AppCubit extends Cubit<AppStates> {
     }).catchError((error) {
       emit(UpdateUserErrorState(error.toString()));
     });
+  }
+
+  List<UserModel> users = [];
+  void getUsers() {
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    if (users.isEmpty) {
+      FirebaseFirestore.instance.collection('users').get().then((value) {
+        for (var element in value.docs) {
+          if (element.data()['uId'] != currentUser.uid) {
+            users.add(
+              UserModel.fromJson(
+                element.data(),
+              ),
+            );
+          }
+        }
+        emit(GetAllUsersSuccessState());
+      }).catchError((error) {
+        debugPrint(error.toString());
+        emit(GetAllUsersErrorState(error.toString()));
+      });
+    }
+  }
+
+  void sendMessage({
+    required content,
+    required time,
+    required date,
+    required receiverId,
+  }) {
+    var message = MessageModel(
+      message: content,
+      time: time,
+      date: date,
+      recieverId: receiverId,
+    );
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(receiverId)
+        .collection('chats')
+        .doc(currentUser.uid)
+        .set(message.toMap())
+        .then((value) {})
+        .catchError((error) {});
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('chats')
+        .doc(receiverId)
+        .set(message.toMap())
+        .then((value) {})
+        .catchError((error) {});
   }
 }
