@@ -69,3 +69,12 @@ class GetAllUsersErrorState extends AppStates {
   String error;
   GetAllUsersErrorState(this.error);
 }
+
+class GetChatMessagesSuccessState extends AppStates {}
+
+class SendMessageSuccessState extends AppStates {}
+
+class SendMessageErrorState extends AppStates {
+  String error;
+  SendMessageErrorState(this.error);
+}

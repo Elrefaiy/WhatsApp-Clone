@@ -33,10 +33,13 @@ Widget chatItem(
 ) =>
     InkWell(
       onTap: () {
+        AppCubit.get(context).getChatMessages(model.uId);
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ChatScreen(),
+            builder: (context) => ChatScreen(
+              model: model,
+            ),
           ),
         );
       },
@@ -196,8 +199,8 @@ Widget webChatItem(context) => InkWell(
 
 Widget myMesseageItem({
   required context,
-  String message = 'my friend ! 😄😄',
-  time,
+  required String content,
+  required String time,
   isRead,
 }) =>
     Align(
@@ -218,7 +221,10 @@ Widget myMesseageItem({
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(right: 15, left: 80),
+            margin: const EdgeInsets.only(
+              right: 15,
+              left: 80,
+            ),
             constraints: const BoxConstraints(
               minWidth: 100,
               minHeight: 30,
@@ -241,7 +247,7 @@ Widget myMesseageItem({
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Text(
-                    message,
+                    content,
                     softWrap: true,
                     style: TextStyle(
                       color: AppCubit.get(context).isDark
@@ -254,7 +260,7 @@ Widget myMesseageItem({
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 2, 0, 3),
                   child: Text(
-                    '12:00',
+                    time,
                     style: TextStyle(
                       fontSize: 10,
                       color: AppCubit.get(context).isDark
@@ -281,7 +287,7 @@ Widget myMesseageItem({
       ),
     );
 
-Widget frienMessageItem(context) => Align(
+Widget friendMessageItem(context) => Align(
       alignment: Alignment.topLeft,
       child: Stack(
         alignment: AlignmentDirectional.topStart,

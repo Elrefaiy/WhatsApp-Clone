@@ -292,22 +292,55 @@ class AppCubit extends Cubit<AppStates> {
       recieverId: receiverId,
     );
     User currentUser = FirebaseAuth.instance.currentUser!;
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(receiverId)
-        .collection('chats')
-        .doc(currentUser.uid)
-        .set(message.toMap())
-        .then((value) {})
-        .catchError((error) {});
 
     FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser.uid)
         .collection('chats')
         .doc(receiverId)
-        .set(message.toMap())
-        .then((value) {})
-        .catchError((error) {});
+        .collection('messages')
+        .add(message.toMap())
+        .then((value) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(receiverId)
+          .collection('chats')
+          .doc(currentUser.uid)
+          .collection('messages')
+          .add(message.toMap())
+          .then((value) {
+        emit(SendMessageSuccessState());
+      }).catchError((error) {
+        emit(SendMessageErrorState(error.toString()));
+      });
+      emit(SendMessageSuccessState());
+    }).catchError((error) {
+      emit(SendMessageErrorState(error.toString()));
+    });
+  }
+
+  List<MessageModel> messages = [];
+  void getChatMessages(receiverId) {
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .orderBy('time')
+        .snapshots()
+        .listen((event) {
+      messages = [];
+      for (var element in event.docs) {
+        messages.add(
+          MessageModel.fromJson(
+            element.data(),
+          ),
+        );
+      }
+      emit(GetChatMessagesSuccessState());
+    });
+    emit(GetChatMessagesSuccessState());
   }
 }

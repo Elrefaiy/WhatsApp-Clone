@@ -1,39 +1,55 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
+// ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+  UserModel model;
+  ChatScreen({required this.model, super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {},
       builder: (context, state) {
+        var messageController = TextEditingController();
+
         return Scaffold(
           appBar: AppBar(
             titleSpacing: 0,
             title: Row(
               children: [
-                const CircleAvatar(
-                  child: ClipOval(
-                    child: Image(
-                      image: AssetImage(
-                        'assets/images/user-avatar.jpg',
-                      ),
-                    ),
-                  ),
+                CircleAvatar(
+                  child: model.image == 'image'
+                      ? const ClipOval(
+                          child: Image(
+                            image: AssetImage(
+                              'assets/images/user-avatar.jpg',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : ClipOval(
+                          child: Image(
+                            image: NetworkImage(
+                              model.image,
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'User Name',
+                    model.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -80,12 +96,26 @@ class ChatScreen extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                myMesseageItem(context: context),
-                const SizedBox(
-                  height: 8,
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      var message = AppCubit.get(context).messages[index];
+                      if (message.recieverId !=
+                          AppCubit.get(context).user['uId']) {
+                        return myMesseageItem(
+                            context: context,
+                            content: message.message,
+                            time: '00:00');
+                      } else {
+                        return friendMessageItem(context);
+                      }
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 5,
+                    ),
+                    itemCount: AppCubit.get(context).messages.length,
+                  ),
                 ),
-                frienMessageItem(context),
-                const Spacer(),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -112,6 +142,7 @@ class ChatScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: TextFormField(
+                                controller: messageController,
                                 keyboardType: TextInputType.multiline,
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
@@ -154,9 +185,16 @@ class ChatScreen extends StatelessWidget {
                         color: c2(),
                       ),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          AppCubit.get(context).sendMessage(
+                            content: messageController.text,
+                            time: '00:00',
+                            date: 'today',
+                            receiverId: model.uId,
+                          );
+                        },
                         icon: const Icon(
-                          Icons.mic,
+                          Icons.send,
                           color: Colors.white,
                           size: 24,
                         ),

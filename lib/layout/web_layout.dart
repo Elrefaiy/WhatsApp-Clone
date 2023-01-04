@@ -230,11 +230,6 @@ class WebLayout extends StatelessWidget {
                   const SizedBox(
                     height: 15,
                   ),
-                  myMesseageItem(context: context),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  frienMessageItem(context),
                   const Spacer(),
                   Container(
                     color: c6(),
