@@ -6,6 +6,7 @@ import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
+import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class WebLayout extends StatelessWidget {
@@ -339,10 +340,9 @@ class WebLayout extends StatelessWidget {
                                         11,
                                         16,
                                       ),
-                                  date: DateTime.now().toString().substring(
-                                        0,
-                                        10,
-                                      ),
+                                  date: DateFormat.yMMMd()
+                                      .format(DateTime.now())
+                                      .toString(),
                                   dateTime: DateTime.now().toString(),
                                   receiverId: model.uId,
                                 );
