@@ -259,8 +259,9 @@ class AppCubit extends Cubit<AppStates> {
 
   List<UserModel> users = [];
   void getUsers() {
-    User currentUser = FirebaseAuth.instance.currentUser!;
-    if (users.isEmpty) {
+    emit(GetAllUsersLoadingState());
+    if (users.isEmpty && token.isNotEmpty) {
+      User currentUser = FirebaseAuth.instance.currentUser!;
       FirebaseFirestore.instance.collection('users').get().then((value) {
         for (var element in value.docs) {
           if (element.data()['uId'] != currentUser.uid) {
@@ -283,12 +284,14 @@ class AppCubit extends Cubit<AppStates> {
     required content,
     required time,
     required date,
+    required dateTime,
     required receiverId,
   }) {
     var message = MessageModel(
       message: content,
       time: time,
       date: date,
+      dateTime: dateTime,
       recieverId: receiverId,
     );
     User currentUser = FirebaseAuth.instance.currentUser!;
@@ -328,7 +331,7 @@ class AppCubit extends Cubit<AppStates> {
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
-        .orderBy('time')
+        .orderBy('dateTime')
         .snapshots()
         .listen((event) {
       messages = [];

@@ -18,7 +18,9 @@ class Layout extends StatelessWidget {
             if (constraints.maxWidth <= 800) {
               return const MobileLayout();
             } else {
-              return const WebLayout();
+              return WebLayout(
+                model: AppCubit.get(context).users[0],
+              );
             }
           },
         );

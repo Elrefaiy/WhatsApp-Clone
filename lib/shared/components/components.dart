@@ -121,8 +121,14 @@ Widget chatItem(
       ),
     );
 
-Widget webChatItem(context) => InkWell(
-      onTap: () {},
+Widget webChatItem(
+  context,
+  UserModel model,
+) =>
+    InkWell(
+      onTap: () {
+        AppCubit.get(context).getChatMessages(model.uId);
+      },
       child: Container(
         color: c6(),
         padding: const EdgeInsets.symmetric(
@@ -131,16 +137,25 @@ Widget webChatItem(context) => InkWell(
         ),
         child: Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 22,
-              child: ClipOval(
-                child: Image(
-                  image: AssetImage(
-                    'assets/images/user-avatar.jpg',
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              child: model.image == 'image'
+                  ? const ClipOval(
+                      child: Image(
+                        image: AssetImage(
+                          'assets/images/user-avatar.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : ClipOval(
+                      child: Image(
+                        image: NetworkImage(
+                          model.image,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
             ),
             const SizedBox(
               width: 15,
@@ -154,7 +169,7 @@ Widget webChatItem(context) => InkWell(
                     children: [
                       Expanded(
                         child: Text(
-                          'General Chat',
+                          model.name,
                           style: Theme.of(context).textTheme.bodyText1,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -287,7 +302,13 @@ Widget myMesseageItem({
       ),
     );
 
-Widget friendMessageItem(context) => Align(
+Widget friendMessageItem({
+  required context,
+  required String content,
+  required String time,
+  isRead,
+}) =>
+    Align(
       alignment: Alignment.topLeft,
       child: Stack(
         alignment: AlignmentDirectional.topStart,
@@ -326,7 +347,7 @@ Widget friendMessageItem(context) => Align(
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Text(
-                    'my friend ! 😄😄',
+                    content,
                     softWrap: true,
                     style: TextStyle(
                       color: AppCubit.get(context).isDark
@@ -339,7 +360,7 @@ Widget friendMessageItem(context) => Align(
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 3, 6, 3),
                   child: Text(
-                    '12:00',
+                    time,
                     style: TextStyle(
                       fontSize: 10,
                       color: AppCubit.get(context).isDark

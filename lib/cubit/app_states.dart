@@ -63,6 +63,8 @@ class CropProfileImageSuccessState extends AppStates {}
 
 class CropProfileImageErrorState extends AppStates {}
 
+class GetAllUsersLoadingState extends AppStates {}
+
 class GetAllUsersSuccessState extends AppStates {}
 
 class GetAllUsersErrorState extends AppStates {

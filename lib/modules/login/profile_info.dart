@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/layout/layout.dart';
+import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class ProfileInfoScreen extends StatelessWidget {
@@ -13,7 +14,19 @@ class ProfileInfoScreen extends StatelessWidget {
     var scaffoldKey = GlobalKey<ScaffoldState>();
 
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is GetAllUsersLoadingState) {
+          showLoadingDialog(context);
+        } else if (state is GetAllUsersSuccessState) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Layout(),
+            ),
+            (route) => false,
+          );
+        }
+      },
       builder: (context, state) {
         var nameController = TextEditingController();
         String image = AppCubit.get(context).user['image'] ?? 'image';
@@ -234,13 +247,7 @@ class ProfileInfoScreen extends StatelessWidget {
                     const Spacer(),
                     InkWell(
                       onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Layout(),
-                          ),
-                          (route) => false,
-                        );
+                        AppCubit.get(context).getUsers();
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(

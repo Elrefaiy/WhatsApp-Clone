@@ -96,6 +96,9 @@ class MobileLayout extends StatelessWidget {
                 ),
                 onTap: (index) {
                   AppCubit.get(context).changeCurrentIndex(index);
+                  if (index == 0) {
+                    AppCubit.get(context).getUsers();
+                  }
                 },
                 tabs: const [
                   Tab(

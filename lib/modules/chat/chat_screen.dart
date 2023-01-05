@@ -1,4 +1,3 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -103,11 +102,16 @@ class ChatScreen extends StatelessWidget {
                       if (message.recieverId !=
                           AppCubit.get(context).user['uId']) {
                         return myMesseageItem(
-                            context: context,
-                            content: message.message,
-                            time: '00:00');
+                          context: context,
+                          content: message.message,
+                          time: message.time,
+                        );
                       } else {
-                        return friendMessageItem(context);
+                        return friendMessageItem(
+                          context: context,
+                          content: message.message,
+                          time: message.time,
+                        );
                       }
                     },
                     separatorBuilder: (context, index) => const SizedBox(
@@ -188,8 +192,15 @@ class ChatScreen extends StatelessWidget {
                         onPressed: () {
                           AppCubit.get(context).sendMessage(
                             content: messageController.text,
-                            time: '00:00',
-                            date: 'today',
+                            time: DateTime.now().toString().substring(
+                                  11,
+                                  16,
+                                ),
+                            date: DateTime.now().toString().substring(
+                                  0,
+                                  10,
+                                ),
+                            dateTime: DateTime.now().toString(),
                             receiverId: model.uId,
                           );
                         },
