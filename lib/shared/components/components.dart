@@ -89,7 +89,9 @@ Widget chatItem(
                         ),
                       ),
                       Text(
-                        '02:41',
+                        AppCubit.get(context)
+                            .lastMessagesTime['time${model.uId}']
+                            .toString(),
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
@@ -108,7 +110,9 @@ Widget chatItem(
                         width: 3,
                       ),
                       Text(
-                        'Hello Ahmed',
+                        AppCubit.get(context)
+                            .lastMessages['message${model.uId}']
+                            .toString(),
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
@@ -176,7 +180,9 @@ Widget webChatItem(
                         ),
                       ),
                       Text(
-                        '02:41',
+                        AppCubit.get(context)
+                            .lastMessagesTime['time${model.uId}']
+                            .toString(),
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
                               fontSize: 12,
                             ),
@@ -197,7 +203,9 @@ Widget webChatItem(
                         width: 3,
                       ),
                       Text(
-                        'Hello Ahmed',
+                        AppCubit.get(context)
+                            .lastMessages['message${model.uId}']
+                            .toString(),
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
                               fontSize: 12,
                             ),

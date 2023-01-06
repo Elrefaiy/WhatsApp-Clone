@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -323,6 +324,8 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   List<MessageModel> messages = [];
+  Map<String, String> lastMessages = {};
+  Map<String, String> lastMessagesTime = {};
   void getChatMessages(receiverId) {
     User currentUser = FirebaseAuth.instance.currentUser!;
     FirebaseFirestore.instance
@@ -341,6 +344,8 @@ class AppCubit extends Cubit<AppStates> {
             element.data(),
           ),
         );
+        lastMessages.addAll({'message$receiverId': messages.last.message});
+        lastMessagesTime.addAll({'time$receiverId': messages.last.time});
       }
       emit(GetChatMessagesSuccessState());
     });

@@ -79,20 +79,21 @@ class ChatScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 8,
+                if (AppCubit.get(context).messages.isNotEmpty)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppCubit.get(context).isDark ? c4() : Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      AppCubit.get(context).messages.first.date,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
                   ),
-                  decoration: BoxDecoration(
-                    color: AppCubit.get(context).isDark ? c4() : Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    'July 24, 2022',
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ),
                 const SizedBox(
                   height: 15,
                 ),
@@ -141,8 +142,9 @@ class ChatScreen extends StatelessWidget {
                             IconButton(
                               onPressed: () {},
                               icon: const FaIcon(
-                                FontAwesomeIcons.solidFaceGrin,
+                                FontAwesomeIcons.faceGrinWide,
                                 color: Colors.grey,
+                                size: 24,
                               ),
                             ),
                             Expanded(
@@ -162,15 +164,7 @@ class ChatScreen extends StatelessWidget {
                             IconButton(
                               onPressed: () {},
                               icon: const FaIcon(
-                                FontAwesomeIcons.paperclip,
-                                size: 22,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.camera_alt,
+                                FontAwesomeIcons.camera,
                                 color: Colors.grey,
                               ),
                             ),
@@ -183,8 +177,7 @@ class ChatScreen extends StatelessWidget {
                         horizontal: 5,
                         vertical: 8,
                       ),
-                      height: 45,
-                      width: 45,
+                      padding: const EdgeInsets.only(right: 4),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: c2(),
@@ -204,10 +197,10 @@ class ChatScreen extends StatelessWidget {
                             receiverId: model.uId,
                           );
                         },
-                        icon: const Icon(
-                          Icons.send,
+                        icon: const FaIcon(
+                          FontAwesomeIcons.solidPaperPlane,
                           color: Colors.white,
-                          size: 24,
+                          size: 20,
                         ),
                       ),
                     ),

@@ -237,22 +237,23 @@ class WebLayout extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
+                      if (AppCubit.get(context).messages.isNotEmpty)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppCubit.get(context).isDark
+                                ? c4()
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            AppCubit.get(context).messages.first.date,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
                         ),
-                        decoration: BoxDecoration(
-                          color: AppCubit.get(context).isDark
-                              ? c4()
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          'July 24, 2022',
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                      ),
                       Expanded(
                         child: ListView.separated(
                           itemBuilder: (context, index) {
