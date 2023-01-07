@@ -159,6 +159,22 @@ class ChatScreen extends StatelessWidget {
                                     color: Colors.grey,
                                   ),
                                 ),
+                                onFieldSubmitted: (text) {
+                                  if (messageController.text.isNotEmpty) {
+                                    AppCubit.get(context).sendMessage(
+                                      content: messageController.text,
+                                      time: DateTime.now().toString().substring(
+                                            11,
+                                            16,
+                                          ),
+                                      date: DateFormat.yMMMd()
+                                          .format(DateTime.now())
+                                          .toString(),
+                                      dateTime: DateTime.now().toString(),
+                                      receiverId: model.uId,
+                                    );
+                                  }
+                                },
                               ),
                             ),
                             IconButton(
@@ -184,18 +200,20 @@ class ChatScreen extends StatelessWidget {
                       ),
                       child: IconButton(
                         onPressed: () {
-                          AppCubit.get(context).sendMessage(
-                            content: messageController.text,
-                            time: DateTime.now().toString().substring(
-                                  11,
-                                  16,
-                                ),
-                            date: DateFormat.yMMMd()
-                                .format(DateTime.now())
-                                .toString(),
-                            dateTime: DateTime.now().toString(),
-                            receiverId: model.uId,
-                          );
+                          if (messageController.text.isNotEmpty) {
+                            AppCubit.get(context).sendMessage(
+                              content: messageController.text,
+                              time: DateTime.now().toString().substring(
+                                    11,
+                                    16,
+                                  ),
+                              date: DateFormat.yMMMd()
+                                  .format(DateTime.now())
+                                  .toString(),
+                              dateTime: DateTime.now().toString(),
+                              receiverId: model.uId,
+                            );
+                          }
                         },
                         icon: const FaIcon(
                           FontAwesomeIcons.solidPaperPlane,

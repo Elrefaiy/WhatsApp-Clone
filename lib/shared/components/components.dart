@@ -89,9 +89,11 @@ Widget chatItem(
                         ),
                       ),
                       Text(
-                        AppCubit.get(context)
-                            .lastMessagesTime['time${model.uId}']
-                            .toString(),
+                        AppCubit.get(context).messages.isEmpty
+                            ? ' '
+                            : AppCubit.get(context)
+                                .lastMessagesTime['time${model.uId}']
+                                .toString(),
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
@@ -101,18 +103,21 @@ Widget chatItem(
                   ),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.done_all,
-                        color: Colors.blue,
-                        size: 18,
-                      ),
+                      if (AppCubit.get(context).messages.isNotEmpty)
+                        const Icon(
+                          Icons.done_all,
+                          color: Colors.blue,
+                          size: 18,
+                        ),
                       const SizedBox(
                         width: 3,
                       ),
                       Text(
-                        AppCubit.get(context)
-                            .lastMessages['message${model.uId}']
-                            .toString(),
+                        AppCubit.get(context).messages.isEmpty
+                            ? 'tap to view messages'
+                            : AppCubit.get(context)
+                                .lastMessages['message${model.uId}']
+                                .toString(),
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
@@ -180,9 +185,11 @@ Widget webChatItem(
                         ),
                       ),
                       Text(
-                        AppCubit.get(context)
-                            .lastMessagesTime['time${model.uId}']
-                            .toString(),
+                        AppCubit.get(context).messages.isEmpty
+                            ? ' '
+                            : AppCubit.get(context)
+                                .lastMessagesTime['time${model.uId}']
+                                .toString(),
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
                               fontSize: 12,
                             ),
@@ -194,18 +201,21 @@ Widget webChatItem(
                   ),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.done_all,
-                        color: Colors.blue,
-                        size: 18,
-                      ),
+                      if (AppCubit.get(context).messages.isNotEmpty)
+                        const Icon(
+                          Icons.done_all,
+                          color: Colors.blue,
+                          size: 18,
+                        ),
                       const SizedBox(
                         width: 3,
                       ),
                       Text(
-                        AppCubit.get(context)
-                            .lastMessages['message${model.uId}']
-                            .toString(),
+                        AppCubit.get(context).messages.isEmpty
+                            ? 'tap to view messages'
+                            : AppCubit.get(context)
+                                .lastMessages['message${model.uId}']
+                                .toString(),
                         style: Theme.of(context).textTheme.bodyText2!.copyWith(
                               fontSize: 12,
                             ),
