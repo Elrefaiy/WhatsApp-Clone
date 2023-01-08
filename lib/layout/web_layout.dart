@@ -168,7 +168,7 @@ class WebLayout extends StatelessWidget {
                   ? Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: AppCubit.get(context).isDark ? c3() : c6(),
+                          color: AppCubit.get(context).isDark ? Color(0xff212E36) : c6(),
                           border: Border(
                             bottom: BorderSide(
                               width: 8,

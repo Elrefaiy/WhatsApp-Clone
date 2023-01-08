@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
+import 'package:whatsapp_clone/modules/image_view/image_view.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 SnackBar snackBar({required String content}) => SnackBar(
@@ -50,25 +51,38 @@ Widget chatItem(
         ),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 28,
-              child: model.image == 'image'
-                  ? const ClipOval(
-                      child: Image(
-                        image: AssetImage(
-                          'assets/images/user-avatar.jpg',
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  : ClipOval(
-                      child: Image(
-                        image: NetworkImage(
-                          model.image,
-                        ),
-                        fit: BoxFit.cover,
-                      ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ImageViewScreen(
+                      image: model.image,
+                      name: model.name,
                     ),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                radius: 28,
+                child: model.image == 'image'
+                    ? const ClipOval(
+                        child: Image(
+                          image: AssetImage(
+                            'assets/images/user-avatar.jpg',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : ClipOval(
+                        child: Image(
+                          image: NetworkImage(
+                            model.image,
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+              ),
             ),
             const SizedBox(
               width: 15,
@@ -391,5 +405,23 @@ Widget friendMessageItem({
             ),
           ),
         ],
+      ),
+    );
+
+Widget interactiveItme(context, image) => InteractiveViewer(
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: image == 'image'
+            ? const Image(
+                image: AssetImage(
+                  'assets/images/user-avatar.jpg',
+                ),
+                fit: BoxFit.fitWidth,
+              )
+            : Image(
+                image: NetworkImage(image),
+                fit: BoxFit.fitWidth,
+              ),
       ),
     );

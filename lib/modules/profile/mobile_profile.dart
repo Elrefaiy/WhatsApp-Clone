@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/modules/image_view/image_view.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
@@ -42,27 +43,40 @@ class MobileProfile extends StatelessWidget {
               Stack(
                 alignment: Alignment.bottomRight,
                 children: [
-                  Hero(
-                    tag: 'Profile',
-                    child: CircleAvatar(
-                      radius: 80,
-                      child: user['image'] == 'image'
-                          ? const ClipOval(
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/user-avatar.jpg',
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImageViewScreen(
+                            image: user['image'],
+                            name: user['name'],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Hero(
+                      tag: 'Profile',
+                      child: CircleAvatar(
+                        radius: 80,
+                        child: user['image'] == 'image'
+                            ? const ClipOval(
+                                child: Image(
+                                  image: AssetImage(
+                                    'assets/images/user-avatar.jpg',
+                                  ),
+                                  fit: BoxFit.cover,
                                 ),
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : ClipOval(
-                              child: Image(
-                                image: NetworkImage(
-                                  user['image'],
+                              )
+                            : ClipOval(
+                                child: Image(
+                                  image: NetworkImage(
+                                    user['image'],
+                                  ),
+                                  fit: BoxFit.cover,
                                 ),
-                                fit: BoxFit.cover,
                               ),
-                            ),
+                      ),
                     ),
                   ),
                   Container(
