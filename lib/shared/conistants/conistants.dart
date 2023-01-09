@@ -35,6 +35,7 @@ ThemeData lightTheme() => ThemeData(
           color: Colors.blueGrey,
           fontSize: 13,
           fontWeight: FontWeight.w400,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
@@ -70,6 +71,7 @@ ThemeData darkTheme() => ThemeData(
           color: Colors.blueGrey[400],
           fontSize: 13,
           fontWeight: FontWeight.w400,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

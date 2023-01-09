@@ -126,13 +126,16 @@ Widget chatItem(
                       const SizedBox(
                         width: 3,
                       ),
-                      Text(
-                        AppCubit.get(context).messages.isEmpty
-                            ? 'tap to view messages'
-                            : AppCubit.get(context)
-                                .lastMessages['message${model.uId}']
-                                .toString(),
-                        style: Theme.of(context).textTheme.bodyText2,
+                      Expanded(
+                        child: Text(
+                          AppCubit.get(context).messages.isEmpty
+                              ? 'tap to view messages'
+                              : AppCubit.get(context)
+                                  .lastMessages['message${model.uId}']
+                                  .toString(),
+                          maxLines: 1,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
                       ),
                     ],
                   ),
@@ -224,15 +227,20 @@ Widget webChatItem(
                       const SizedBox(
                         width: 3,
                       ),
-                      Text(
-                        AppCubit.get(context).messages.isEmpty
-                            ? 'tap to view messages'
-                            : AppCubit.get(context)
-                                .lastMessages['message${model.uId}']
-                                .toString(),
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                              fontSize: 12,
-                            ),
+                      Expanded(
+                        child: Text(
+                          AppCubit.get(context).messages.isEmpty
+                              ? 'tap to view messages'
+                              : AppCubit.get(context)
+                                  .lastMessages['message${model.uId}']
+                                  .toString(),
+                          maxLines: 1,
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    fontSize: 12,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                        ),
                       ),
                     ],
                   ),
@@ -270,13 +278,7 @@ Widget myMesseageItem({
           Container(
             margin: const EdgeInsets.only(
               right: 15,
-              left: 80,
-            ),
-            constraints: const BoxConstraints(
-              minWidth: 100,
-              minHeight: 30,
-              maxHeight: double.infinity,
-              maxWidth: 200,
+              left: 200,
             ),
             decoration: BoxDecoration(
               color:
@@ -287,46 +289,48 @@ Widget myMesseageItem({
                 topLeft: Radius.circular(13),
               ),
             ),
-            child: Row(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.fromLTRB(5, 5, 50, 0),
                   child: Text(
                     content,
-                    softWrap: true,
+                    maxLines: 100,
                     style: TextStyle(
                       color: AppCubit.get(context).isDark
                           ? Colors.white
                           : Colors.black,
                       fontSize: 14,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 2, 0, 3),
-                  child: Text(
-                    time,
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: AppCubit.get(context).isDark
-                          ? Colors.grey[100]
-                          : Colors.grey[700],
-                    ),
+                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        time,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: AppCubit.get(context).isDark
+                              ? Colors.grey[100]
+                              : Colors.grey[700],
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Icon(
+                        Icons.done_all_outlined,
+                        color: Colors.blue[300],
+                        size: 16,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  width: 3,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 2, 3, 3),
-                  child: Icon(
-                    Icons.done_all_outlined,
-                    color: Colors.blue[300],
-                    size: 16,
-                  ),
-                )
               ],
             ),
           ),
@@ -358,12 +362,6 @@ Widget friendMessageItem({
           ),
           Container(
             margin: const EdgeInsets.only(left: 15, right: 80),
-            constraints: const BoxConstraints(
-              minWidth: 100,
-              minHeight: 30,
-              maxHeight: double.infinity,
-              maxWidth: 200,
-            ),
             decoration: BoxDecoration(
               color: AppCubit.get(context).isDark ? c4() : Colors.white,
               borderRadius: const BorderRadius.only(
@@ -372,25 +370,26 @@ Widget friendMessageItem({
                 topRight: Radius.circular(13),
               ),
             ),
-            child: Row(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.fromLTRB(5, 5, 35, 0),
                   child: Text(
                     content,
-                    softWrap: true,
+                    maxLines: 100,
                     style: TextStyle(
                       color: AppCubit.get(context).isDark
                           ? Colors.white
                           : Colors.black,
                       fontSize: 14,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 3, 6, 3),
+                  padding: const EdgeInsets.fromLTRB(5, 0, 5, 3),
                   child: Text(
                     time,
                     style: TextStyle(
