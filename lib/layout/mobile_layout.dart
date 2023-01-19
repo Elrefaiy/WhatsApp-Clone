@@ -4,6 +4,7 @@ import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/chat/mobile_chat.dart';
 import 'package:whatsapp_clone/modules/settings/mobile_settings.dart';
+import 'package:whatsapp_clone/modules/status/add_status/add_text_status.dart';
 import 'package:whatsapp_clone/modules/status/mobile_status.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
@@ -145,7 +146,14 @@ class MobileLayout extends StatelessWidget {
                     ? FloatingActionButton(
                         heroTag: null,
                         mini: true,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AddTextStatusScreen(),
+                            ),
+                          );
+                        },
                         backgroundColor: Colors.grey[100],
                         child: const Icon(
                           Icons.edit,

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -281,6 +280,8 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
+  var chatController = ScrollController();
+
   void sendMessage({
     required content,
     required time,
@@ -318,6 +319,7 @@ class AppCubit extends Cubit<AppStates> {
         emit(SendMessageErrorState(error.toString()));
       });
       emit(SendMessageSuccessState());
+      chatController.jumpTo(chatController.position.maxScrollExtent);
     }).catchError((error) {
       emit(SendMessageErrorState(error.toString()));
     });
@@ -338,6 +340,7 @@ class AppCubit extends Cubit<AppStates> {
         .snapshots()
         .listen((event) {
       messages = [];
+      chatController.jumpTo(chatController.position.maxScrollExtent);
       for (var element in event.docs) {
         messages.add(
           MessageModel.fromJson(

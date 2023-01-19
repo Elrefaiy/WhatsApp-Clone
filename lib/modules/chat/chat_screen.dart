@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -78,7 +77,7 @@ class ChatScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 5,
                 ),
                 if (AppCubit.get(context).messages.isNotEmpty)
                   Container(
@@ -96,10 +95,11 @@ class ChatScreen extends StatelessWidget {
                     ),
                   ),
                 const SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
                 Expanded(
                   child: ListView.separated(
+                    controller: AppCubit.get(context).chatController,
                     itemBuilder: (context, index) {
                       var message = AppCubit.get(context).messages[index];
                       if (message.recieverId !=
@@ -122,6 +122,9 @@ class ChatScreen extends StatelessWidget {
                     ),
                     itemCount: AppCubit.get(context).messages.length,
                   ),
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.min,
@@ -194,7 +197,6 @@ class ChatScreen extends StatelessWidget {
                         horizontal: 5,
                         vertical: 8,
                       ),
-                      padding: const EdgeInsets.only(right: 4),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: c2(),
@@ -216,10 +218,9 @@ class ChatScreen extends StatelessWidget {
                             );
                           }
                         },
-                        icon: const FaIcon(
-                          FontAwesomeIcons.solidPaperPlane,
+                        icon: const Icon(
+                          Icons.send,
                           color: Colors.white,
-                          size: 20,
                         ),
                       ),
                     ),
