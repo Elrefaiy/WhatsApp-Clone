@@ -182,7 +182,9 @@ class ChatScreen extends StatelessWidget {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                AppCubit.get(context).getMessageImage(context);
+                              },
                               icon: const FaIcon(
                                 FontAwesomeIcons.camera,
                                 color: Colors.grey,

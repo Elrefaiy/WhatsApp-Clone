@@ -206,7 +206,6 @@ class AppCubit extends Cubit<AppStates> {
           hideBottomControls: true,
           toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.square,
-          lockAspectRatio: true,
         ),
         IOSUiSettings(
           title: 'Cropper',
@@ -353,5 +352,68 @@ class AppCubit extends Cubit<AppStates> {
       emit(GetChatMessagesSuccessState());
     });
     emit(GetChatMessagesSuccessState());
+  }
+
+  File messageImage = File('');
+
+  Future<void> getMessageImage(context) async {
+    pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedFile != null) {
+      messageImage = File(pickedFile.path);
+      cropMessageImage(context);
+      emit(GetMessageImageSuccessState());
+    } else {
+      emit(GetMessageImageErrorState());
+    }
+  }
+
+  Future<void> cropMessageImage(context) async {
+    CroppedFile? croppedImage = await ImageCropper().cropImage(
+      sourcePath: pickedFile.path,
+      uiSettings: [
+        AndroidUiSettings(
+          statusBarColor: Colors.black,
+          toolbarColor: Colors.black,
+          hideBottomControls: true,
+          toolbarWidgetColor: Colors.white,
+          lockAspectRatio: false,
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    );
+    if (croppedImage != null) {
+      messageImage = File(croppedImage.path);
+      emit(CropMessageImageSuccessState());
+      uploadMessageImage();
+    } else {
+      debugPrint('Image not Successfully set');
+      emit(CropMessageImageErrorState());
+    }
+  }
+
+  void uploadMessageImage() {
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    emit(UploadMessageImageLoadingState());
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child(
+            'media/${currentUser.uid}/${Uri.file(messageImage.path).pathSegments.last}')
+        .putFile(messageImage)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        // send
+      }).catchError((error) {
+        emit(UploadMessageImageSuccessState());
+      });
+    }).catchError((error) {
+      emit(UploadMessageImageErrorState());
+    });
   }
 }

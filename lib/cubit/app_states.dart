@@ -80,3 +80,17 @@ class SendMessageErrorState extends AppStates {
   String error;
   SendMessageErrorState(this.error);
 }
+
+class GetMessageImageSuccessState extends AppStates {}
+
+class GetMessageImageErrorState extends AppStates {}
+
+class CropMessageImageSuccessState extends AppStates {}
+
+class CropMessageImageErrorState extends AppStates {}
+
+class UploadMessageImageLoadingState extends AppStates {}
+
+class UploadMessageImageSuccessState extends AppStates {}
+
+class UploadMessageImageErrorState extends AppStates {}
