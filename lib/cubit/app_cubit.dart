@@ -12,6 +12,7 @@ import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_cropper/image_cropper.dart';
+import 'package:intl/intl.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
@@ -356,20 +357,20 @@ class AppCubit extends Cubit<AppStates> {
 
   File messageImage = File('');
 
-  Future<void> getMessageImage(context) async {
+  Future<void> getMessageImage(context, receiverId) async {
     pickedFile = await picker.pickImage(
       source: ImageSource.gallery,
     );
     if (pickedFile != null) {
       messageImage = File(pickedFile.path);
-      cropMessageImage(context);
+      cropMessageImage(context, receiverId);
       emit(GetMessageImageSuccessState());
     } else {
       emit(GetMessageImageErrorState());
     }
   }
 
-  Future<void> cropMessageImage(context) async {
+  Future<void> cropMessageImage(context, receiverId) async {
     CroppedFile? croppedImage = await ImageCropper().cropImage(
       sourcePath: pickedFile.path,
       uiSettings: [
@@ -391,14 +392,14 @@ class AppCubit extends Cubit<AppStates> {
     if (croppedImage != null) {
       messageImage = File(croppedImage.path);
       emit(CropMessageImageSuccessState());
-      uploadMessageImage();
+      uploadMessageImage(receiverId);
     } else {
       debugPrint('Image not Successfully set');
       emit(CropMessageImageErrorState());
     }
   }
 
-  void uploadMessageImage() {
+  void uploadMessageImage(receiverId) {
     User currentUser = FirebaseAuth.instance.currentUser!;
     emit(UploadMessageImageLoadingState());
     firebase_storage.FirebaseStorage.instance
@@ -408,7 +409,13 @@ class AppCubit extends Cubit<AppStates> {
         .putFile(messageImage)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-        // send
+        sendMessage(
+          content: value,
+          time: DateTime.now().toString().substring(11, 16),
+          date: DateFormat.yMMMd().format(DateTime.now()).toString(),
+          dateTime: DateTime.now().toString(),
+          receiverId: receiverId,
+        );
       }).catchError((error) {
         emit(UploadMessageImageSuccessState());
       });

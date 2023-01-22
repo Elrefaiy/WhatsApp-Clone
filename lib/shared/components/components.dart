@@ -278,7 +278,7 @@ Widget myMesseageItem({
           Container(
             margin: const EdgeInsets.only(
               right: 15,
-              left: 200,
+              left: 100,
             ),
             decoration: BoxDecoration(
               color:
@@ -294,18 +294,47 @@ Widget myMesseageItem({
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 5, 50, 0),
-                  child: Text(
-                    content,
-                    maxLines: 100,
-                    style: TextStyle(
-                      color: AppCubit.get(context).isDark
-                          ? Colors.white
-                          : Colors.black,
-                      fontSize: 14,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+                  padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                  child: content.contains(
+                          'https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-61959.appspot.com')
+                      ? GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ImageViewScreen(
+                                  image: content,
+                                  name: 'Media View',
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 300,
+                            margin: const EdgeInsets.only(bottom: 3),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  content,
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Text(
+                          content,
+                          maxLines: 100,
+                          style: TextStyle(
+                            color: AppCubit.get(context).isDark
+                                ? Colors.white
+                                : Colors.black,
+                            fontSize: 14,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 3),
@@ -361,7 +390,7 @@ Widget friendMessageItem({
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 15, right: 80),
+            margin: const EdgeInsets.only(left: 15, right: 100),
             decoration: BoxDecoration(
               color: AppCubit.get(context).isDark ? c4() : Colors.white,
               borderRadius: const BorderRadius.only(
