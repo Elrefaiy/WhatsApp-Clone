@@ -405,7 +405,7 @@ class AppCubit extends Cubit<AppStates> {
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child(
-            'media/${currentUser.uid}/${Uri.file(messageImage.path).pathSegments.last}')
+            'media/${currentUser.uid}&$receiverId/${Uri.file(messageImage.path).pathSegments.last}')
         .putFile(messageImage)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
@@ -416,11 +416,80 @@ class AppCubit extends Cubit<AppStates> {
           dateTime: DateTime.now().toString(),
           receiverId: receiverId,
         );
+        addMedia(
+          media: value,
+          receiverId: receiverId,
+        );
       }).catchError((error) {
         emit(UploadMessageImageSuccessState());
       });
     }).catchError((error) {
       emit(UploadMessageImageErrorState());
+    });
+  }
+
+  void addMedia({
+    required media,
+    required receiverId,
+  }) {
+    var message = MessageModel(
+      message: media,
+      time: DateTime.now().toString().substring(11, 16),
+      date: DateFormat.yMMMd().format(DateTime.now()).toString(),
+      dateTime: DateTime.now().toString(),
+      recieverId: receiverId,
+    );
+    User currentUser = FirebaseAuth.instance.currentUser!;
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('media')
+        .add(message.toMap())
+        .then((value) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(receiverId)
+          .collection('chats')
+          .doc(currentUser.uid)
+          .collection('media')
+          .add(message.toMap())
+          .then((value) {
+        emit(SendMessageSuccessState());
+      }).catchError((error) {
+        emit(SendMessageErrorState(error.toString()));
+      });
+      emit(SendMessageSuccessState());
+    }).catchError((error) {
+      emit(SendMessageErrorState(error.toString()));
+    });
+  }
+
+  List<MessageModel> media = [];
+
+  void getChatMedia(receiverId) {
+    media = [];
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('media')
+        .get()
+        .then(
+      (value) {
+        value.docs.forEach(
+          (element) {
+            media.add(MessageModel.fromJson(element.data()));
+          },
+        );
+        emit(GetChatMediaSuccessState());
+      },
+    ).catchError((error) {
+      emit(GetChatMediaErrorState(error.toString()));
     });
   }
 }

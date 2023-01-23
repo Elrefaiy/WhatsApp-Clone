@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/user.dart';
+import 'package:whatsapp_clone/modules/chat/media_view.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +17,18 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is GetChatMediaSuccessState) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MediaViewScreen(
+                name: model.name,
+              ),
+            ),
+          );
+        }
+      },
       builder: (context, state) {
         var messageController = TextEditingController();
 
@@ -55,11 +67,13 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AppCubit.get(context).getChatMedia(model.uId);
+                  },
                   icon: const Icon(
                     Icons.more_vert,
                   ),
-                )
+                ),
               ],
             ),
           ),

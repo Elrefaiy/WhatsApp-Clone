@@ -94,3 +94,10 @@ class UploadMessageImageLoadingState extends AppStates {}
 class UploadMessageImageSuccessState extends AppStates {}
 
 class UploadMessageImageErrorState extends AppStates {}
+
+class GetChatMediaSuccessState extends AppStates {}
+
+class GetChatMediaErrorState extends AppStates {
+  String error;
+  GetChatMediaErrorState(this.error);
+}
