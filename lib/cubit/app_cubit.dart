@@ -7,11 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/message.dart';
+import 'package:whatsapp_clone/models/status.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_cropper/image_cropper.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class AppCubit extends Cubit<AppStates> {
@@ -481,15 +483,35 @@ class AppCubit extends Cubit<AppStates> {
         .get()
         .then(
       (value) {
-        value.docs.forEach(
-          (element) {
-            media.add(MessageModel.fromJson(element.data()));
-          },
-        );
+        for (var element in value.docs) {
+          media.add(MessageModel.fromJson(element.data()));
+        }
         emit(GetChatMediaSuccessState());
       },
     ).catchError((error) {
       emit(GetChatMediaErrorState(error.toString()));
+    });
+  }
+
+  void addTextStatus({required String text}) {
+    emit(AddTextStatusLoadingState());
+    User currentUser = FirebaseAuth.instance.currentUser!;
+    StatusModel status = StatusModel(
+      status: text,
+      caption: 'no-caption',
+      time: DateTime.now().toString().substring(11, 16),
+      date: DateFormat.yMMMd().format(DateTime.now()).toString(),
+      dateTime: DateTime.now().toString(),
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser.uid)
+        .collection('status')
+        .add(status.toMap())
+        .then((value) {
+      emit(AddTextStatusSuccessState());
+    }).catchError((error) {
+      emit(AddTextStatusErrorState(error.toString()));
     });
   }
 }

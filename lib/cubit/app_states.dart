@@ -101,3 +101,12 @@ class GetChatMediaErrorState extends AppStates {
   String error;
   GetChatMediaErrorState(this.error);
 }
+
+class AddTextStatusLoadingState extends AppStates {}
+
+class AddTextStatusSuccessState extends AppStates {}
+
+class AddTextStatusErrorState extends AppStates {
+  String error;
+  AddTextStatusErrorState(this.error);
+}

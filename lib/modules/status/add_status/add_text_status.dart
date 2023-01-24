@@ -11,8 +11,13 @@ class AddTextStatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is AddTextStatusSuccessState) {
+          Navigator.pop(context);
+        }
+      },
       builder: (context, state) {
+        var textController = TextEditingController();
         return Scaffold(
           backgroundColor: Colors.teal,
           body: Column(
@@ -57,6 +62,7 @@ class AddTextStatusScreen extends StatelessWidget {
                   ),
                   child: Center(
                     child: TextFormField(
+                      controller: textController,
                       cursorColor: Colors.white,
                       keyboardType: TextInputType.multiline,
                       maxLines: 8,
@@ -114,7 +120,11 @@ class AddTextStatusScreen extends StatelessWidget {
                         color: c2(),
                       ),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          AppCubit.get(context).addTextStatus(
+                            text: textController.text,
+                          );
+                        },
                         icon: const Icon(
                           Icons.send,
                           color: Colors.white,
