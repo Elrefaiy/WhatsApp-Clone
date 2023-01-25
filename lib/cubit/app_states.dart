@@ -110,3 +110,10 @@ class AddTextStatusErrorState extends AppStates {
   String error;
   AddTextStatusErrorState(this.error);
 }
+
+class GetStatusSuccessState extends AppStates {}
+
+class GetStatusErrorState extends AppStates {
+  String error;
+  GetStatusErrorState(this.error);
+}

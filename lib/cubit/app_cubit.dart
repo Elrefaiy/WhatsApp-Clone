@@ -514,4 +514,32 @@ class AppCubit extends Cubit<AppStates> {
       emit(AddTextStatusErrorState(error.toString()));
     });
   }
+
+  Map<String, List<StatusModel>> status = {};
+  void getStatus() {
+    if (users.isNotEmpty) {
+      for (var element in users) {
+        List<StatusModel> userstatus = [];
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(element.uId)
+            .collection('status')
+            .get()
+            .then((value) {
+          for (var element in value.docs) {
+            var statusModel = StatusModel.fromJson(element.data());
+            userstatus.add(statusModel);
+            // print(statusModel.toMap());
+          }
+          status.addAll({element.uId: userstatus});
+          emit(GetStatusSuccessState());
+        }).catchError((error) {
+          debugPrint(error.toString());
+          emit(GetStatusErrorState(error.toString()));
+        });
+      }
+    } else {
+      debugPrint('users list is empty !');
+    }
+  }
 }

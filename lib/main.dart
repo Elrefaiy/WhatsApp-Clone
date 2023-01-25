@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => AppCubit()
         ..getUser()
-        ..getUsers(),
+        ..getUsers()
+        ..getStatus(),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
         builder: (context, state) {
