@@ -502,6 +502,8 @@ class AppCubit extends Cubit<AppStates> {
       time: DateTime.now().toString().substring(11, 16),
       date: DateFormat.yMMMd().format(DateTime.now()).toString(),
       dateTime: DateTime.now().toString(),
+      isImage: false,
+      color: 0xff008069,
     );
     FirebaseFirestore.instance
         .collection('users')

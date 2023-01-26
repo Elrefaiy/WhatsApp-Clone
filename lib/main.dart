@@ -22,7 +22,6 @@ void main() async {
   if (token != '') {
     widget = const Layout();
   }
-
   runApp(MyApp(startWidget: widget));
 }
 

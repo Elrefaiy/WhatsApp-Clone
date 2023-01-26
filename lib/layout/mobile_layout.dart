@@ -99,6 +99,8 @@ class MobileLayout extends StatelessWidget {
                   AppCubit.get(context).changeCurrentIndex(index);
                   if (index == 0) {
                     AppCubit.get(context).getUsers();
+                  } else if (index == 1) {
+                    AppCubit.get(context).getStatus();
                   }
                 },
                 tabs: const [

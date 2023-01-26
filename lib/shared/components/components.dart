@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
+import 'package:whatsapp_clone/models/status.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
 import 'package:whatsapp_clone/modules/image_view/image_view.dart';
+import 'package:whatsapp_clone/modules/status/mobile_status_screen.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
+// ignore: depend_on_referenced_packages
+import 'package:intl/intl.dart';
 
 SnackBar snackBar({required String content}) => SnackBar(
       duration: const Duration(seconds: 4),
@@ -451,5 +455,84 @@ Widget interactiveItme(context, image) => InteractiveViewer(
                 image: NetworkImage(image),
                 fit: BoxFit.fitWidth,
               ),
+      ),
+    );
+
+Widget statusItem({
+  required context,
+  required List<StatusModel>? models,
+  required name,
+}) =>
+    InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MobileStatusScreen(
+              models: models,
+            ),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  width: 2.5,
+                  color: c2(),
+                ),
+              ),
+              child: models!.last.isImage
+                  ? Container()
+                  : CircleAvatar(
+                      backgroundColor: Color(models.last.color),
+                      radius: 26,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          models.last.status,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 9,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+                        ),
+                      ),
+                    ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    name,
+                    style: Theme.of(context).textTheme.headline2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    // ignore: unrelated_type_equality_checks
+                    '${models!.last.date == DateFormat.yMMMd().format(DateTime.now()).toString() ? 'Today' : models.last.date}, ${models.last.time}',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
