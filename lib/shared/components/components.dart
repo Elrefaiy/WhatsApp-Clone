@@ -315,11 +315,13 @@ Widget myMesseageItem({
                           },
                           child: Container(
                             width: double.infinity,
-                            height: 300,
                             margin: const EdgeInsets.only(bottom: 3),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image(
                                 image: NetworkImage(
                                   content,
                                 ),
@@ -408,18 +410,49 @@ Widget friendMessageItem({
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 5, 35, 0),
-                  child: Text(
-                    content,
-                    maxLines: 100,
-                    style: TextStyle(
-                      color: AppCubit.get(context).isDark
-                          ? Colors.white
-                          : Colors.black,
-                      fontSize: 14,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+                  padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                  child: content.contains(
+                          'https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-61959.appspot.com')
+                      ? GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ImageViewScreen(
+                                  image: content,
+                                  name: 'Media View',
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(bottom: 3),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image(
+                                image: NetworkImage(
+                                  content,
+                                ),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Text(
+                          content,
+                          maxLines: 100,
+                          style: TextStyle(
+                            color: AppCubit.get(context).isDark
+                                ? Colors.white
+                                : Colors.black,
+                            fontSize: 14,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 3),
