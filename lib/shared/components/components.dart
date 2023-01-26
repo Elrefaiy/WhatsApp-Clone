@@ -1,3 +1,4 @@
+import 'package:dashed_circle/dashed_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/models/status.dart';
@@ -511,31 +512,29 @@ Widget statusItem({
         padding: const EdgeInsets.all(15),
         child: Row(
           children: [
-            Container(
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  width: 2.5,
-                  color: c2(),
-                ),
-              ),
-              child: models!.last.isImage
+            DashedCircle(
+              dashes: models!.length,
+              gapSize: 3,
+              color: c2(),
+              child: models.last.isImage
                   ? Container()
-                  : CircleAvatar(
-                      backgroundColor: Color(models.last.color),
-                      radius: 26,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          models.last.status,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 9,
-                            overflow: TextOverflow.ellipsis,
+                  : Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: CircleAvatar(
+                        backgroundColor: Color(models.last.color),
+                        radius: 24,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            models.last.status,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 9,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 3,
                           ),
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
                         ),
                       ),
                     ),
@@ -559,7 +558,7 @@ Widget statusItem({
                   ),
                   Text(
                     // ignore: unrelated_type_equality_checks
-                    '${models!.last.date == DateFormat.yMMMd().format(DateTime.now()).toString() ? 'Today' : models.last.date}, ${models.last.time}',
+                    '${models.last.date == DateFormat.yMMMd().format(DateTime.now()).toString() ? 'Today' : models.last.date}, ${models.last.time}',
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ],

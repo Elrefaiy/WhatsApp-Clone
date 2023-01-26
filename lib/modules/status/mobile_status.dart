@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
@@ -126,15 +127,19 @@ class MobileStatus extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: status.length,
-                itemBuilder: (context, index) => statusItem(
-                  context: context,
-                  models: status[usersWithStatus[index].uId],
-                  name: usersWithStatus[index].name,
+            ConditionalBuilder(
+              condition: status.isNotEmpty,
+              builder: (context) => Expanded(
+                child: ListView.builder(
+                  itemCount: status.length,
+                  itemBuilder: (context, index) => statusItem(
+                    context: context,
+                    models: status[usersWithStatus[index].uId],
+                    name: usersWithStatus[index].name,
+                  ),
                 ),
               ),
+              fallback: (context) => Container(),
             ),
           ],
         );
