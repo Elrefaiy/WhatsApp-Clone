@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
+import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/layout/layout.dart';
-import 'package:whatsapp_clone/shared/components/components.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class ProfileInfoScreen extends StatelessWidget {
   const ProfileInfoScreen({super.key});
@@ -16,7 +16,7 @@ class ProfileInfoScreen extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is GetAllUsersLoadingState) {
-          showLoadingDialog(context);
+          AppConstants.showLoadingDialog(context);
         } else if (state is GetAllUsersSuccessState) {
           Navigator.pushAndRemoveUntil(
             context,
@@ -61,13 +61,13 @@ class ProfileInfoScreen extends StatelessWidget {
                       onTap: () {
                         scaffoldKey.currentState!.showBottomSheet(
                           backgroundColor: AppCubit.get(context).isDark
-                              ? c3()
+                              ? AppColors.c3()
                               : Colors.white,
                           (context) => Container(
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
                               color: AppCubit.get(context).isDark
-                                  ? c4()
+                                  ? AppColors.c4()
                                   : Colors.white,
                               boxShadow: [
                                 BoxShadow(
@@ -255,7 +255,7 @@ class ProfileInfoScreen extends StatelessWidget {
                           vertical: 14,
                         ),
                         decoration: BoxDecoration(
-                          color: c2(),
+                          color: AppColors.c2(),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: const Text(

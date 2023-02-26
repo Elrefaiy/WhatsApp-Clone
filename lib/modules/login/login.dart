@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
+import 'package:whatsapp_clone/core/utils/app_constants.dart';
+import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/login/verify.dart';
-import 'package:whatsapp_clone/shared/components/components.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -17,7 +18,7 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is SubmitPhoneNumberLoadingState) {
-          showLoadingDialog(context);
+          AppConstants.showLoadingDialog(context);
         } else if (state is SubmitPhoneNumberSuccessState) {
           Navigator.pop(context);
           Navigator.push(
@@ -32,9 +33,9 @@ class LoginScreen extends StatelessWidget {
         } else if (state is SubmitPhoneNumberErrorState) {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
-            snackBar(
-              content:
-                  'you have logged in more than many times in short time, you have to wait few minutes before you login again.',
+            AppConstants.showSnackBar(
+              context: context,
+              content: AppStrings.loginWarning,
             ),
           );
         }
@@ -90,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                             DropdownButtonFormField(
                               elevation: 0,
                               dropdownColor: AppCubit.get(context).isDark
-                                  ? c4()
+                                  ? AppColors.c4()
                                   : Colors.grey[100],
                               style: Theme.of(context).textTheme.bodyText1,
                               borderRadius: BorderRadius.circular(5),
@@ -196,7 +197,7 @@ class LoginScreen extends StatelessWidget {
                             vertical: 14,
                           ),
                           decoration: BoxDecoration(
-                            color: c2(),
+                            color: AppColors.c2(),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: const Text(

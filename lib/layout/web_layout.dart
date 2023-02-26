@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
@@ -39,7 +39,7 @@ class WebLayout extends StatelessWidget {
                   children: [
                     Container(
                       height: 54,
-                      color: c6(),
+                      color: AppColors.c6(),
                       padding: const EdgeInsets.symmetric(
                         vertical: 10,
                       ),
@@ -105,7 +105,7 @@ class WebLayout extends StatelessWidget {
                                 height: 34,
                                 padding: const EdgeInsets.only(bottom: 10),
                                 decoration: BoxDecoration(
-                                  color: c6(),
+                                  color: AppColors.c6(),
                                   borderRadius: BorderRadius.circular(
                                     5,
                                   ),
@@ -168,11 +168,13 @@ class WebLayout extends StatelessWidget {
                   ? Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: AppCubit.get(context).isDark ? Color(0xff212E36) : c6(),
+                          color: AppCubit.get(context).isDark
+                              ? const Color(0xff212E36)
+                              : AppColors.c6(),
                           border: Border(
                             bottom: BorderSide(
                               width: 8,
-                              color: c2(),
+                              color: AppColors.c2(),
                             ),
                           ),
                         ),
@@ -246,7 +248,7 @@ class WebLayout extends StatelessWidget {
                           children: [
                             Container(
                               height: 54,
-                              color: c6(),
+                              color: AppColors.c6(),
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 15,
                                 vertical: 10,
@@ -312,7 +314,7 @@ class WebLayout extends StatelessWidget {
                                 ),
                                 decoration: BoxDecoration(
                                   color: AppCubit.get(context).isDark
-                                      ? c4()
+                                      ? AppColors.c4()
                                       : Colors.white,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
@@ -350,7 +352,7 @@ class WebLayout extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              color: c6(),
+                              color: AppColors.c6(),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [

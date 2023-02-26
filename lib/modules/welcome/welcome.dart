@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/login/login.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -105,7 +105,7 @@ class WelcomeScreen extends StatelessWidget {
                               vertical: 10,
                             ),
                             decoration: BoxDecoration(
-                              color: c2(),
+                              color: AppColors.c2(),
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: const Text(

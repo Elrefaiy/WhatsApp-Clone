@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
+import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/login/login.dart';
 import 'package:whatsapp_clone/modules/profile/mobile_profile.dart';
-import 'package:whatsapp_clone/shared/components/components.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class MobileSettingsScreen extends StatelessWidget {
   const MobileSettingsScreen({super.key});
@@ -16,7 +16,7 @@ class MobileSettingsScreen extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is LogoutLoadingState) {
-          showLoadingDialog(context);
+          AppConstants.showLoadingDialog(context);
         } else if (state is LogoutSuccessState) {
           Navigator.pop(context);
           Navigator.pushAndRemoveUntil(
@@ -120,7 +120,7 @@ class MobileSettingsScreen extends StatelessWidget {
                       Icon(
                         Icons.brightness_6,
                         size: 24,
-                        color: c5(),
+                        color: AppColors.c5(),
                       ),
                       const SizedBox(
                         width: 20,
@@ -163,7 +163,7 @@ class MobileSettingsScreen extends StatelessWidget {
                       Icon(
                         Icons.logout,
                         size: 24,
-                        color: c5(),
+                        color: AppColors.c5(),
                       ),
                       const SizedBox(
                         width: 20,
@@ -204,7 +204,7 @@ class MobileSettingsScreen extends StatelessWidget {
                       Icon(
                         Icons.delete,
                         size: 24,
-                        color: c5(),
+                        color: AppColors.c5(),
                       ),
                       const SizedBox(
                         width: 20,
@@ -245,7 +245,7 @@ class MobileSettingsScreen extends StatelessWidget {
                       Icon(
                         Icons.info_outline_rounded,
                         size: 24,
-                        color: c5(),
+                        color: AppColors.c5(),
                       ),
                       const SizedBox(
                         width: 20,

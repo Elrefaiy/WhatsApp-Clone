@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/status.dart';
@@ -63,11 +64,11 @@ class MobileStatus extends StatelessWidget {
                             border: Border.all(
                               width: 2,
                               color: AppCubit.get(context).isDark
-                                  ? c3()
+                                  ? AppColors.c3()
                                   : Colors.white,
                             ),
                             shape: BoxShape.circle,
-                            color: c1(),
+                            color: AppColors.c1(),
                           ),
                           child: const Icon(
                             Icons.add,
@@ -105,8 +106,9 @@ class MobileStatus extends StatelessWidget {
                       onPressed: () {},
                       icon: Icon(
                         Icons.more_horiz,
-                        color:
-                            AppCubit.get(context).isDark ? Colors.white : c1(),
+                        color: AppCubit.get(context).isDark
+                            ? Colors.white
+                            : AppColors.c1(),
                       ),
                     ),
                   ],

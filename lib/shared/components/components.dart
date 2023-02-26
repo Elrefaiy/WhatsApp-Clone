@@ -1,37 +1,14 @@
 import 'package:dashed_circle/dashed_circle.dart';
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/models/status.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
 import 'package:whatsapp_clone/modules/image_view/image_view.dart';
 import 'package:whatsapp_clone/modules/status/mobile_status_screen.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
-
-SnackBar snackBar({required String content}) => SnackBar(
-      duration: const Duration(seconds: 4),
-      content: Text(
-        content,
-      ),
-    );
-
-showLoadingDialog(context) {
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (context) => const AlertDialog(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      content: Center(
-        child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
-        ),
-      ),
-    ),
-  );
-}
 
 Widget chatItem(
   context,
@@ -161,7 +138,7 @@ Widget webChatItem(
         AppCubit.get(context).getChatMessages(model.uId);
       },
       child: Container(
-        color: c6(),
+        color: AppColors.c6(),
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 10,
@@ -273,8 +250,9 @@ Widget myMesseageItem({
             height: 15,
             margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
-              color:
-                  AppCubit.get(context).isDark ? c1() : const Color(0xffd9fdd3),
+              color: AppCubit.get(context).isDark
+                  ? AppColors.c1()
+                  : const Color(0xffd9fdd3),
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(20),
               ),
@@ -286,8 +264,9 @@ Widget myMesseageItem({
               left: 100,
             ),
             decoration: BoxDecoration(
-              color:
-                  AppCubit.get(context).isDark ? c1() : const Color(0xffd9fdd3),
+              color: AppCubit.get(context).isDark
+                  ? AppColors.c1()
+                  : const Color(0xffd9fdd3),
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(13),
                 bottomLeft: Radius.circular(13),
@@ -390,7 +369,8 @@ Widget friendMessageItem({
             height: 15,
             margin: const EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
-              color: AppCubit.get(context).isDark ? c4() : Colors.white,
+              color:
+                  AppCubit.get(context).isDark ? AppColors.c4() : Colors.white,
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(20),
               ),
@@ -399,7 +379,8 @@ Widget friendMessageItem({
           Container(
             margin: const EdgeInsets.only(left: 15, right: 100),
             decoration: BoxDecoration(
-              color: AppCubit.get(context).isDark ? c4() : Colors.white,
+              color:
+                  AppCubit.get(context).isDark ? AppColors.c4() : Colors.white,
               borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(13),
                 bottomLeft: Radius.circular(13),
@@ -515,7 +496,7 @@ Widget statusItem({
             DashedCircle(
               dashes: models!.length,
               gapSize: 3,
-              color: c2(),
+              color: AppColors.c2(),
               child: models.last.isImage
                   ? Container()
                   : Padding(

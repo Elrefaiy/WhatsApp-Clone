@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/modules/chat/media_view.dart';
+import 'package:whatsapp_clone/modules/user_info/user_info.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:intl/intl.dart';
 
-// ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
-  UserModel model;
-  ChatScreen({required this.model, super.key});
+  final UserModel model;
+  const ChatScreen({required this.model, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +61,22 @@ class ChatScreen extends StatelessWidget {
                   width: 10,
                 ),
                 Expanded(
-                  child: Text(
-                    model.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserInfoScreen(
+                            userModel: model,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      model.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
                 IconButton(
@@ -100,7 +113,9 @@ class ChatScreen extends StatelessWidget {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: AppCubit.get(context).isDark ? c4() : Colors.white,
+                      color: AppCubit.get(context).isDark
+                          ? AppColors.c4()
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -151,7 +166,7 @@ class ChatScreen extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: AppCubit.get(context).isDark
-                              ? c4()
+                              ? AppColors.c4()
                               : Colors.white,
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -218,7 +233,7 @@ class ChatScreen extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: c2(),
+                        color: AppColors.c2(),
                       ),
                       child: IconButton(
                         onPressed: () {

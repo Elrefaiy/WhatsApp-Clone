@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
+import 'package:whatsapp_clone/core/utils/app_constants.dart';
+import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/image_view/image_view.dart';
-import 'package:whatsapp_clone/shared/components/components.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class MobileProfile extends StatelessWidget {
   const MobileProfile({super.key});
@@ -14,12 +15,15 @@ class MobileProfile extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is UpdateUserLoadingState) {
-          showLoadingDialog(context);
+          AppConstants.showLoadingDialog(context);
         } else if (state is UpdateUserSuccessState) {
           Navigator.pop(context);
         } else if (state is UpdateUserErrorState) {
           Navigator.pop(context);
-          snackBar(content: 'some thing went wrong, please try again');
+          AppConstants.showSnackBar(
+            context: context,
+            content: AppStrings.somethingWrong,
+          );
         }
       },
       builder: (context, state) {
@@ -82,7 +86,7 @@ class MobileProfile extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: c2(),
+                      color: AppColors.c2(),
                     ),
                     child: IconButton(
                       icon: const Icon(
@@ -92,13 +96,13 @@ class MobileProfile extends StatelessWidget {
                       onPressed: () {
                         scaffoldKey.currentState!.showBottomSheet(
                           backgroundColor: AppCubit.get(context).isDark
-                              ? c3()
+                              ? AppColors.c3()
                               : Colors.white,
                           (context) => Container(
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
                               color: AppCubit.get(context).isDark
-                                  ? c4()
+                                  ? AppColors.c4()
                                   : Colors.white,
                               boxShadow: [
                                 BoxShadow(
@@ -231,13 +235,15 @@ class MobileProfile extends StatelessWidget {
               InkWell(
                 onTap: () {
                   scaffoldKey.currentState!.showBottomSheet(
-                    backgroundColor:
-                        AppCubit.get(context).isDark ? c3() : Colors.white,
+                    backgroundColor: AppCubit.get(context).isDark
+                        ? AppColors.c3()
+                        : Colors.white,
                     (context) => Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color:
-                            AppCubit.get(context).isDark ? c4() : Colors.white,
+                        color: AppCubit.get(context).isDark
+                            ? AppColors.c4()
+                            : Colors.white,
                         boxShadow: [
                           BoxShadow(
                             spreadRadius: 10,
@@ -328,7 +334,7 @@ class MobileProfile extends StatelessWidget {
                       Icon(
                         Icons.person,
                         size: 24,
-                        color: c5(),
+                        color: AppColors.c5(),
                       ),
                       const SizedBox(
                         width: 20,
@@ -361,7 +367,7 @@ class MobileProfile extends StatelessWidget {
                       Icon(
                         Icons.edit,
                         size: 24,
-                        color: c2(),
+                        color: AppColors.c2(),
                       ),
                     ],
                   ),
@@ -377,13 +383,15 @@ class MobileProfile extends StatelessWidget {
               InkWell(
                 onTap: () {
                   scaffoldKey.currentState!.showBottomSheet(
-                    backgroundColor:
-                        AppCubit.get(context).isDark ? c3() : Colors.white,
+                    backgroundColor: AppCubit.get(context).isDark
+                        ? AppColors.c3()
+                        : Colors.white,
                     (context) => Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color:
-                            AppCubit.get(context).isDark ? c4() : Colors.white,
+                        color: AppCubit.get(context).isDark
+                            ? AppColors.c4()
+                            : Colors.white,
                         boxShadow: [
                           BoxShadow(
                             spreadRadius: 10,
@@ -473,7 +481,7 @@ class MobileProfile extends StatelessWidget {
                       Icon(
                         Icons.info_outline,
                         size: 24,
-                        color: c5(),
+                        color: AppColors.c5(),
                       ),
                       const SizedBox(
                         width: 20,
@@ -499,7 +507,7 @@ class MobileProfile extends StatelessWidget {
                       Icon(
                         Icons.edit,
                         size: 24,
-                        color: c2(),
+                        color: AppColors.c2(),
                       ),
                     ],
                   ),
@@ -525,7 +533,7 @@ class MobileProfile extends StatelessWidget {
                       Icon(
                         Icons.phone,
                         size: 24,
-                        color: c5(),
+                        color: AppColors.c5(),
                       ),
                       const SizedBox(
                         width: 20,

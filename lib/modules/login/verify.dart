@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
+import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/login/profile_info.dart';
@@ -20,7 +22,7 @@ class VerifyingScreen extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is SignInLoadingState) {
-          showLoadingDialog(context);
+          AppConstants.showLoadingDialog(context);
         } else if (state is GetUserSuccessState) {
           Navigator.pop(context);
           Navigator.pushAndRemoveUntil(
@@ -33,7 +35,8 @@ class VerifyingScreen extends StatelessWidget {
         } else if (state is SignInErrorState) {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
-            snackBar(
+            AppConstants.showSnackBar(
+              context: context,
               content: state.error.toString(),
             ),
           );
@@ -142,7 +145,7 @@ class VerifyingScreen extends StatelessWidget {
                           vertical: 14,
                         ),
                         decoration: BoxDecoration(
-                          color: c2(),
+                          color: AppColors.c2(),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: const Text(

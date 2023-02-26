@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class AddTextStatusScreen extends StatelessWidget {
   const AddTextStatusScreen({super.key});
@@ -96,7 +96,7 @@ class AddTextStatusScreen extends StatelessWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: c4(),
+                        color: AppColors.c4(),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       padding: const EdgeInsets.symmetric(
@@ -117,7 +117,7 @@ class AddTextStatusScreen extends StatelessWidget {
                       width: 40,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: c2(),
+                        color: AppColors.c2(),
                       ),
                       child: IconButton(
                         onPressed: () {

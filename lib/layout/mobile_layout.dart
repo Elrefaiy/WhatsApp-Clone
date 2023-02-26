@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/modules/chat/mobile_chat.dart';
@@ -24,7 +25,9 @@ class MobileLayout extends StatelessWidget {
               title: Text(
                 'WhatsApp',
                 style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: AppCubit.get(context).isDark ? c5() : Colors.white,
+                      color: AppCubit.get(context).isDark
+                          ? AppColors.c5()
+                          : Colors.white,
                     ),
               ),
               actions: [
@@ -32,20 +35,26 @@ class MobileLayout extends StatelessWidget {
                   onPressed: () {},
                   icon: Icon(
                     Icons.camera_alt_outlined,
-                    color: AppCubit.get(context).isDark ? c5() : Colors.white,
+                    color: AppCubit.get(context).isDark
+                        ? AppColors.c5()
+                        : Colors.white,
                   ),
                 ),
                 IconButton(
                   onPressed: () {},
                   icon: Icon(
                     Icons.search,
-                    color: AppCubit.get(context).isDark ? c5() : Colors.white,
+                    color: AppCubit.get(context).isDark
+                        ? AppColors.c5()
+                        : Colors.white,
                   ),
                 ),
                 PopupMenuButton(
                   icon: Icon(
                     Icons.more_vert,
-                    color: AppCubit.get(context).isDark ? c5() : Colors.white,
+                    color: AppCubit.get(context).isDark
+                        ? AppColors.c5()
+                        : Colors.white,
                   ),
                   color: AppCubit.get(context).isDark
                       ? const Color.fromARGB(255, 50, 65, 73)
@@ -84,13 +93,18 @@ class MobileLayout extends StatelessWidget {
               bottom: TabBar(
                 indicatorColor: Colors.white,
                 indicatorWeight: 4,
-                unselectedLabelColor:
-                    AppCubit.get(context).isDark ? c5() : Colors.white70,
-                labelColor: AppCubit.get(context).isDark ? c2() : Colors.white,
+                unselectedLabelColor: AppCubit.get(context).isDark
+                    ? AppColors.c5()
+                    : Colors.white70,
+                labelColor: AppCubit.get(context).isDark
+                    ? AppColors.c2()
+                    : Colors.white,
                 indicator: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: AppCubit.get(context).isDark ? c2() : Colors.white,
+                      color: AppCubit.get(context).isDark
+                          ? AppColors.c2()
+                          : Colors.white,
                       width: 4,
                     ),
                   ),
@@ -171,7 +185,7 @@ class MobileLayout extends StatelessWidget {
                 FloatingActionButton(
                   heroTag: null,
                   onPressed: () {},
-                  backgroundColor: c2(),
+                  backgroundColor: AppColors.c2(),
                   child: Icon(
                     AppCubit.get(context).currentIndex == 0
                         ? Icons.chat

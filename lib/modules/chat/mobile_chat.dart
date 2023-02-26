@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class MobileChats extends StatelessWidget {
   const MobileChats({super.key});
@@ -61,7 +61,7 @@ class MobileChats extends StatelessWidget {
                           text: 'end-to-end encrypted',
                           style:
                               Theme.of(context).textTheme.bodyText2!.copyWith(
-                                    color: c2(),
+                                    color: AppColors.c2(),
                                     fontSize: 11,
                                   ),
                         ),
