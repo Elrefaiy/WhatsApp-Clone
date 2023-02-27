@@ -7,7 +7,6 @@ import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/status.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class MobileStatus extends StatelessWidget {
   const MobileStatus({super.key});

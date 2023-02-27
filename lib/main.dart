@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_clone/cubit/app_cubit.dart';
-import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/layout/layout.dart';
 import 'package:whatsapp_clone/modules/welcome/welcome.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
