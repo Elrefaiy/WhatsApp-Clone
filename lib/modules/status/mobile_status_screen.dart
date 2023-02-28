@@ -4,12 +4,10 @@ import 'package:story_view/story_view.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/status.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
-// ignore: must_be_immutable
 class MobileStatusScreen extends StatelessWidget {
-  List<StatusModel> models;
-  MobileStatusScreen({required this.models, super.key});
+  final List<StatusModel> models;
+  const MobileStatusScreen({required this.models, super.key});
 
   @override
   Widget build(BuildContext context) {

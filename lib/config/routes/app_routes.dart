@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/layout/layout.dart';
 import 'package:whatsapp_clone/models/status.dart';
 import 'package:whatsapp_clone/models/user.dart';
@@ -102,7 +103,7 @@ class AppRoutes {
           },
         );
       default:
-        throw Exception('this route is undefiened!');
+        throw const RoutesException('this route is undefiened!');
     }
   }
 }

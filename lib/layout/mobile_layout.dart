@@ -7,7 +7,6 @@ import 'package:whatsapp_clone/modules/chat/mobile_chat.dart';
 import 'package:whatsapp_clone/modules/settings/mobile_settings.dart';
 import 'package:whatsapp_clone/modules/status/add_status/add_text_status.dart';
 import 'package:whatsapp_clone/modules/status/mobile_status.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 
 class MobileLayout extends StatelessWidget {
   const MobileLayout({super.key});

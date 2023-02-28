@@ -8,10 +8,9 @@ import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
 import 'package:intl/intl.dart';
 
-// ignore: must_be_immutable
 class WebLayout extends StatelessWidget {
-  UserModel model;
-  WebLayout({required this.model, super.key});
+  final UserModel model;
+  const WebLayout({required this.model, super.key});
 
   @override
   Widget build(BuildContext context) {

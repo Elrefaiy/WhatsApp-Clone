@@ -8,7 +8,6 @@ import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/modules/chat/media_view.dart';
 import 'package:whatsapp_clone/modules/user_info/user_info.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
-import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatelessWidget {
