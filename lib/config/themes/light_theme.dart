@@ -17,18 +17,20 @@ ThemeData lightTheme() {
     textTheme: TextTheme(
       headline1: TextStyle(
         color: AppColors.c1(),
-        fontSize: 22,
-        fontWeight: FontWeight.w500,
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        overflow: TextOverflow.ellipsis,
       ),
       headline2: const TextStyle(
         color: Colors.black,
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        overflow: TextOverflow.ellipsis,
       ),
       bodyText1: const TextStyle(
         color: Colors.black,
         fontSize: 16,
-        fontWeight: FontWeight.w400,
+        overflow: TextOverflow.ellipsis,
       ),
       bodyText2: const TextStyle(
         color: Colors.blueGrey,

@@ -5,7 +5,7 @@ import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
-import 'package:whatsapp_clone/modules/login/login.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/screens/login.dart';
 import 'package:whatsapp_clone/modules/profile/mobile_profile.dart';
 
 class MobileSettingsScreen extends StatelessWidget {

@@ -33,7 +33,7 @@ class MobileLayout extends StatelessWidget {
                 IconButton(
                   onPressed: () {},
                   icon: Icon(
-                    Icons.camera_alt_outlined,
+                    Icons.camera_alt,
                     color: AppCubit.get(context).isDark
                         ? AppColors.c5()
                         : Colors.white,
@@ -145,7 +145,6 @@ class MobileLayout extends StatelessWidget {
               ),
             ),
             body: const TabBarView(
-              physics: NeverScrollableScrollPhysics(),
               children: [
                 MobileChats(),
                 MobileStatus(),

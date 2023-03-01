@@ -14,24 +14,26 @@ ThemeData darkTheme() {
       color: AppColors.c4(),
       titleSpacing: 20,
     ),
-    textTheme: TextTheme(
-      headline1: const TextStyle(
+    textTheme: const TextTheme(
+      headline1: TextStyle(
         color: Colors.white,
-        fontSize: 23,
-        fontWeight: FontWeight.w500,
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        overflow: TextOverflow.ellipsis,
       ),
-      headline2: const TextStyle(
+      headline2: TextStyle(
         color: Colors.white,
-        fontSize: 18,
-        fontWeight: FontWeight.w500,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        overflow: TextOverflow.ellipsis,
       ),
-      bodyText1: const TextStyle(
+      bodyText1: TextStyle(
         color: Colors.white,
         fontSize: 16,
-        fontWeight: FontWeight.w400,
+        overflow: TextOverflow.ellipsis,
       ),
       bodyText2: TextStyle(
-        color: Colors.blueGrey[400],
+        color: Colors.blueGrey,
         fontSize: 13,
         fontWeight: FontWeight.w400,
         overflow: TextOverflow.ellipsis,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'config/themes/dark_theme.dart';
 import 'config/themes/light_theme.dart';
 import 'cubit/app_cubit.dart';
@@ -20,6 +21,7 @@ class WhatsApp extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return MaterialApp(
+            onGenerateRoute: AppRoutes.onGeneratedRoute,
             debugShowCheckedModeBanner: false,
             theme: AppCubit.get(context).isDark ? darkTheme() : lightTheme(),
             home: startWidget,

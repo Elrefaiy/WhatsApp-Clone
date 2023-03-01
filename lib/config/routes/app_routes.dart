@@ -5,14 +5,14 @@ import 'package:whatsapp_clone/models/status.dart';
 import 'package:whatsapp_clone/models/user.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
 import 'package:whatsapp_clone/modules/image_view/image_view.dart';
-import 'package:whatsapp_clone/modules/login/login.dart';
-import 'package:whatsapp_clone/modules/login/profile_info.dart';
-import 'package:whatsapp_clone/modules/login/verify.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/screens/login.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/screens/profile_info.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/screens/verify.dart';
 import 'package:whatsapp_clone/modules/profile/mobile_profile.dart';
 import 'package:whatsapp_clone/modules/settings/mobile_settings.dart';
 import 'package:whatsapp_clone/modules/status/add_status/add_text_status.dart';
 import 'package:whatsapp_clone/modules/status/mobile_status_screen.dart';
-import 'package:whatsapp_clone/modules/welcome/welcome.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/screens/welcome.dart';
 
 class Routes {
   static const String welcome = '/';

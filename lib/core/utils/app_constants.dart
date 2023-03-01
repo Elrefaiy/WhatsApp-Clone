@@ -30,4 +30,19 @@ class AppConstants {
       ),
     );
   }
+
+  static Image noUserImage() {
+    return const Image(
+      image: AssetImage(
+        'assets/images/user-avatar.jpg',
+      ),
+      fit: BoxFit.cover,
+    );
+  }
+
+  static MediaQueryData mediaQueryData(context) {
+    return MediaQuery.of(context).copyWith(
+      textScaleFactor: MediaQuery.of(context).size.width >= 560 ? 1.3 : 1,
+    );
+  }
 }

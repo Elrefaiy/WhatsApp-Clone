@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
+import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/user.dart';
@@ -39,14 +40,7 @@ class ChatScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   child: model.image == 'image'
-                      ? const ClipOval(
-                          child: Image(
-                            image: AssetImage(
-                              'assets/images/user-avatar.jpg',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        )
+                      ? ClipOval(child: AppConstants.noUserImage())
                       : ClipOval(
                           child: Image(
                             image: NetworkImage(
@@ -216,8 +210,9 @@ class ChatScreen extends StatelessWidget {
                                   model.uId,
                                 );
                               },
-                              icon: const FaIcon(
-                                FontAwesomeIcons.camera,
+                              icon: const Icon(
+                                Icons.camera_alt,
+                                size: 28,
                                 color: Colors.grey,
                               ),
                             ),

@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/layout/layout.dart';
-import 'package:whatsapp_clone/modules/welcome/welcome.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/screens/welcome.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
 import 'app.dart';
