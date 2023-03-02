@@ -13,7 +13,6 @@ import 'package:whatsapp_clone/shared/conistants/conistants.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_cropper/image_cropper.dart';
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class AppCubit extends Cubit<AppStates> {
