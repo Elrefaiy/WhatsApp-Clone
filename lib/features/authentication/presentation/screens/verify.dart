@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
-import 'package:whatsapp_clone/cubit/app_cubit.dart';
-import 'package:whatsapp_clone/cubit/app_states.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/screens/profile_info.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 
 class VerifyingScreen extends StatelessWidget {
   final String phoneNumber;
@@ -17,26 +16,23 @@ class VerifyingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var otpCodeController = TextEditingController();
 
-    return BlocConsumer<AppCubit, AppStates>(
+    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if (state is SignInLoadingState) {
           AppConstants.showLoadingDialog(context);
         } else if (state is GetUserSuccessState) {
           Navigator.pop(context);
-          Navigator.pushAndRemoveUntil(
+          Navigator.pushNamedAndRemoveUntil(
             context,
-            MaterialPageRoute(
-              builder: (context) => const ProfileInfoScreen(),
-            ),
+            Routes.profileInfo,
             (route) => false,
+            arguments: state.user,
           );
         } else if (state is SignInErrorState) {
           Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-            AppConstants.showSnackBar(
-              context: context,
-              content: state.error.toString(),
-            ),
+          AppConstants.showSnackBar(
+            context: context,
+            content: state.error,
           );
         }
       },
@@ -134,7 +130,9 @@ class VerifyingScreen extends StatelessWidget {
                   const Spacer(),
                   InkWell(
                     onTap: () {
-                      AppCubit.get(context).submitOTP(otpCodeController.text);
+                      AuthenticationCubit.get(context).submitOTP(
+                        otpCode: otpCodeController.text,
+                      );
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(

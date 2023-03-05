@@ -20,3 +20,13 @@ class SubmitPhoneParams {
     required this.country,
   });
 }
+
+class SubmitOTPParams {
+  final String verificationId;
+  final String otpCode;
+
+  const SubmitOTPParams({
+    required this.verificationId,
+    required this.otpCode,
+  });
+}

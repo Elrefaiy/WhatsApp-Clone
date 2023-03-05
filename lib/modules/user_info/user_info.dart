@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
-import 'package:whatsapp_clone/models/user.dart';
+import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 
 class UserInfoScreen extends StatelessWidget {
   final UserModel userModel;

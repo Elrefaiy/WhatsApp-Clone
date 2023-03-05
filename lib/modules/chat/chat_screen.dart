@@ -5,7 +5,7 @@ import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
-import 'package:whatsapp_clone/models/user.dart';
+import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 import 'package:whatsapp_clone/modules/chat/media_view.dart';
 import 'package:whatsapp_clone/modules/user_info/user_info.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
@@ -38,17 +38,9 @@ class ChatScreen extends StatelessWidget {
             titleSpacing: 0,
             title: Row(
               children: [
-                CircleAvatar(
-                  child: model.image == 'image'
-                      ? ClipOval(child: AppConstants.noUserImage())
-                      : ClipOval(
-                          child: Image(
-                            image: NetworkImage(
-                              model.image,
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                AppConstants.userImage(
+                  radius: 35,
+                  image: model.image,
                 ),
                 const SizedBox(
                   width: 10,

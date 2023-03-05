@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FirebaseFirestoreConsumer {
-  Future<dynamic> get({
-    required String collection1,
-    String? doc1,
-    String? collection2,
-    String? doc2,
-    String? collection3,
-  });
+  Future<Map<String, dynamic>> getUser({required String uId});
+  // Future<List<dynamic>> getAllUsers();
+  // Future<List<dynamic>> getChatMessages({
+  //   required String uId,
+  //   required String recieverId,
+  // });
+  // Future<List<dynamic>> getChatMedia({
+  //   required String uId,
+  //   required String recieverId,
+  // });
   Future<dynamic> set({
     required String collection,
     required String doc,
@@ -59,51 +62,6 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
   }
 
   @override
-  Future<dynamic> get({
-    required String collection1,
-    String? doc1,
-    String? collection2,
-    String? doc2,
-    String? collection3,
-  }) async {
-    if (doc1 == null) {
-      await instance.collection(collection1).get();
-    } else if (collection2 == null) {
-      await instance
-          .collection(collection1)
-          .doc(doc1)
-          .get()
-          .then((value) => value.data());
-    } else if (doc2 == null) {
-      await instance
-          .collection(collection1)
-          .doc(doc1)
-          .collection(collection2)
-          .get();
-    } else if (collection3 == null) {
-      await instance
-          .collection(collection1)
-          .doc(doc1)
-          .collection(collection2)
-          .doc(doc2)
-          .get()
-          .then(
-        (value) {
-          return value.data();
-        },
-      );
-    } else {
-      await instance
-          .collection(collection1)
-          .doc(doc1)
-          .collection(collection2)
-          .doc(doc2)
-          .collection(collection3)
-          .get();
-    }
-  }
-
-  @override
   Future set({
     required String collection,
     required String doc,
@@ -119,5 +77,12 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
     required Map<String, dynamic> body,
   }) async {
     await instance.collection(collection).doc(doc).update(body);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getUser({required String uId}) async {
+    return await instance.collection('users').doc(uId).get().then(
+          (value) => Future.value(value.data()),
+        );
   }
 }

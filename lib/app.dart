@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/config/routes/app_routes.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 import 'config/themes/dark_theme.dart';
 import 'config/themes/light_theme.dart';
 import 'cubit/app_cubit.dart';
-import 'cubit/app_states.dart';
+import 'injection_container.dart' as di;
 
 class WhatsApp extends StatelessWidget {
   final Widget startWidget;
@@ -12,13 +13,16 @@ class WhatsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AppCubit()
-        ..getUser()
-        ..getUsers()
-        ..getStatus(),
-      child: BlocConsumer<AppCubit, AppStates>(
-        listener: (context, state) {},
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => di.sl<AuthenticationCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => AppCubit(),
+        ),
+      ],
+      child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) {
           return MaterialApp(
             onGenerateRoute: AppRoutes.onGeneratedRoute,

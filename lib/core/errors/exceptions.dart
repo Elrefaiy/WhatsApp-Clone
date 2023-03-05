@@ -33,29 +33,18 @@ class RoutesException extends Equatable implements Exception {
   }
 }
 
-class FetchDataException extends ServerException {
-  const FetchDataException([message]) : super("Error During Communication");
+class VerificationException extends ServerException {
+  const VerificationException([message]) : super("Verification Phone Failed");
 }
 
-class BadRequestException extends ServerException {
-  const BadRequestException([message]) : super("Bad Request");
+class NoVerificationIdException extends ServerException {
+  const NoVerificationIdException([message])
+      : super("No Verification Id Recieved");
 }
 
-class UnauthorizedException extends ServerException {
-  const UnauthorizedException([message]) : super("Unauthorized");
-}
-
-class NotFoundException extends ServerException {
-  const NotFoundException([message]) : super("Requested Info Not Found");
-}
-
-class ConflictException extends ServerException {
-  const ConflictException([message]) : super("Conflict Occurred");
-}
-
-class InternalServerErrorException extends ServerException {
-  const InternalServerErrorException([message])
-      : super("Internal Server Error");
+class CodeAutoRetrievalTimeoutException extends ServerException {
+  const CodeAutoRetrievalTimeoutException([message])
+      : super("Code Auto Retrieval Timeout");
 }
 
 class NoInternetConnectionException extends ServerException {

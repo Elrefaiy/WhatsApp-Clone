@@ -5,7 +5,7 @@ import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/models/status.dart';
-import 'package:whatsapp_clone/models/user.dart';
+import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 import 'package:whatsapp_clone/shared/components/components.dart';
 
 class MobileStatus extends StatelessWidget {

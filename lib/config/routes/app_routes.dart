@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/core/errors/exceptions.dart';
+import 'package:whatsapp_clone/features/authentication/domain/entities/user.dart';
 import 'package:whatsapp_clone/layout/layout.dart';
 import 'package:whatsapp_clone/models/status.dart';
-import 'package:whatsapp_clone/models/user.dart';
+import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
 import 'package:whatsapp_clone/modules/image_view/image_view.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/login.dart';
@@ -59,7 +60,8 @@ class AppRoutes {
       case Routes.profileInfo:
         return MaterialPageRoute(
           builder: (context) {
-            return const ProfileInfoScreen();
+            final user = settings.arguments as User;
+            return ProfileInfoScreen(user: user);
           },
         );
       case Routes.imageView:

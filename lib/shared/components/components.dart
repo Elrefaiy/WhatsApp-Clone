@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/models/status.dart';
-import 'package:whatsapp_clone/models/user.dart';
+import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
 import 'package:whatsapp_clone/modules/image_view/image_view.dart';
 import 'package:whatsapp_clone/modules/status/mobile_status_screen.dart';

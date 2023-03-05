@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/core/utils/app_strings.dart';
 
 class AppConstants {
   static showSnackBar({
@@ -31,12 +32,25 @@ class AppConstants {
     );
   }
 
-  static Image noUserImage() {
-    return const Image(
-      image: AssetImage(
-        'assets/images/user-avatar.jpg',
-      ),
-      fit: BoxFit.cover,
+  static CircleAvatar userImage({
+    required double radius,
+    required String image,
+  }) {
+    return CircleAvatar(
+      radius: radius,
+      child: image == 'image'
+          ? const ClipOval(
+              child: Image(
+                image: AssetImage(AppStrings.noUserImage),
+                fit: BoxFit.cover,
+              ),
+            )
+          : ClipOval(
+              child: Image(
+                image: NetworkImage(image),
+                fit: BoxFit.cover,
+              ),
+            ),
     );
   }
 

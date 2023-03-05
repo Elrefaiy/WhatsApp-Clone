@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
-import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/features/authentication/domain/entities/user.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 
 class ProfileInfoScreen extends StatelessWidget {
-  const ProfileInfoScreen({super.key});
+  final User user;
+  const ProfileInfoScreen({required this.user, super.key});
 
   @override
   Widget build(BuildContext context) {
     var scaffoldKey = GlobalKey<ScaffoldState>();
 
-    return BlocConsumer<AppCubit, AppStates>(
+    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
-        if (state is GetAllUsersLoadingState) {
-          AppConstants.showLoadingDialog(context);
-        } else if (state is GetAllUsersSuccessState) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            Routes.home,
-            (route) => false,
-          );
-        }
+        // if (state is GetAllUsersLoadingState) {
+        //   AppConstants.showLoadingDialog(context);
+        // } else if (state is GetAllUsersSuccessState) {
+        //   Navigator.pushNamedAndRemoveUntil(
+        //     context,
+        //     Routes.home,
+        //     (route) => false,
+        //   );
+        // }
       },
       builder: (context, state) {
-        var nameController = TextEditingController();
-        String image = AppCubit.get(context).user['image'] ?? 'image';
-        nameController.text = AppCubit.get(context).user['name'];
+        final nameController = TextEditingController();
+        nameController.text = user.name;
 
         Widget bodyBuilder() {
           return Center(
@@ -88,9 +88,9 @@ class ProfileInfoScreen extends StatelessWidget {
                                   const Spacer(),
                                   IconButton(
                                     onPressed: () {
-                                      AppCubit.get(context)
-                                          .updateProfileImage(image: 'image');
-                                      AppCubit.get(context).getUser();
+                                      // AppCubit.get(context)
+                                      //     .updateProfileImage(image: 'image');
+                                      // AppCubit.get(context).getUser();
                                     },
                                     icon: const Icon(
                                       Icons.delete,
@@ -114,8 +114,8 @@ class ProfileInfoScreen extends StatelessWidget {
                                         ),
                                         child: IconButton(
                                           onPressed: () {
-                                            AppCubit.get(context)
-                                                .getCameraImage(context);
+                                            // AppCubit.get(context)
+                                            //     .getCameraImage(context);
                                           },
                                           icon: const Icon(
                                             Icons.camera_alt,
@@ -147,8 +147,8 @@ class ProfileInfoScreen extends StatelessWidget {
                                         ),
                                         child: IconButton(
                                           onPressed: () {
-                                            AppCubit.get(context)
-                                                .getGalleryImage(context);
+                                            // AppCubit.get(context)
+                                            //     .getGalleryImage(context);
                                           },
                                           icon: const Icon(
                                             Icons.image_rounded,
@@ -174,18 +174,9 @@ class ProfileInfoScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    child: CircleAvatar(
+                    child: AppConstants.userImage(
                       radius: 65,
-                      child: image == 'image'
-                          ? ClipOval(
-                              child: AppConstants.noUserImage(),
-                            )
-                          : ClipOval(
-                              child: Image(
-                                image: NetworkImage(image),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                      image: user.image,
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -200,9 +191,9 @@ class ProfileInfoScreen extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyText1,
                           maxLength: 25,
                           onFieldSubmitted: (value) {
-                            AppCubit.get(context).updateName(
-                              name: value,
-                            );
+                            // AppCubit.get(context).updateName(
+                            //   name: value,
+                            // );
                           },
                           decoration: InputDecoration(
                             hintText: 'User Name',
@@ -222,7 +213,7 @@ class ProfileInfoScreen extends StatelessWidget {
                   const Spacer(),
                   InkWell(
                     onTap: () {
-                      AppCubit.get(context).getUsers();
+                      // AppCubit.get(context).getUsers();
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(

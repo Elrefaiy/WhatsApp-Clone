@@ -1,13 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
+import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
+import 'package:whatsapp_clone/features/authentication/data/repositories/get_current_user_repo_impl.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/submit_otp_repo_impl.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/submit_phone_repo_impl.dart';
+import 'package:whatsapp_clone/features/authentication/domain/repositories/get_current_user_repo.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/submit_otp_repo.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/submit_phone_repo.dart';
+import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_data.dart';
 import 'core/network/network_info.dart';
 import 'features/authentication/domain/usecases/submit_otp.dart';
@@ -19,17 +25,19 @@ import 'features/settings/presentation/cubit/settings_cubit.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  // Blocs
+  //! Blocs
   sl.registerFactory<AuthenticationCubit>(
     () => AuthenticationCubit(
       submitPhoneUseCase: sl(),
       submitOTPUseCase: sl(),
+      getCurrentUserUseCase: sl(),
+      sharedPreferences: sl(),
     ),
   );
   sl.registerFactory<HomeCubit>(() => HomeCubit());
   sl.registerFactory<SettingsCubit>(() => SettingsCubit());
 
-  // Use Cases
+  //! Use Cases
 
   // authentication
   sl.registerLazySingleton<SubmitPhoneUseCase>(
@@ -38,36 +46,53 @@ Future<void> init() async {
   sl.registerLazySingleton<SubmitOTPUseCase>(
     () => SubmitOTPUseCase(submitOTPRepository: sl()),
   );
+  sl.registerLazySingleton<GetCurrentUserUseCase>(
+    () => GetCurrentUserUseCase(getCurrentUserRepository: sl()),
+  );
   sl.registerLazySingleton<UpdateUserUseCase>(
     () => UpdateUserUseCase(updateUserRepository: sl()),
   );
 
-  // Repositories
+  //! Repositories
   sl.registerLazySingleton<SubmitPhoneRepository>(
     () => SubmitPhoneRepositoryImpl(
       instance: sl(),
+      sharedPreferences: sl(),
       networkInfo: sl(),
     ),
   );
   sl.registerLazySingleton<SubmitOTPRepository>(
     () => SubmitOTPRepositoryImpl(
-      instance: sl(),
+      authInstance: sl(),
+      storeInstance: sl(),
+      networkInfo: sl(),
+      sharedPreferences: sl(),
+    ),
+  );
+  sl.registerLazySingleton<GetCurrentUserRepository>(
+    () => GetCurrentUserRepositoryImpl(
+      authInstance: sl(),
+      storeInstance: sl(),
       networkInfo: sl(),
     ),
   );
 
-  // Datasources
+  //! Datasources
 
-  //Core
+  //! Core
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(connectionChecker: sl()));
   sl.registerLazySingleton<FirebaseAuthConsumer>(
     () => FirebaseAuthConsumerImpl(instance: sl()),
   );
+  sl.registerLazySingleton<FirebaseFirestoreConsumer>(
+    () => FirebaseFirestoreConsumerImpl(instance: sl()),
+  );
 
-  //Externals
+  //!Externals
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => InternetConnectionChecker());
   sl.registerLazySingleton(() => FirebaseAuth.instance);
+  sl.registerLazySingleton(() => FirebaseFirestore.instance);
 }

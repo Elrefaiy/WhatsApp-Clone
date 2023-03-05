@@ -5,7 +5,7 @@ import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
-import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
     var countryController = TextEditingController();
     var formKey = GlobalKey<FormState>();
 
-    return BlocConsumer<AppCubit, AppStates>(
+    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
         if (state is SubmitPhoneNumberLoadingState) {
           AppConstants.showLoadingDialog(context);
@@ -166,8 +166,8 @@ class LoginScreen extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         if (formKey.currentState!.validate()) {
-                          AppCubit.get(context).submitPhoneNumber(
-                            phoneNumber: phoneController.text,
+                          AuthenticationCubit.get(context).submitPhoneNumber(
+                            phone: phoneController.text,
                             country: countryController.text,
                           );
                         }
