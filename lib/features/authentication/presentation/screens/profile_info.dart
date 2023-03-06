@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
-import 'package:whatsapp_clone/features/authentication/domain/entities/user.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 
 class ProfileInfoScreen extends StatelessWidget {
-  final User user;
-  const ProfileInfoScreen({required this.user, super.key});
+  const ProfileInfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +16,21 @@ class ProfileInfoScreen extends StatelessWidget {
 
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
-        // if (state is GetAllUsersLoadingState) {
+        // if (state is GetUserLoadingState) {
         //   AppConstants.showLoadingDialog(context);
-        // } else if (state is GetAllUsersSuccessState) {
-        //   Navigator.pushNamedAndRemoveUntil(
-        //     context,
-        //     Routes.home,
-        //     (route) => false,
-        //   );
+        // } else if (state is GetUserSuccessState) {
+        //   Navigator.pop(context);
+        // Navigator.pushNamedAndRemoveUntil(
+        //   context,
+        //   Routes.home,
+        //   (route) => false,
+        // );
         // }
       },
       builder: (context, state) {
         final nameController = TextEditingController();
-        nameController.text = user.name;
-
+        final currentUser = AuthenticationCubit.get(context).currentUser;
+        nameController.text = currentUser.name;
         Widget bodyBuilder() {
           return Center(
             child: Padding(
@@ -87,11 +87,7 @@ class ProfileInfoScreen extends StatelessWidget {
                                   ),
                                   const Spacer(),
                                   IconButton(
-                                    onPressed: () {
-                                      // AppCubit.get(context)
-                                      //     .updateProfileImage(image: 'image');
-                                      // AppCubit.get(context).getUser();
-                                    },
+                                    onPressed: () {},
                                     icon: const Icon(
                                       Icons.delete,
                                       color: Colors.grey,
@@ -114,8 +110,8 @@ class ProfileInfoScreen extends StatelessWidget {
                                         ),
                                         child: IconButton(
                                           onPressed: () {
-                                            // AppCubit.get(context)
-                                            //     .getCameraImage(context);
+                                            AuthenticationCubit.get(context)
+                                                .getCameraImage(context);
                                           },
                                           icon: const Icon(
                                             Icons.camera_alt,
@@ -147,8 +143,8 @@ class ProfileInfoScreen extends StatelessWidget {
                                         ),
                                         child: IconButton(
                                           onPressed: () {
-                                            // AppCubit.get(context)
-                                            //     .getGalleryImage(context);
+                                            AuthenticationCubit.get(context)
+                                                .getGalleryImage(context);
                                           },
                                           icon: const Icon(
                                             Icons.image_rounded,
@@ -176,7 +172,7 @@ class ProfileInfoScreen extends StatelessWidget {
                     },
                     child: AppConstants.userImage(
                       radius: 65,
-                      image: user.image,
+                      image: currentUser.image,
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -191,9 +187,10 @@ class ProfileInfoScreen extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodyText1,
                           maxLength: 25,
                           onFieldSubmitted: (value) {
-                            // AppCubit.get(context).updateName(
-                            //   name: value,
-                            // );
+                            AuthenticationCubit.get(context).updateUsername(
+                              username: nameController.text,
+                            );
+                            AuthenticationCubit.get(context).getCurrentUser();
                           },
                           decoration: InputDecoration(
                             hintText: 'User Name',
@@ -213,7 +210,10 @@ class ProfileInfoScreen extends StatelessWidget {
                   const Spacer(),
                   InkWell(
                     onTap: () {
-                      // AppCubit.get(context).getUsers();
+                      Navigator.pushNamed(
+                        context,
+                        Routes.home,
+                      );
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(

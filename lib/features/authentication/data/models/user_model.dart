@@ -19,7 +19,7 @@ class UserModel extends User {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'name': name,
       'phone': phone,

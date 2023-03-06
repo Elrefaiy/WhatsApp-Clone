@@ -49,3 +49,43 @@ class GetUserErrorState extends AuthenticationState {
   @override
   List<Object> get props => [error];
 }
+
+class UpdateUsernameLoadingState extends AuthenticationState {}
+
+class UpdateUsernameSuccessState extends AuthenticationState {}
+
+class UpdateUsernameErrorState extends AuthenticationState {
+  final String error;
+  const UpdateUsernameErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}
+
+class GetProfileImageSuccessState extends AuthenticationState {}
+
+class GetProfileImageErrorState extends AuthenticationState {
+  final String error;
+  const GetProfileImageErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}
+
+class CropProfileImageSuccessState extends AuthenticationState {}
+
+class CropProfileImageErrorState extends AuthenticationState {
+  final String error;
+  const CropProfileImageErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}
+
+class UpdateProfileImageLoadingState extends AuthenticationState {}
+
+class UpdateProfileImageSuccessState extends AuthenticationState {}
+
+class UpdateProfileImageErrorState extends AuthenticationState {
+  final String error;
+  const UpdateProfileImageErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}

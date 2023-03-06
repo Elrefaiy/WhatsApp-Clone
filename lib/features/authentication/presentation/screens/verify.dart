@@ -26,7 +26,6 @@ class VerifyingScreen extends StatelessWidget {
             context,
             Routes.profileInfo,
             (route) => false,
-            arguments: state.user,
           );
         } else if (state is SignInErrorState) {
           Navigator.pop(context);

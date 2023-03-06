@@ -17,4 +17,14 @@ class User extends Equatable {
 
   @override
   List<Object?> get props => [name, phone, image, about, uId];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'phone': phone,
+      'about': about,
+      'image': image,
+      'uId': uId,
+    };
+  }
 }

@@ -60,8 +60,7 @@ class AppRoutes {
       case Routes.profileInfo:
         return MaterialPageRoute(
           builder: (context) {
-            final user = settings.arguments as User;
-            return ProfileInfoScreen(user: user);
+            return const ProfileInfoScreen();
           },
         );
       case Routes.imageView:

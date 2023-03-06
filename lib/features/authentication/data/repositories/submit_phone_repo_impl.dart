@@ -9,7 +9,6 @@ import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/submit_phone_repo.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 
 class SubmitPhoneRepositoryImpl implements SubmitPhoneRepository {
   final NetworkInfo networkInfo;

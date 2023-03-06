@@ -7,8 +7,6 @@ import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
 import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
 import 'package:whatsapp_clone/core/network/network_info.dart';
 import 'package:whatsapp_clone/core/usecase/usecase.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/cubit/app_states.dart';
 import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/submit_otp_repo.dart';
 
@@ -47,7 +45,7 @@ class SubmitOTPRepositoryImpl implements SubmitOTPRepository {
             about: 'Hello, I am using Whatsapp',
             image: 'image',
             uId: authInstance.currentUser.uid,
-          ).toMap(),
+          ).toJson(),
         );
         // sharedPreferences.setString(
         //   AppStrings.token,

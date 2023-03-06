@@ -2,32 +2,36 @@ import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
 import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
 import 'package:whatsapp_clone/core/network/network_info.dart';
-import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/get_current_user_repo.dart';
+import 'package:whatsapp_clone/features/authentication/domain/repositories/update_name_repo.dart';
 
-class GetCurrentUserRepositoryImpl implements GetCurrentUserRepository {
+class UpdateUsernameReposoryImpl implements UpdateUsernameRepository {
   final NetworkInfo networkInfo;
-  final FirebaseAuthConsumer authInstance;
   final FirebaseFirestoreConsumer storeInstance;
+  final FirebaseAuthConsumer authInstance;
 
-  GetCurrentUserRepositoryImpl({
+  UpdateUsernameReposoryImpl({
     required this.networkInfo,
-    required this.authInstance,
     required this.storeInstance,
+    required this.authInstance,
   });
 
   @override
-  Future<Either<Failure, UserModel>> getCurrentUser() async {
+  Future<Either<Failure, dynamic>> updateUserData({
+    required String name,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        final json = await storeInstance.getUser(
-          uId: authInstance.currentUser.uid,
+        final response = await storeInstance.update(
+          collection: 'users',
+          doc: authInstance.currentUser.uid,
+          body: {
+            'name': name,
+          },
         );
-        final user = UserModel.fromJson(json);
-        return Right(user);
-      } catch (error) {
+        return Right(response);
+      } on ServerException {
         return Left(ServerFailure());
       }
     } else {
