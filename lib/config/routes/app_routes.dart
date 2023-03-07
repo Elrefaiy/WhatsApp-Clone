@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/features/authentication/domain/entities/user.dart';
-import 'package:whatsapp_clone/layout/layout.dart';
+import 'package:whatsapp_clone/features/home/presentation/layout/layout.dart';
 import 'package:whatsapp_clone/models/status.dart';
 import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';

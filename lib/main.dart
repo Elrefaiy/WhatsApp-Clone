@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/layout/layout.dart';
+import 'package:whatsapp_clone/features/home/presentation/layout/layout.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/welcome.dart';
 import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
 import 'app.dart';
