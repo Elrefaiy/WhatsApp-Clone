@@ -210,9 +210,10 @@ class ProfileInfoScreen extends StatelessWidget {
                   const Spacer(),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(
+                      Navigator.pushNamedAndRemoveUntil(
                         context,
                         Routes.home,
+                        (route) => false,
                       );
                     },
                     child: Container(
