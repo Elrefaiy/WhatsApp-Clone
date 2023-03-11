@@ -23,7 +23,7 @@ ThemeData darkTheme() {
       ),
       headline2: TextStyle(
         color: Colors.white,
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: FontWeight.bold,
         overflow: TextOverflow.ellipsis,
       ),

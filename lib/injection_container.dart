@@ -19,6 +19,10 @@ import 'package:whatsapp_clone/features/authentication/domain/repositories/updat
 import 'package:whatsapp_clone/features/authentication/domain/repositories/update_name_repo.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
+import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_remote.dart';
+import 'package:whatsapp_clone/features/home/data/repositories/get_all_users_repo_impl.dart';
+import 'package:whatsapp_clone/features/home/domain/repositories/get_all_users_repo.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/get_all_users.dart';
 import 'core/network/network_info.dart';
 import 'features/authentication/domain/usecases/submit_otp.dart';
 import 'features/authentication/domain/usecases/submit_phone.dart';
@@ -41,7 +45,12 @@ Future<void> init() async {
       sharedPreferences: sl(),
     ),
   );
-  sl.registerFactory<HomeCubit>(() => HomeCubit());
+  sl.registerFactory<HomeCubit>(
+    () => HomeCubit(
+      getAllUsersUseCase: sl(),
+    ),
+  );
+
   sl.registerFactory<SettingsCubit>(() => SettingsCubit());
 
   //! Use Cases
@@ -63,7 +72,14 @@ Future<void> init() async {
     () => UpdateUserImageUseCase(updateUserImageRepository: sl()),
   );
 
+  // home
+  sl.registerLazySingleton<GetAllUsersUseCase>(
+    () => GetAllUsersUseCase(getAllUsersRepository: sl()),
+  );
+
   //! Repositories
+
+  // authentication
   sl.registerLazySingleton<SubmitPhoneRepository>(
     () => SubmitPhoneRepositoryImpl(
       instance: sl(),
@@ -102,8 +118,20 @@ Future<void> init() async {
     ),
   );
 
-  //! Datasources
+  // home
+  sl.registerLazySingleton<GetAllUsersRepository>(
+    () => GetAllUsersRepositroyImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
 
+  //! Datasources
+  sl.registerLazySingleton<GetAllUsersRemoteDataSource>(
+    () => GetAllUsersRemoteDataSourceImpl(
+      instance: sl(),
+    ),
+  );
   //! Core
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(connectionChecker: sl()));

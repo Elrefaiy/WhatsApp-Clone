@@ -23,7 +23,7 @@ ThemeData lightTheme() {
       ),
       headline2: const TextStyle(
         color: Colors.black,
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: FontWeight.bold,
         overflow: TextOverflow.ellipsis,
       ),

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
-import 'package:whatsapp_clone/models/message.dart';
+import 'package:whatsapp_clone/features/home/data/models/message_model.dart';
 import 'package:whatsapp_clone/models/status.dart';
 import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 import 'package:whatsapp_clone/shared/conistants/conistants.dart';
@@ -305,7 +305,7 @@ class AppCubit extends Cubit<AppStates> {
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
-        .add(message.toMap())
+        .add(message.toJson())
         .then((value) {
       FirebaseFirestore.instance
           .collection('users')
@@ -313,7 +313,7 @@ class AppCubit extends Cubit<AppStates> {
           .collection('chats')
           .doc(currentUser.uid)
           .collection('messages')
-          .add(message.toMap())
+          .add(message.toJson())
           .then((value) {
         emit(SendMessageSuccessState());
       }).catchError((error) {
@@ -448,7 +448,7 @@ class AppCubit extends Cubit<AppStates> {
         .collection('chats')
         .doc(receiverId)
         .collection('media')
-        .add(message.toMap())
+        .add(message.toJson())
         .then((value) {
       FirebaseFirestore.instance
           .collection('users')
@@ -456,7 +456,7 @@ class AppCubit extends Cubit<AppStates> {
           .collection('chats')
           .doc(currentUser.uid)
           .collection('media')
-          .add(message.toMap())
+          .add(message.toJson())
           .then((value) {
         emit(SendMessageSuccessState());
       }).catchError((error) {

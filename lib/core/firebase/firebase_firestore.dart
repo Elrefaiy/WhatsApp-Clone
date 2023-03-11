@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FirebaseFirestoreConsumer {
   Future<Map<String, dynamic>> getUser({required String uId});
-  // Future<List<dynamic>> getAllUsers();
+  Future<List<Map<String, dynamic>>> getAllUsers();
   // Future<List<dynamic>> getChatMessages({
   //   required String uId,
   //   required String recieverId,
@@ -84,5 +84,18 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
     return await instance.collection('users').doc(uId).get().then(
           (value) => Future.value(value.data()),
         );
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getAllUsers() async {
+    final List<Map<String, dynamic>> users = [];
+    await instance.collection('users').get().then((value) {
+      for (var element in value.docs) {
+        users.add(
+          element.data(),
+        );
+      }
+    });
+    return users;
   }
 }

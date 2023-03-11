@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/features/home/presentation/layout/layout.dart';
+import 'package:whatsapp_clone/features/home/presentation/screens/all_users_screen.dart';
 import 'package:whatsapp_clone/models/status.dart';
 import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
 import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
@@ -20,6 +21,7 @@ class Routes {
   static const String login = '/login';
   static const String verify = '/verify';
   static const String profileInfo = '/profile_info';
+  static const String contacts = '/contacts';
   static const String imageView = '/image_view';
   static const String profile = '/profile';
   static const String settings = '/settings';
@@ -60,6 +62,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) {
             return const ProfileInfoScreen();
+          },
+        );
+      case Routes.contacts:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const AllUsersScreen();
           },
         );
       case Routes.imageView:

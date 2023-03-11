@@ -5,6 +5,7 @@ import 'package:whatsapp_clone/features/authentication/presentation/cubit/authen
 import 'config/themes/dark_theme.dart';
 import 'config/themes/light_theme.dart';
 import 'cubit/app_cubit.dart';
+import 'features/home/presentation/cubit/home_cubit.dart';
 import 'injection_container.dart' as di;
 
 class WhatsApp extends StatelessWidget {
@@ -17,6 +18,9 @@ class WhatsApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => di.sl<AuthenticationCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<HomeCubit>(),
         ),
         BlocProvider(
           create: (context) => AppCubit(),

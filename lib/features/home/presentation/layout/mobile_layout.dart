@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
 import 'package:whatsapp_clone/modules/chat/mobile_chat.dart';
 import 'package:whatsapp_clone/modules/settings/mobile_settings.dart';
-import 'package:whatsapp_clone/modules/status/add_status/add_text_status.dart';
 import 'package:whatsapp_clone/modules/status/mobile_status.dart';
 
 class MobileLayout extends StatelessWidget {
@@ -13,7 +14,7 @@ class MobileLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppStates>(
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         return DefaultTabController(
           length: 3,
@@ -152,46 +153,15 @@ class MobileLayout extends StatelessWidget {
                 ),
               ],
             ),
-            floatingActionButton: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                AppCubit.get(context).currentIndex == 1
-                    ? FloatingActionButton(
-                        heroTag: null,
-                        mini: true,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AddTextStatusScreen(),
-                            ),
-                          );
-                        },
-                        backgroundColor: Colors.grey[100],
-                        child: const Icon(
-                          Icons.edit,
-                          color: Colors.blueGrey,
-                        ),
-                      )
-                    : Container(
-                        width: 0,
-                      ),
-                const SizedBox(
-                  height: 10,
-                ),
-                FloatingActionButton(
-                  heroTag: null,
-                  onPressed: () {},
-                  backgroundColor: AppColors.c2(),
-                  child: Icon(
-                    AppCubit.get(context).currentIndex == 0
-                        ? Icons.chat
-                        : AppCubit.get(context).currentIndex == 1
-                            ? Icons.camera_alt
-                            : Icons.call,
-                  ),
-                ),
-              ],
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                HomeCubit.get(context).getAllUsers();
+                Navigator.pushNamed(
+                  context,
+                  Routes.contacts,
+                );
+              },
+              child: Icon(Icons.message),
             ),
           ),
         );
@@ -199,3 +169,45 @@ class MobileLayout extends StatelessWidget {
     );
   }
 }
+
+// Column(
+//               mainAxisAlignment: MainAxisAlignment.end,
+//               children: [
+//                 AppCubit.get(context).currentIndex == 1
+//                     ? FloatingActionButton(
+//                         heroTag: null,
+//                         mini: true,
+//                         onPressed: () {
+//                           Navigator.push(
+//                             context,
+//                             MaterialPageRoute(
+//                               builder: (context) => const AddTextStatusScreen(),
+//                             ),
+//                           );
+//                         },
+//                         backgroundColor: Colors.grey[100],
+//                         child: const Icon(
+//                           Icons.edit,
+//                           color: Colors.blueGrey,
+//                         ),
+//                       )
+//                     : Container(
+//                         width: 0,
+//                       ),
+//                 const SizedBox(
+//                   height: 10,
+//                 ),
+//                 FloatingActionButton(
+//                   heroTag: null,
+//                   onPressed: () {},
+//                   backgroundColor: AppColors.c2(),
+//                   child: Icon(
+//                     AppCubit.get(context).currentIndex == 0
+//                         ? Icons.chat
+//                         : AppCubit.get(context).currentIndex == 1
+//                             ? Icons.camera_alt
+//                             : Icons.call,
+//                   ),
+//                 ),
+//               ],
+//             ),
