@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/home/presentation/layout/layout.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/welcome.dart';
-import 'package:whatsapp_clone/shared/network/local/cahche_helper.dart';
 import 'app.dart';
 import 'bloc_observer.dart';
 import 'firebase_options.dart';
@@ -15,7 +14,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await di.init();
-  await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

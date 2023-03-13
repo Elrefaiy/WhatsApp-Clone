@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/features/home/presentation/layout/layout.dart';
 import 'package:whatsapp_clone/features/home/presentation/screens/all_users_screen.dart';
-import 'package:whatsapp_clone/models/status.dart';
-import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
-import 'package:whatsapp_clone/modules/chat/chat_screen.dart';
-import 'package:whatsapp_clone/modules/image_view/image_view.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/login.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/profile_info.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/verify.dart';
-import 'package:whatsapp_clone/modules/profile/mobile_profile.dart';
-import 'package:whatsapp_clone/modules/settings/mobile_settings.dart';
-import 'package:whatsapp_clone/modules/status/add_status/add_text_status.dart';
-import 'package:whatsapp_clone/modules/status/mobile_status_screen.dart';
+import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_settings.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/welcome.dart';
 
 class Routes {
@@ -70,46 +63,46 @@ class AppRoutes {
             return const AllUsersScreen();
           },
         );
-      case Routes.imageView:
-        return MaterialPageRoute(
-          builder: (context) {
-            final name = settings.arguments as String;
-            final image = settings.arguments as String;
-            return ImageViewScreen(name: name, image: image);
-          },
-        );
-      case Routes.profile:
-        return MaterialPageRoute(
-          builder: (context) {
-            return const MobileProfile();
-          },
-        );
+      // case Routes.imageView:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       final name = settings.arguments as String;
+      //       final image = settings.arguments as String;
+      //       return ImageViewScreen(name: name, image: image);
+      //     },
+      //   );
+      // case Routes.profile:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       return const MobileProfile();
+      //     },
+      //   );
       case Routes.settings:
         return MaterialPageRoute(
           builder: (context) {
             return const MobileSettingsScreen();
           },
         );
-      case Routes.chat:
-        return MaterialPageRoute(
-          builder: (context) {
-            final model = settings.arguments as UserModel;
-            return ChatScreen(model: model);
-          },
-        );
-      case Routes.status:
-        return MaterialPageRoute(
-          builder: (context) {
-            final models = settings.arguments as List<StatusModel>;
-            return MobileStatusScreen(models: models);
-          },
-        );
-      case Routes.addTextStatus:
-        return MaterialPageRoute(
-          builder: (context) {
-            return const AddTextStatusScreen();
-          },
-        );
+      // case Routes.chat:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       final model = settings.arguments as UserModel;
+      //       return ChatScreen(model: model);
+      //     },
+      //   );
+      // case Routes.status:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       final models = settings.arguments as List<StatusModel>;
+      //       return MobileStatusScreen(models: models);
+      //     },
+      //   );
+      // case Routes.addTextStatus:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       return const AddTextStatusScreen();
+      //     },
+      //   );
       default:
         throw const RoutesException('this route is undefiened!');
     }

@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
-import 'package:whatsapp_clone/cubit/app_cubit.dart';
-import 'package:whatsapp_clone/cubit/app_states.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
-import 'package:whatsapp_clone/modules/chat/mobile_chat.dart';
-import 'package:whatsapp_clone/modules/settings/mobile_settings.dart';
-import 'package:whatsapp_clone/modules/status/mobile_status.dart';
+import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_settings.dart';
 
 class MobileLayout extends StatelessWidget {
   const MobileLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<AuthenticationCubit, AuthenticationState>(
       builder: (context, state) {
         return DefaultTabController(
           length: 3,
@@ -23,8 +21,9 @@ class MobileLayout extends StatelessWidget {
               elevation: 0,
               title: Text(
                 'WhatsApp',
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      color: AppCubit.get(context).isDark
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      fontSize: 24,
+                      color: SettingsCubit.get(context).isDark
                           ? AppColors.c5()
                           : Colors.white,
                     ),
@@ -34,7 +33,7 @@ class MobileLayout extends StatelessWidget {
                   onPressed: () {},
                   icon: Icon(
                     Icons.camera_alt,
-                    color: AppCubit.get(context).isDark
+                    color: SettingsCubit.get(context).isDark
                         ? AppColors.c5()
                         : Colors.white,
                   ),
@@ -43,7 +42,7 @@ class MobileLayout extends StatelessWidget {
                   onPressed: () {},
                   icon: Icon(
                     Icons.search,
-                    color: AppCubit.get(context).isDark
+                    color: SettingsCubit.get(context).isDark
                         ? AppColors.c5()
                         : Colors.white,
                   ),
@@ -51,11 +50,11 @@ class MobileLayout extends StatelessWidget {
                 PopupMenuButton(
                   icon: Icon(
                     Icons.more_vert,
-                    color: AppCubit.get(context).isDark
+                    color: SettingsCubit.get(context).isDark
                         ? AppColors.c5()
                         : Colors.white,
                   ),
-                  color: AppCubit.get(context).isDark
+                  color: SettingsCubit.get(context).isDark
                       ? const Color.fromARGB(255, 50, 65, 73)
                       : Colors.grey[100],
                   itemBuilder: (context) => [
@@ -78,7 +77,7 @@ class MobileLayout extends StatelessWidget {
                             style:
                                 Theme.of(context).textTheme.bodyText2!.copyWith(
                                       fontSize: 16,
-                                      color: AppCubit.get(context).isDark
+                                      color: SettingsCubit.get(context).isDark
                                           ? Colors.white
                                           : Colors.grey[800],
                                     ),
@@ -92,16 +91,16 @@ class MobileLayout extends StatelessWidget {
               bottom: TabBar(
                 indicatorColor: Colors.white,
                 indicatorWeight: 4,
-                unselectedLabelColor: AppCubit.get(context).isDark
+                unselectedLabelColor: SettingsCubit.get(context).isDark
                     ? AppColors.c5()
                     : Colors.white70,
-                labelColor: AppCubit.get(context).isDark
+                labelColor: SettingsCubit.get(context).isDark
                     ? AppColors.c2()
                     : Colors.white,
                 indicator: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: AppCubit.get(context).isDark
+                      color: SettingsCubit.get(context).isDark
                           ? AppColors.c2()
                           : Colors.white,
                       width: 4,
@@ -109,12 +108,12 @@ class MobileLayout extends StatelessWidget {
                   ),
                 ),
                 onTap: (index) {
-                  AppCubit.get(context).changeCurrentIndex(index);
-                  if (index == 0) {
-                    AppCubit.get(context).getUsers();
-                  } else if (index == 1) {
-                    AppCubit.get(context).getStatus();
-                  }
+                  // SettingsCubit.get(context).changeCurrentIndex(index);
+                  // if (index == 0) {
+                  //   SettingsCubit.get(context).getUsers();
+                  // } else if (index == 1) {
+                  //   SettingsCubit.get(context).getStatus();
+                  // }
                 },
                 tabs: const [
                   Tab(
@@ -146,8 +145,12 @@ class MobileLayout extends StatelessWidget {
             ),
             body: const TabBarView(
               children: [
-                MobileChats(),
-                MobileStatus(),
+                Center(
+                  child: Text('Chats'),
+                ),
+                Center(
+                  child: Text('Status'),
+                ),
                 Center(
                   child: Text('Calls'),
                 ),
@@ -161,7 +164,7 @@ class MobileLayout extends StatelessWidget {
                   Routes.contacts,
                 );
               },
-              child: Icon(Icons.message),
+              child: const Icon(Icons.message),
             ),
           ),
         );
@@ -173,7 +176,7 @@ class MobileLayout extends StatelessWidget {
 // Column(
 //               mainAxisAlignment: MainAxisAlignment.end,
 //               children: [
-//                 AppCubit.get(context).currentIndex == 1
+//                 SettingsCubit.get(context).currentIndex == 1
 //                     ? FloatingActionButton(
 //                         heroTag: null,
 //                         mini: true,

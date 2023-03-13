@@ -3,7 +3,7 @@ import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/core/utils/media_query.dart';
-import 'package:whatsapp_clone/cubit/app_cubit.dart';
+import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -32,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 CircleAvatar(
                   backgroundImage: AssetImage(
-                    AppCubit.get(context).isDark
+                    SettingsCubit.get(context).isDark
                         ? 'assets/images/welcome-dark.jpg'
                         : 'assets/images/welcome-light.jpg',
                   ),

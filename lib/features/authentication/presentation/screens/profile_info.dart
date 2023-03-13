@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
-import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
+import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
 
 class ProfileInfoScreen extends StatelessWidget {
   const ProfileInfoScreen({super.key});
@@ -54,13 +54,13 @@ class ProfileInfoScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       scaffoldKey.currentState!.showBottomSheet(
-                        backgroundColor: AppCubit.get(context).isDark
+                        backgroundColor: SettingsCubit.get(context).isDark
                             ? AppColors.c3()
                             : Colors.white,
                         (context) => Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color: AppCubit.get(context).isDark
+                            color: SettingsCubit.get(context).isDark
                                 ? AppColors.c4()
                                 : Colors.white,
                             boxShadow: [

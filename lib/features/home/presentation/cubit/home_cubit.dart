@@ -4,7 +4,7 @@ import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:whatsapp_clone/core/usecase/usecase.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/get_all_users.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_all_users.dart';
 
 part 'home_state.dart';
 

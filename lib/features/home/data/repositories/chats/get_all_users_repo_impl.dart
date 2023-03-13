@@ -4,7 +4,7 @@ import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_remo
 import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
-import 'package:whatsapp_clone/features/home/domain/repositories/get_all_users_repo.dart';
+import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_all_users_repo.dart';
 
 class GetAllUsersRepositroyImpl implements GetAllUsersRepository {
   final GetAllUsersRemoteDataSource remoteDataSource;

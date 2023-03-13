@@ -4,8 +4,8 @@ import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/cubit/app_cubit.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
+import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -78,7 +78,7 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           DropdownButtonFormField(
                             elevation: 0,
-                            dropdownColor: AppCubit.get(context).isDark
+                            dropdownColor: SettingsCubit.get(context).isDark
                                 ? AppColors.c4()
                                 : Colors.grey[100],
                             style: Theme.of(context).textTheme.bodyText1,

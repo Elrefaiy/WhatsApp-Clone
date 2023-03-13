@@ -20,9 +20,12 @@ import 'package:whatsapp_clone/features/authentication/domain/repositories/updat
 import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
 import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_remote.dart';
-import 'package:whatsapp_clone/features/home/data/repositories/get_all_users_repo_impl.dart';
-import 'package:whatsapp_clone/features/home/domain/repositories/get_all_users_repo.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/get_all_users.dart';
+import 'package:whatsapp_clone/features/home/data/repositories/chats/get_all_users_repo_impl.dart';
+import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_all_users_repo.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_all_users.dart';
+import 'package:whatsapp_clone/features/settings/data/repositories/logout_repo_impl.dart';
+import 'package:whatsapp_clone/features/settings/domain/repositories/logout_repository.dart';
+import 'package:whatsapp_clone/features/settings/domain/usecases/logout.dart';
 import 'core/network/network_info.dart';
 import 'features/authentication/domain/usecases/submit_otp.dart';
 import 'features/authentication/domain/usecases/submit_phone.dart';
@@ -51,7 +54,11 @@ Future<void> init() async {
     ),
   );
 
-  sl.registerFactory<SettingsCubit>(() => SettingsCubit());
+  sl.registerFactory<SettingsCubit>(
+    () => SettingsCubit(
+      logoutUseCase: sl(),
+    ),
+  );
 
   //! Use Cases
 
@@ -75,6 +82,11 @@ Future<void> init() async {
   // home
   sl.registerLazySingleton<GetAllUsersUseCase>(
     () => GetAllUsersUseCase(getAllUsersRepository: sl()),
+  );
+
+  // settings
+  sl.registerLazySingleton<LogoutUseCase>(
+    () => LogoutUseCase(logoutRepository: sl()),
   );
 
   //! Repositories
@@ -123,6 +135,15 @@ Future<void> init() async {
     () => GetAllUsersRepositroyImpl(
       remoteDataSource: sl(),
       networkInfo: sl(),
+    ),
+  );
+
+  // settings
+  sl.registerLazySingleton<LogoutRepository>(
+    () => LogoutRepositoryImpl(
+      authInstance: sl(),
+      networkInfo: sl(),
+      sharedPreferences: sl(),
     ),
   );
 
