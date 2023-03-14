@@ -44,12 +44,10 @@ class MobileSettingsScreen extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const MobileProfile(),
-                  //   ),
-                  // );
+                  Navigator.pushNamed(
+                    context,
+                    Routes.profile,
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(15),

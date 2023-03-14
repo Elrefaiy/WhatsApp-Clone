@@ -50,13 +50,13 @@ class GetUserErrorState extends AuthenticationState {
   List<Object> get props => [error];
 }
 
-class UpdateUsernameLoadingState extends AuthenticationState {}
+class UpdateUserLoadingState extends AuthenticationState {}
 
-class UpdateUsernameSuccessState extends AuthenticationState {}
+class UpdateUserSuccessState extends AuthenticationState {}
 
-class UpdateUsernameErrorState extends AuthenticationState {
+class UpdateUserErrorState extends AuthenticationState {
   final String error;
-  const UpdateUsernameErrorState(this.error);
+  const UpdateUserErrorState(this.error);
   @override
   List<Object> get props => [error];
 }
@@ -75,17 +75,6 @@ class CropProfileImageSuccessState extends AuthenticationState {}
 class CropProfileImageErrorState extends AuthenticationState {
   final String error;
   const CropProfileImageErrorState(this.error);
-  @override
-  List<Object> get props => [error];
-}
-
-class UpdateProfileImageLoadingState extends AuthenticationState {}
-
-class UpdateProfileImageSuccessState extends AuthenticationState {}
-
-class UpdateProfileImageErrorState extends AuthenticationState {
-  final String error;
-  const UpdateProfileImageErrorState(this.error);
   @override
   List<Object> get props => [error];
 }

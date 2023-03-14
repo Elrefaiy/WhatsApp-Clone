@@ -12,6 +12,7 @@ import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/submit_otp.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/submit_phone.dart';
+import 'package:whatsapp_clone/features/authentication/domain/usecases/update_about.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_name.dart';
 import '../../domain/entities/user.dart';
@@ -23,6 +24,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   final GetCurrentUserUseCase getCurrentUserUseCase;
   final UpdateUsernameUseCase updateUsernameUseCase;
   final UpdateUserImageUseCase updateUserImageUseCase;
+  final UpdateAboutUseCase updateAboutUseCase;
   final SharedPreferences sharedPreferences;
 
   AuthenticationCubit({
@@ -31,6 +33,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     required this.getCurrentUserUseCase,
     required this.updateUsernameUseCase,
     required this.updateUserImageUseCase,
+    required this.updateAboutUseCase,
     required this.sharedPreferences,
   }) : super(AuthenticationInitial());
 
@@ -89,13 +92,29 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   Future<void> updateUsername({
     required String username,
   }) async {
-    emit(UpdateUsernameLoadingState());
+    emit(UpdateUserLoadingState());
     final response = await updateUsernameUseCase(username);
-    emit(
-      response.fold(
-        (failure) => UpdateUsernameErrorState(_mapFailureToMsg(failure)),
-        (right) => UpdateUsernameSuccessState(),
-      ),
+    response.fold(
+      (failure) => emit(UpdateUserErrorState(_mapFailureToMsg(failure))),
+      (right) {
+        emit(UpdateUserSuccessState());
+        getCurrentUser();
+      },
+    );
+  }
+
+  Future<void> updateAbout({
+    required String about,
+  }) async {
+    emit(UpdateUserLoadingState());
+    final response = await updateAboutUseCase(about);
+
+    response.fold(
+      (failure) => emit(UpdateUserErrorState(_mapFailureToMsg(failure))),
+      (right) {
+        emit(UpdateUserSuccessState());
+        getCurrentUser();
+      },
     );
   }
 
@@ -148,16 +167,15 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       ],
     );
     if (croppedImage != null) {
-      emit(UpdateProfileImageLoadingState());
+      emit(UpdateUserLoadingState());
       profileImage = File(croppedImage.path);
       emit(CropProfileImageSuccessState());
       final response = await updateUserImageUseCase(profileImage);
 
       response.fold(
-        (failure) =>
-            emit(UpdateProfileImageErrorState(_mapFailureToMsg(failure))),
+        (failure) => emit(UpdateUserErrorState(_mapFailureToMsg(failure))),
         (right) {
-          emit(UpdateProfileImageSuccessState());
+          emit(UpdateUserSuccessState());
           getCurrentUser();
         },
       );

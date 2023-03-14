@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
+import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
 
@@ -16,16 +17,17 @@ class ProfileInfoScreen extends StatelessWidget {
 
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
-        // if (state is GetUserLoadingState) {
-        //   AppConstants.showLoadingDialog(context);
-        // } else if (state is GetUserSuccessState) {
-        //   Navigator.pop(context);
-        // Navigator.pushNamedAndRemoveUntil(
-        //   context,
-        //   Routes.home,
-        //   (route) => false,
-        // );
-        // }
+        if (state is UpdateUserLoadingState) {
+          AppConstants.showLoadingDialog(context);
+        } else if (state is UpdateUserSuccessState) {
+          Navigator.pop(context);
+        } else if (state is UpdateUserErrorState) {
+          Navigator.pop(context);
+          AppConstants.showSnackBar(
+            context: context,
+            content: AppStrings.somethingWrong,
+          );
+        }
       },
       builder: (context, state) {
         final nameController = TextEditingController();

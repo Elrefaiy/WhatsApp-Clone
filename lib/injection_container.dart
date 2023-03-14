@@ -10,14 +10,17 @@ import 'package:whatsapp_clone/core/firebase/firebase_storage.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/get_current_user_repo_impl.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/submit_otp_repo_impl.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/submit_phone_repo_impl.dart';
+import 'package:whatsapp_clone/features/authentication/data/repositories/update_about_repo_impl.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/update_image_repository_impl.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/update_name_repo_impl.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/get_current_user_repo.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/submit_otp_repo.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/submit_phone_repo.dart';
+import 'package:whatsapp_clone/features/authentication/domain/repositories/update_about_repo.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/update_image_repo.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/update_name_repo.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
+import 'package:whatsapp_clone/features/authentication/domain/usecases/update_about.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
 import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_remote.dart';
 import 'package:whatsapp_clone/features/home/data/repositories/chats/get_all_users_repo_impl.dart';
@@ -45,6 +48,7 @@ Future<void> init() async {
       getCurrentUserUseCase: sl(),
       updateUsernameUseCase: sl(),
       updateUserImageUseCase: sl(),
+      updateAboutUseCase: sl(),
       sharedPreferences: sl(),
     ),
   );
@@ -77,6 +81,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<UpdateUserImageUseCase>(
     () => UpdateUserImageUseCase(updateUserImageRepository: sl()),
+  );
+  sl.registerLazySingleton<UpdateAboutUseCase>(
+    () => UpdateAboutUseCase(updateAboutRepository: sl()),
   );
 
   // home
@@ -116,6 +123,13 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<UpdateUsernameRepository>(
     () => UpdateUsernameReposoryImpl(
+      authInstance: sl(),
+      storeInstance: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  sl.registerLazySingleton<UpdateAboutRepository>(
+    () => UpdateAboutReposoryImpl(
       authInstance: sl(),
       storeInstance: sl(),
       networkInfo: sl(),
