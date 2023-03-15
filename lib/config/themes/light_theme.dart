@@ -27,6 +27,12 @@ ThemeData lightTheme() {
         fontWeight: FontWeight.bold,
         overflow: TextOverflow.ellipsis,
       ),
+      headline3: const TextStyle(
+        color: Colors.white,
+        fontSize: 24,
+        fontWeight: FontWeight.w500,
+        overflow: TextOverflow.ellipsis,
+      ),
       bodyText1: const TextStyle(
         color: Colors.black,
         fontSize: 16,

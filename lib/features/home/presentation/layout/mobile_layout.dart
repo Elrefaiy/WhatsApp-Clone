@@ -55,82 +55,120 @@ class _MobileLayoutState extends State<MobileLayout>
             headerSliverBuilder: (BuildContext context, bool isScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  title: Row(
-                    children: [
-                      const Text('WhatsApp'),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.camera_alt,
-                          color: SettingsCubit.get(context).isDark
-                              ? AppColors.c5()
-                              : Colors.white,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.search,
-                          color: SettingsCubit.get(context).isDark
-                              ? AppColors.c5()
-                              : Colors.white,
-                        ),
-                      ),
-                      PopupMenuButton(
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: SettingsCubit.get(context).isDark
-                              ? AppColors.c5()
-                              : Colors.white,
-                        ),
+                  title: Text(
+                    'WhatsApp',
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.camera_alt,
                         color: SettingsCubit.get(context).isDark
-                            ? const Color.fromARGB(255, 50, 65, 73)
-                            : Colors.grey[100],
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MobileSettingsScreen(),
-                                  ),
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 50),
-                                child: Text(
-                                  'Settings',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(
-                                        fontSize: 16,
-                                        color: SettingsCubit.get(context).isDark
-                                            ? Colors.white
-                                            : Colors.grey[800],
-                                      ),
+                            ? AppColors.c5()
+                            : Colors.white,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.search,
+                        color: SettingsCubit.get(context).isDark
+                            ? AppColors.c5()
+                            : Colors.white,
+                      ),
+                    ),
+                    PopupMenuButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: SettingsCubit.get(context).isDark
+                            ? AppColors.c5()
+                            : Colors.white,
+                      ),
+                      color: SettingsCubit.get(context).isDark
+                          ? Colors.blueGrey[800]
+                          : Colors.grey[100],
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MobileSettingsScreen(),
                                 ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 50),
+                              child: Text(
+                                'Settings',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(
+                                      fontSize: 16,
+                                      color: SettingsCubit.get(context).isDark
+                                          ? Colors.white
+                                          : Colors.grey[800],
+                                    ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                   pinned: true,
                   floating: true,
                   bottom: TabBar(
                     controller: controller,
-                    indicatorColor: Colors.white,
+                    indicatorColor: SettingsCubit.get(context).isDark
+                        ? AppColors.c2()
+                        : Colors.white,
                     indicatorWeight: 4,
-                    tabs: const <Tab>[
-                      Tab(text: 'Chats'),
-                      Tab(text: 'Chats'),
-                      Tab(text: 'Chats'),
+                    tabs: <Tab>[
+                      Tab(
+                        child: Text(
+                          'Chats',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: HomeCubit.get(context).currentIndex == 0
+                                ? SettingsCubit.get(context).isDark
+                                    ? AppColors.c2()
+                                    : Colors.white
+                                : Colors.white.withOpacity(.6),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'Status',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: HomeCubit.get(context).currentIndex == 1
+                                ? SettingsCubit.get(context).isDark
+                                    ? AppColors.c2()
+                                    : Colors.white
+                                : Colors.white.withOpacity(.6),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'Calls',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: HomeCubit.get(context).currentIndex == 2
+                                ? SettingsCubit.get(context).isDark
+                                    ? AppColors.c2()
+                                    : Colors.white
+                                : Colors.white.withOpacity(.6),
+                          ),
+                        ),
+                      ),
                     ],
                     // controller: _tabController,
                   ),

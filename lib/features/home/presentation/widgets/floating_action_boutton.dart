@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/config/routes/app_routes.dart';
+import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
 
 class FAB extends StatelessWidget {
@@ -18,6 +19,7 @@ class FAB extends StatelessWidget {
               Routes.contacts,
             );
           },
+          backgroundColor: AppColors.c2(),
           child: const Icon(Icons.message),
         );
       case 1:
@@ -28,12 +30,17 @@ class FAB extends StatelessWidget {
               heroTag: null,
               onPressed: () {},
               mini: true,
-              child: const Icon(Icons.edit),
+              backgroundColor: Colors.blueGrey[100],
+              child: Icon(
+                Icons.edit,
+                color: Colors.blueGrey[600],
+              ),
             ),
             const SizedBox(height: 10),
             FloatingActionButton(
               heroTag: null,
               onPressed: () {},
+              backgroundColor: AppColors.c2(),
               child: const Icon(Icons.camera_alt),
             ),
           ],
@@ -41,6 +48,7 @@ class FAB extends StatelessWidget {
       default:
         return FloatingActionButton(
           onPressed: () {},
+          backgroundColor: AppColors.c2(),
           child: const Icon(Icons.call),
         );
     }

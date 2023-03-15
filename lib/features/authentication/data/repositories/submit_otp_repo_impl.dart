@@ -37,17 +37,21 @@ class SubmitOTPRepositoryImpl implements SubmitOTPRepository {
         final response = await authInstance.signInWithCredential(
           credential: credential,
         );
-        await storeInstance.set(
-          collection: 'users',
-          doc: authInstance.currentUser.uid,
-          body: UserModel(
-            name: 'User Name',
-            phone: authInstance.currentUser.phoneNumber!,
-            about: 'Hello, I am using Whatsapp',
-            image: 'image',
-            uId: authInstance.currentUser.uid,
-          ).toJson(),
-        );
+
+        if (await userExist() == false) {
+          await storeInstance.set(
+            collection: 'users',
+            doc: authInstance.currentUser.uid,
+            body: UserModel(
+              name: 'User Name',
+              phone: authInstance.currentUser.phoneNumber!,
+              about: 'Hello, I am using Whatsapp',
+              image: 'image',
+              uId: authInstance.currentUser.uid,
+            ).toJson(),
+          );
+        }
+
         sharedPreferences.setString(
           AppStrings.token,
           authInstance.currentUser.uid,
@@ -59,5 +63,16 @@ class SubmitOTPRepositoryImpl implements SubmitOTPRepository {
     } else {
       throw const NoInternetConnectionException();
     }
+  }
+
+  Future<bool> userExist() async {
+    bool exist = false;
+    final users = await storeInstance.getAllUsers();
+    for (var element in users) {
+      if (element['uId'] == authInstance.currentUser.uid) {
+        exist = true;
+      }
+    }
+    return exist;
   }
 }
