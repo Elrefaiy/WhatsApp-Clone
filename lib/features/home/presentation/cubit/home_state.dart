@@ -24,3 +24,5 @@ class GetAllUsersErrorState extends HomeState {
   @override
   List<Object> get props => [error];
 }
+
+class ChangeCurrentIndexState extends HomeState {}

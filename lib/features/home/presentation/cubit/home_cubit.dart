@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:whatsapp_clone/core/usecase/usecase.dart';
@@ -15,6 +16,13 @@ class HomeCubit extends Cubit<HomeState> {
   }) : super(HomeInitial());
 
   static HomeCubit get(context) => BlocProvider.of(context);
+
+  int currentIndex = 0;
+  void changeIndex(index) {
+    emit(HomeInitial());
+    currentIndex = index;
+    emit(ChangeCurrentIndexState());
+  }
 
   Future<void> getAllUsers() async {
     emit(GetAllUsersLoadingState());
