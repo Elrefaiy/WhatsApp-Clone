@@ -10,7 +10,8 @@ import 'injection_container.dart' as di;
 
 class WhatsApp extends StatelessWidget {
   final Widget startWidget;
-  const WhatsApp({required this.startWidget, super.key});
+  final bool mode;
+  const WhatsApp({required this.startWidget, required this.mode, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class WhatsApp extends StatelessWidget {
           create: (context) => di.sl<HomeCubit>(),
         ),
         BlocProvider(
-          create: (context) => di.sl<SettingsCubit>(),
+          create: (context) => di.sl<SettingsCubit>()..changeMode(mode),
         ),
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(

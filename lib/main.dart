@@ -18,9 +18,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   String token = di.sl<SharedPreferences>().getString(AppStrings.token) ?? '';
+  bool mode = di.sl<SharedPreferences>().getBool(AppStrings.isDark) ?? false;
   Widget widget = const WelcomeScreen();
   if (token != '') {
     widget = const Layout();
   }
-  runApp(WhatsApp(startWidget: widget));
+  runApp(WhatsApp(
+    startWidget: widget,
+    mode: mode,
+  ));
 }

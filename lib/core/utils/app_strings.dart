@@ -13,4 +13,5 @@ class AppStrings {
   //! SharedPreferences Keys
   static const verificationId = 'CACHED_VERIFICATION_ID';
   static const token = 'USER_TOKEN';
+  static const isDark = 'IS_DARK';
 }

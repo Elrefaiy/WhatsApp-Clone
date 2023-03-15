@@ -61,6 +61,7 @@ Future<void> init() async {
   sl.registerFactory<SettingsCubit>(
     () => SettingsCubit(
       logoutUseCase: sl(),
+      sharedPreferences: sl(),
     ),
   );
 
