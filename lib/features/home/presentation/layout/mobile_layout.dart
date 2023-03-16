@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
+import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
 import 'package:whatsapp_clone/features/home/presentation/widgets/floating_action_boutton.dart';
 import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
@@ -56,7 +57,7 @@ class _MobileLayoutState extends State<MobileLayout>
               return <Widget>[
                 SliverAppBar(
                   title: Text(
-                    'WhatsApp',
+                    AppStrings.appName,
                     style: Theme.of(context).textTheme.headline3,
                   ),
                   actions: [

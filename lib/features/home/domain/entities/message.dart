@@ -17,4 +17,12 @@ class Message extends Equatable {
 
   @override
   List<Object?> get props => [message, time, date, dateTime, recieverId];
+
+  Map<String, dynamic> toMap() => {
+        'message': message,
+        'time': time,
+        'date': date,
+        'dateTime': dateTime,
+        'recieverId': recieverId,
+      };
 }

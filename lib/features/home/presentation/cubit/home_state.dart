@@ -26,3 +26,12 @@ class GetAllUsersErrorState extends HomeState {
 }
 
 class ChangeCurrentIndexState extends HomeState {}
+
+class SendTextMessageSuccessState extends HomeState {}
+
+class SendTextMessageErrorState extends HomeState {
+  final String error;
+  const SendTextMessageErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}

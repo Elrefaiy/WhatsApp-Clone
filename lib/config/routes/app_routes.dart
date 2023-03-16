@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/core/widgets/image_view.dart';
+import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
 import 'package:whatsapp_clone/features/home/presentation/layout/layout.dart';
 import 'package:whatsapp_clone/features/home/presentation/screens/all_users_screen.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/login.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/profile_info.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/verify.dart';
+import 'package:whatsapp_clone/features/home/presentation/screens/chat_screen.dart';
 import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_profile.dart';
 import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_settings.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/welcome.dart';
@@ -84,13 +86,13 @@ class AppRoutes {
             return const MobileSettingsScreen();
           },
         );
-      // case Routes.chat:
-      //   return MaterialPageRoute(
-      //     builder: (context) {
-      //       final model = settings.arguments as UserModel;
-      //       return ChatScreen(model: model);
-      //     },
-      //   );
+      case Routes.chat:
+        return MaterialPageRoute(
+          builder: (context) {
+            final model = settings.arguments as User;
+            return ChatScreen(model: model);
+          },
+        );
       // case Routes.status:
       //   return MaterialPageRoute(
       //     builder: (context) {

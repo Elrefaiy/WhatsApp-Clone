@@ -21,12 +21,12 @@ abstract class FirebaseFirestoreConsumer {
     required String doc,
     required Map<String, dynamic> body,
   });
-  Future<dynamic> add({
+  Future<dynamic> addMessage({
     required String collection1,
     required String doc1,
     required String collection2,
-    String? doc2,
-    String? collection3,
+    required String doc2,
+    required String collection3,
     required Map<String, dynamic> body,
   });
 }
@@ -36,29 +36,30 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
 
   FirebaseFirestoreConsumerImpl({required this.instance});
   @override
-  Future add({
+  Future addMessage({
     required String collection1,
     required String doc1,
     required String collection2,
-    String? doc2,
-    String? collection3,
+    required String doc2,
+    required String collection3,
     required Map<String, dynamic> body,
   }) async {
-    if (collection3 != null) {
-      await instance
+    await instance
+        .collection(collection1)
+        .doc(doc1)
+        .collection(collection2)
+        .doc(doc2)
+        .collection(collection3)
+        .add(body)
+        .then((value) {
+      instance
           .collection(collection1)
-          .doc(doc1)
-          .collection(collection2)
           .doc(doc2)
+          .collection(collection2)
+          .doc(doc1)
           .collection(collection3)
           .add(body);
-    } else {
-      await instance
-          .collection(collection1)
-          .doc(doc1)
-          .collection(collection2)
-          .add(body);
-    }
+    });
   }
 
   @override

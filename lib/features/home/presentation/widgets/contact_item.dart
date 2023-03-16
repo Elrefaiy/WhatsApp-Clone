@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
 
 class ContactItem extends StatelessWidget {
@@ -9,7 +11,13 @@ class ContactItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          Routes.chat,
+          arguments: user,
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
@@ -18,19 +26,9 @@ class ContactItem extends StatelessWidget {
         child: Row(
           children: [
             GestureDetector(
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => ImageViewScreen(
-                //       image: model.image,
-                //       name: model.name,
-                //     ),
-                //   ),
-                // );
-              },
+              onTap: () {},
               child: AppConstants.userImage(
-                radius: 23,
+                radius: 22,
                 image: user.image,
               ),
             ),
@@ -41,7 +39,9 @@ class ContactItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    user.name,
+                    user.uId == AuthenticationCubit.get(context).currentUser.uId
+                        ? '${user.phone} (You)'
+                        : user.name,
                     style: Theme.of(context).textTheme.headline2,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

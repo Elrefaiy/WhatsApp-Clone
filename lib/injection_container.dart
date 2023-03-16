@@ -24,8 +24,11 @@ import 'package:whatsapp_clone/features/authentication/domain/usecases/update_ab
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
 import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_remote.dart';
 import 'package:whatsapp_clone/features/home/data/repositories/chats/get_all_users_repo_impl.dart';
+import 'package:whatsapp_clone/features/home/data/repositories/chats/send_text_message_repo_impl.dart';
 import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_all_users_repo.dart';
+import 'package:whatsapp_clone/features/home/domain/repositories/chats/send_text_message_repo.dart';
 import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_all_users.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/chats/send_text_message.dart';
 import 'package:whatsapp_clone/features/settings/data/repositories/logout_repo_impl.dart';
 import 'package:whatsapp_clone/features/settings/domain/repositories/logout_repository.dart';
 import 'package:whatsapp_clone/features/settings/domain/usecases/logout.dart';
@@ -55,6 +58,7 @@ Future<void> init() async {
   sl.registerFactory<HomeCubit>(
     () => HomeCubit(
       getAllUsersUseCase: sl(),
+      sendTextMessageUseCase: sl(),
     ),
   );
 
@@ -90,6 +94,9 @@ Future<void> init() async {
   // home
   sl.registerLazySingleton<GetAllUsersUseCase>(
     () => GetAllUsersUseCase(getAllUsersRepository: sl()),
+  );
+  sl.registerLazySingleton<SendTextMessageUseCase>(
+    () => SendTextMessageUseCase(sendTextMessageRepository: sl()),
   );
 
   // settings
@@ -149,6 +156,13 @@ Future<void> init() async {
   sl.registerLazySingleton<GetAllUsersRepository>(
     () => GetAllUsersRepositroyImpl(
       remoteDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  sl.registerLazySingleton<SendTextMessageRepository>(
+    () => SendTextMessageRepositoryImpl(
+      authInstance: sl(),
+      storeInstance: sl(),
       networkInfo: sl(),
     ),
   );

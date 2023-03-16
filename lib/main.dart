@@ -10,7 +10,7 @@ import 'bloc_observer.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await di.init();
