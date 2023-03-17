@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
 import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
 import 'package:whatsapp_clone/core/firebase/firebase_storage.dart';
+import 'package:whatsapp_clone/features/authentication/data/datasources/get_current_user_local.dart';
+import 'package:whatsapp_clone/features/authentication/data/datasources/get_current_user_remote.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/get_current_user_repo_impl.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/submit_otp_repo_impl.dart';
 import 'package:whatsapp_clone/features/authentication/data/repositories/submit_phone_repo_impl.dart';
@@ -22,6 +24,7 @@ import 'package:whatsapp_clone/features/authentication/domain/repositories/updat
 import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_about.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
+import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_local.dart';
 import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_remote.dart';
 import 'package:whatsapp_clone/features/home/data/repositories/chats/get_all_users_repo_impl.dart';
 import 'package:whatsapp_clone/features/home/data/repositories/chats/send_text_message_repo_impl.dart';
@@ -124,9 +127,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<GetCurrentUserRepository>(
     () => GetCurrentUserRepositoryImpl(
-      authInstance: sl(),
-      storeInstance: sl(),
       networkInfo: sl(),
+      remoteDataSource: sl(),
+      localDataSource: sl(),
     ),
   );
   sl.registerLazySingleton<UpdateUsernameRepository>(
@@ -156,6 +159,7 @@ Future<void> init() async {
   sl.registerLazySingleton<GetAllUsersRepository>(
     () => GetAllUsersRepositroyImpl(
       remoteDataSource: sl(),
+      localDataSource: sl(),
       networkInfo: sl(),
     ),
   );
@@ -177,9 +181,29 @@ Future<void> init() async {
   );
 
   //! Datasources
+
+  // authentication
+  sl.registerLazySingleton<GetCurrentUserRemoteDataSource>(
+    () => GetCurrentUserRemoteDataSourceImpl(
+      authInstance: sl(),
+      storeInstance: sl(),
+    ),
+  );
+  sl.registerLazySingleton<GetCurrentUserLocalDataSource>(
+    () => GetCurrentUserLocalDataImpl(
+      sharedPreferences: sl(),
+    ),
+  );
+
+  // home
   sl.registerLazySingleton<GetAllUsersRemoteDataSource>(
     () => GetAllUsersRemoteDataSourceImpl(
       instance: sl(),
+    ),
+  );
+  sl.registerLazySingleton<GetAllUsersLocalDataSource>(
+    () => GetAllUsersLocalDataSourceImpl(
+      sharedPreferences: sl(),
     ),
   );
   //! Core

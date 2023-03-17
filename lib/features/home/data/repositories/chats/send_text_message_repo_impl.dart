@@ -2,7 +2,6 @@ import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
 import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
 import 'package:whatsapp_clone/core/network/network_info.dart';
-import 'package:whatsapp_clone/features/home/data/models/message_model.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/message.dart';
 import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';

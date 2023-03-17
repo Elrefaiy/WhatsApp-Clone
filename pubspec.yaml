@@ -33,8 +33,10 @@ dependencies:
 
 flutter_native_splash:
   color: "#ffffff"
-  image: assets/icons/splash.png
   color_dark: "#131A22"
+  image: assets/icons/splash.png
+  branding: assets/icons/from-meta.png
+  branding_mode: bottom
   android: true
   ios: true
   web: true

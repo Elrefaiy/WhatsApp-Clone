@@ -1,37 +1,39 @@
-import 'package:whatsapp_clone/core/errors/exceptions.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
 import 'package:whatsapp_clone/core/network/network_info.dart';
-import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
+import 'package:whatsapp_clone/features/authentication/data/datasources/get_current_user_local.dart';
+import 'package:whatsapp_clone/features/authentication/data/datasources/get_current_user_remote.dart';
 import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
+import 'package:whatsapp_clone/features/authentication/domain/entities/user.dart';
 import 'package:whatsapp_clone/features/authentication/domain/repositories/get_current_user_repo.dart';
 
 class GetCurrentUserRepositoryImpl implements GetCurrentUserRepository {
   final NetworkInfo networkInfo;
-  final FirebaseAuthConsumer authInstance;
-  final FirebaseFirestoreConsumer storeInstance;
+  final GetCurrentUserRemoteDataSource remoteDataSource;
+  final GetCurrentUserLocalDataSource localDataSource;
 
   GetCurrentUserRepositoryImpl({
     required this.networkInfo,
-    required this.authInstance,
-    required this.storeInstance,
+    required this.remoteDataSource,
+    required this.localDataSource,
   });
 
   @override
-  Future<Either<Failure, UserModel>> getCurrentUser() async {
+  Future<Either<Failure, User>> getCurrentUser() async {
     if (await networkInfo.isConnected) {
       try {
-        final json = await storeInstance.getUser(
-          uId: authInstance.currentUser.uid,
-        );
-        final user = UserModel.fromJson(json);
+        final user = await remoteDataSource.getCurrentUser();
+        await localDataSource.cacheCurrentUser(user);
         return Right(user);
       } catch (error) {
         return Left(ServerFailure());
       }
     } else {
-      throw const NoInternetConnectionException();
+      try {
+        final user = localDataSource.getCurrentUser();
+        return Right(user);
+      } catch (error) {
+        return Left(CacheFailure());
+      }
     }
   }
 }

@@ -16,6 +16,8 @@ class AppStrings {
 
   //! SharedPreferences Keys
   static const verificationId = 'CACHED_VERIFICATION_ID';
-  static const token = 'USER_TOKEN';
-  static const isDark = 'IS_DARK';
+  static const token = 'CACHED_USER_TOKEN';
+  static const isDark = 'CACHED_IS_DARK';
+  static const currentUser = 'CACHED_CURRENT_USER';
+  static const allContacts = 'CACHED_ALL_CONTACTS';
 }

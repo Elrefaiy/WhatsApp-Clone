@@ -7,8 +7,9 @@ abstract class GetAllUsersRemoteDataSource {
 
 class GetAllUsersRemoteDataSourceImpl implements GetAllUsersRemoteDataSource {
   final FirebaseFirestoreConsumer instance;
-
-  GetAllUsersRemoteDataSourceImpl({required this.instance});
+  GetAllUsersRemoteDataSourceImpl({
+    required this.instance,
+  });
 
   @override
   Future<List<UserModel>> getAllUsers() async {

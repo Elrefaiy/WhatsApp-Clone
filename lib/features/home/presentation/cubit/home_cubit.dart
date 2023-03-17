@@ -47,6 +47,7 @@ class HomeCubit extends Cubit<HomeState> {
     required String dateTime,
     required String receiverId,
   }) async {
+    emit(SendTextMessageLoadingState());
     Message msg = Message(
       message: message,
       time: time,

@@ -27,6 +27,8 @@ class GetAllUsersErrorState extends HomeState {
 
 class ChangeCurrentIndexState extends HomeState {}
 
+class SendTextMessageLoadingState extends HomeState {}
+
 class SendTextMessageSuccessState extends HomeState {}
 
 class SendTextMessageErrorState extends HomeState {
