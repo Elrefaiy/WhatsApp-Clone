@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/core/errors/failures.dart';
@@ -6,6 +7,7 @@ import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/message.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
 import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_all_users.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_chat_messages.dart';
 import 'package:whatsapp_clone/features/home/domain/usecases/chats/send_text_message.dart';
 
 part 'home_state.dart';
@@ -13,9 +15,11 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final GetAllUsersUseCase getAllUsersUseCase;
   final SendTextMessageUseCase sendTextMessageUseCase;
+  final GetChatMessagesUseCase getChatMessagesUseCase;
   HomeCubit({
     required this.getAllUsersUseCase,
     required this.sendTextMessageUseCase,
+    required this.getChatMessagesUseCase,
   }) : super(HomeInitial());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -62,6 +66,11 @@ class HomeCubit extends Cubit<HomeState> {
         (right) => SendTextMessageSuccessState(),
       ),
     );
+  }
+
+  Stream<List<Message>> getChatMessages(String receiverId) {
+    emit(GetChatMessagesLoadingState());
+    return getChatMessagesUseCase.call(receiverId);
   }
 
   String _mapFailureToMsg(Failure failure) {

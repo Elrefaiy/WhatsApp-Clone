@@ -3,6 +3,7 @@ import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
+import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
 
 class ContactItem extends StatelessWidget {
   final User user;
@@ -12,6 +13,7 @@ class ContactItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        HomeCubit.get(context).getChatMessages(user.uId);
         Navigator.pushNamed(
           context,
           Routes.chat,

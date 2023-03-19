@@ -5,8 +5,12 @@ import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:intl/intl.dart';
+import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
+import 'package:whatsapp_clone/features/home/domain/entities/message.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
 import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
+import 'package:whatsapp_clone/features/home/presentation/widgets/freind_message_item.dart';
+import 'package:whatsapp_clone/features/home/presentation/widgets/my_message_item.dart';
 import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -109,6 +113,36 @@ class ChatScreen extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
+                Expanded(
+                  child: StreamBuilder<List<Message>>(
+                    stream: HomeCubit.get(context).getChatMessages(model.uId),
+                    builder: (context, snapshot) {
+                      return ListView.separated(
+                        // controller: AppCubit.get(context).chatController,
+                        itemBuilder: (context, index) {
+                          if (snapshot.data![index].recieverId !=
+                              AuthenticationCubit.get(context)
+                                  .currentUser
+                                  .uId) {
+                            return MyMessageWidget(
+                              content: snapshot.data![index].message,
+                              time: snapshot.data![index].time,
+                            );
+                          } else {
+                            return FriendMessageWidget(
+                              content: snapshot.data![index].message,
+                              time: snapshot.data![index].time,
+                            );
+                          }
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 5,
+                        ),
+                        itemCount: snapshot.data!.length,
+                      );
+                    },
+                  ),
+                ),
                 // Expanded(
                 //   child: ListView.separated(
                 //     controller: AppCubit.get(context).chatController,
@@ -135,7 +169,7 @@ class ChatScreen extends StatelessWidget {
                 //     itemCount: AppCubit.get(context).messages.length,
                 //   ),
                 // ),
-                Spacer(),
+
                 const SizedBox(
                   height: 10,
                 ),

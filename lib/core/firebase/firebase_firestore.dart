@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:whatsapp_clone/features/home/data/models/message_model.dart';
 
 abstract class FirebaseFirestoreConsumer {
   Future<Map<String, dynamic>> getUser({required String uId});
   Future<List<Map<String, dynamic>>> getAllUsers();
-  // Future<List<dynamic>> getChatMessages({
-  //   required String uId,
-  //   required String recieverId,
-  // });
+  Stream<List<MessageModel>> getChatMessages({
+    required String uId,
+    required String recieverId,
+  });
   // Future<List<dynamic>> getChatMedia({
   //   required String uId,
   //   required String recieverId,
@@ -98,5 +99,28 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
       }
     });
     return users;
+  }
+
+  @override
+  Stream<List<MessageModel>> getChatMessages({
+    required String uId,
+    required String recieverId,
+  }) {
+    return instance
+        .collection('users')
+        .doc(uId)
+        .collection('chats')
+        .doc(recieverId)
+        .collection('messages')
+        .orderBy('dateTime')
+        .snapshots()
+        .map((event) {
+      List<MessageModel> messages = [];
+
+      for (var element in event.docs) {
+        messages.add(MessageModel.fromJson(element.data()));
+      }
+      return messages;
+    });
   }
 }

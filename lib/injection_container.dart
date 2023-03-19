@@ -24,13 +24,18 @@ import 'package:whatsapp_clone/features/authentication/domain/repositories/updat
 import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_about.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_local.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_remote.dart';
+import 'package:whatsapp_clone/features/home/data/datasources/chats/get_all_users_local.dart';
+import 'package:whatsapp_clone/features/home/data/datasources/chats/get_all_users_remote.dart';
+import 'package:whatsapp_clone/features/home/data/datasources/chats/get_chat_messages_local.dart';
+import 'package:whatsapp_clone/features/home/data/datasources/chats/get_chat_messages_remote.dart';
 import 'package:whatsapp_clone/features/home/data/repositories/chats/get_all_users_repo_impl.dart';
+import 'package:whatsapp_clone/features/home/data/repositories/chats/get_chat_messages_repo_impl.dart';
 import 'package:whatsapp_clone/features/home/data/repositories/chats/send_text_message_repo_impl.dart';
 import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_all_users_repo.dart';
+import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_chat_messages_repo.dart';
 import 'package:whatsapp_clone/features/home/domain/repositories/chats/send_text_message_repo.dart';
 import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_all_users.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_chat_messages.dart';
 import 'package:whatsapp_clone/features/home/domain/usecases/chats/send_text_message.dart';
 import 'package:whatsapp_clone/features/settings/data/repositories/logout_repo_impl.dart';
 import 'package:whatsapp_clone/features/settings/domain/repositories/logout_repository.dart';
@@ -62,6 +67,7 @@ Future<void> init() async {
     () => HomeCubit(
       getAllUsersUseCase: sl(),
       sendTextMessageUseCase: sl(),
+      getChatMessagesUseCase: sl(),
     ),
   );
 
@@ -100,6 +106,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<SendTextMessageUseCase>(
     () => SendTextMessageUseCase(sendTextMessageRepository: sl()),
+  );
+  sl.registerLazySingleton<GetChatMessagesUseCase>(
+    () => GetChatMessagesUseCase(getChatMessagesRepository: sl()),
   );
 
   // settings
@@ -170,6 +179,11 @@ Future<void> init() async {
       networkInfo: sl(),
     ),
   );
+  sl.registerLazySingleton<GetChatMessagesRepository>(
+    () => GetChatMessagesRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
 
   // settings
   sl.registerLazySingleton<LogoutRepository>(
@@ -206,6 +220,18 @@ Future<void> init() async {
       sharedPreferences: sl(),
     ),
   );
+  sl.registerLazySingleton<GetChatMessagesRemoteDataSource>(
+    () => GetChatMessagesRemoteDataImpl(
+      authInstance: sl(),
+      storeInstance: sl(),
+    ),
+  );
+  sl.registerLazySingleton<GetChatMessagesLocalDataSource>(
+    () => GetChatMessagesLocalDataImpl(
+      sharedPreferences: sl(),
+    ),
+  );
+
   //! Core
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(connectionChecker: sl()));

@@ -1,11 +1,11 @@
 import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/core/network/network_info.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_local.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/get_all_users_remote.dart';
+import 'package:whatsapp_clone/features/home/data/datasources/chats/get_all_users_local.dart';
 import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
 import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_all_users_repo.dart';
+import 'package:whatsapp_clone/features/home/data/datasources/chats/get_all_users_remote.dart';
 
 class GetAllUsersRepositroyImpl implements GetAllUsersRepository {
   final GetAllUsersRemoteDataSource remoteDataSource;
