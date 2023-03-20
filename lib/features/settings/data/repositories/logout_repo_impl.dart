@@ -1,17 +1,17 @@
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:whatsapp_clone/core/errors/exceptions.dart';
-import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
-import 'package:whatsapp_clone/core/network/network_info.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/features/settings/domain/repositories/logout_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/firebase/firebase_auth.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../../core/utils/app_strings.dart';
+import '../../domain/repositories/logout_repository.dart';
 
 class LogoutRepositoryImpl implements LogoutRepository {
   final NetworkInfo networkInfo;
   final FirebaseAuthConsumer authInstance;
   final SharedPreferences sharedPreferences;
-
   LogoutRepositoryImpl({
     required this.networkInfo,
     required this.authInstance,

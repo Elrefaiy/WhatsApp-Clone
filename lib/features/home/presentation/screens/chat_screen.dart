@@ -94,29 +94,9 @@ class ChatScreen extends StatelessWidget {
                 const SizedBox(
                   height: 5,
                 ),
-                // if (AppCubit.get(context).messages.isNotEmpty)
-                //   Container(
-                //     padding: const EdgeInsets.symmetric(
-                //       horizontal: 10,
-                //       vertical: 8,
-                //     ),
-                //     decoration: BoxDecoration(
-                //       color: AppCubit.get(context).isDark
-                //           ? AppColors.c4()
-                //           : Colors.white,
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     child: Text(
-                //       AppCubit.get(context).messages.first.date,
-                //       style: Theme.of(context).textTheme.bodyText2,
-                //     ),
-                //   ),
-                const SizedBox(
-                  height: 10,
-                ),
                 Expanded(
                   child: StreamBuilder<List<Message>>(
-                    stream: HomeCubit.get(context).getChatMessages(model.uId),
+                    stream: HomeCubit.get(context).curruntChatMessages,
                     builder: (context, snapshot) {
                       return ListView.separated(
                         // controller: AppCubit.get(context).chatController,

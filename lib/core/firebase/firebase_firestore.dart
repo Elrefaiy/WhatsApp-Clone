@@ -1,31 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:whatsapp_clone/features/home/data/models/message_model.dart';
 
 import '../../features/authentication/data/models/user_model.dart';
+import '../../features/home/data/models/message_model.dart';
 
 abstract class FirebaseFirestoreConsumer {
-  Future<bool> setUser({required String uId});
-  Future<Map<String, dynamic>> getUser({required String uId});
+  Future<bool> setUser({
+    required String uId,
+    required String phone,
+  });
+
+  Future<Map<String, dynamic>> getUser({
+    required String uId,
+  });
+
   Future<List<Map<String, dynamic>>> getAllUsers();
+
   Stream<List<MessageModel>> getChatMessages({
     required String uId,
     required String recieverId,
   });
-  // Future<List<dynamic>> getChatMedia({
-  //   required String uId,
-  //   required String recieverId,
-  // });
-  Future<dynamic> set({
+
+  Future<dynamic> updateUserData({
     required String collection,
     required String doc,
     required Map<String, dynamic> body,
   });
-  Future<dynamic> update({
-    required String collection,
-    required String doc,
-    required Map<String, dynamic> body,
-  });
+
   Future<dynamic> addMessage({
     required String collection1,
     required String doc1,
@@ -38,8 +38,8 @@ abstract class FirebaseFirestoreConsumer {
 
 class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
   final FirebaseFirestore instance;
-
   FirebaseFirestoreConsumerImpl({required this.instance});
+
   @override
   Future addMessage({
     required String collection1,
@@ -56,28 +56,21 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
         .doc(doc2)
         .collection(collection3)
         .add(body)
-        .then((value) {
-      instance
-          .collection(collection1)
-          .doc(doc2)
-          .collection(collection2)
-          .doc(doc1)
-          .collection(collection3)
-          .add(body);
-    });
+        .then(
+      (value) {
+        instance
+            .collection(collection1)
+            .doc(doc2)
+            .collection(collection2)
+            .doc(doc1)
+            .collection(collection3)
+            .add(body);
+      },
+    );
   }
 
   @override
-  Future set({
-    required String collection,
-    required String doc,
-    required Map<String, dynamic> body,
-  }) async {
-    await instance.collection(collection).doc(doc).set(body);
-  }
-
-  @override
-  Future update({
+  Future updateUserData({
     required String collection,
     required String doc,
     required Map<String, dynamic> body,
@@ -129,7 +122,10 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
   }
 
   @override
-  Future<bool> setUser({required String uId}) async {
+  Future<bool> setUser({
+    required String uId,
+    required String phone,
+  }) async {
     final users = await getAllUsers();
     for (var element in users) {
       if (element['uId'] == uId) {
@@ -139,7 +135,7 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
     await instance.collection('users').doc(uId).set(
           UserModel(
             name: 'User Name',
-            phone: FirebaseAuth.instance.currentUser!.phoneNumber!,
+            phone: phone,
             about: 'Hello, I am using Whatsapp',
             image: 'image',
             uId: uId,

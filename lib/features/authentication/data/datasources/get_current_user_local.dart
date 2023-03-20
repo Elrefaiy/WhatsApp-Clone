@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:whatsapp_clone/core/errors/exceptions.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
+
+import '../../../../core/errors/exceptions.dart';
+import '../../../../core/utils/app_strings.dart';
+import '../models/user_model.dart';
 
 abstract class GetCurrentUserLocalDataSource {
   UserModel getCurrentUser();
@@ -11,8 +12,9 @@ abstract class GetCurrentUserLocalDataSource {
 
 class GetCurrentUserLocalDataImpl implements GetCurrentUserLocalDataSource {
   final SharedPreferences sharedPreferences;
-
-  GetCurrentUserLocalDataImpl({required this.sharedPreferences});
+  GetCurrentUserLocalDataImpl({
+    required this.sharedPreferences,
+  });
 
   @override
   UserModel getCurrentUser() {

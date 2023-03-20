@@ -27,6 +27,15 @@ class SubmitPhoneNumberErrorState extends AuthenticationState {
 
 class SignInWithCredintialLoadingState extends AuthenticationState {}
 
+class VerificationFailedState extends AuthenticationState {
+  final String error;
+  const VerificationFailedState(this.error);
+  @override
+  List<Object> get props => [error];
+}
+
+class CodeAutoRetrievalTimeoutState extends AuthenticationState {}
+
 class SignInLoadingState extends AuthenticationState {}
 
 class SignInSuccessState extends AuthenticationState {}

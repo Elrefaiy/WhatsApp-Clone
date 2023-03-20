@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_clone/config/routes/app_routes.dart';
-import 'package:whatsapp_clone/core/utils/app_colors.dart';
-import 'package:whatsapp_clone/core/utils/app_constants.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
-import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
+
+import '../../../../config/routes/app_routes.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_constants.dart';
+import '../../../../core/utils/app_strings.dart';
+import '../../../settings/presentation/cubit/settings_cubit.dart';
+import '../cubit/authentication_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

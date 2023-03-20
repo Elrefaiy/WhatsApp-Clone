@@ -31,14 +31,17 @@ class HomeCubit extends Cubit<HomeState> {
     emit(ChangeCurrentIndexState());
   }
 
+  List<User> allUsers = [];
   Future<void> getAllUsers() async {
     emit(GetAllUsersLoadingState());
     final response = await getAllUsersUseCase.call(NoParams());
-    emit(
-      response.fold(
-        (failure) => GetAllUsersErrorState(_mapFailureToMsg(failure)),
-        (users) => GetAllUsersSuccessState(users),
-      ),
+
+    response.fold(
+      (failure) => emit(GetAllUsersErrorState(_mapFailureToMsg(failure))),
+      (users) {
+        allUsers = users;
+        emit(GetAllUsersSuccessState(users));
+      },
     );
   }
 

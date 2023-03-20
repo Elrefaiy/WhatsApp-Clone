@@ -1,16 +1,16 @@
-import 'package:whatsapp_clone/core/network/network_info.dart';
-import 'package:whatsapp_clone/features/authentication/data/datasources/get_current_user_local.dart';
-import 'package:whatsapp_clone/features/authentication/data/datasources/get_current_user_remote.dart';
-import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:whatsapp_clone/features/authentication/domain/entities/user.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/get_current_user_repo.dart';
+
+import '../../../../core/errors/failures.dart';
+import '../../../../core/network/network_info.dart';
+import '../../domain/entities/user.dart';
+import '../../domain/repositories/get_current_user_repo.dart';
+import '../datasources/get_current_user_local.dart';
+import '../datasources/get_current_user_remote.dart';
 
 class GetCurrentUserRepositoryImpl implements GetCurrentUserRepository {
   final NetworkInfo networkInfo;
   final GetCurrentUserRemoteDataSource remoteDataSource;
   final GetCurrentUserLocalDataSource localDataSource;
-
   GetCurrentUserRepositoryImpl({
     required this.networkInfo,
     required this.remoteDataSource,

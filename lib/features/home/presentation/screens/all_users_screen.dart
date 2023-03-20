@@ -16,15 +16,15 @@ class AllUsersScreen extends StatelessWidget {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is GetAllUsersSuccessState) {
+          } else {
             return ListView.builder(
               itemBuilder: (context, index) {
-                return ContactItem(user: state.users[index]);
+                return ContactItem(
+                  user: HomeCubit.get(context).allUsers[index],
+                );
               },
-              itemCount: state.users.length,
+              itemCount: HomeCubit.get(context).allUsers.length,
             );
-          } else {
-            return Container();
           }
         }
 

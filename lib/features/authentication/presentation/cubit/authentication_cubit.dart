@@ -7,19 +7,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:whatsapp_clone/core/errors/failures.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
-import 'package:whatsapp_clone/core/usecase/usecase.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
-import 'package:whatsapp_clone/features/authentication/domain/usecases/submit_otp.dart';
-import 'package:whatsapp_clone/features/authentication/domain/usecases/submit_phone.dart';
-import 'package:whatsapp_clone/features/authentication/domain/usecases/update_about.dart';
-import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
-import 'package:whatsapp_clone/features/authentication/domain/usecases/update_name.dart';
-import '../../data/models/user_model.dart';
+
+import '../../../../core/errors/failures.dart';
+import '../../../../core/firebase/firebase_auth.dart';
+import '../../../../core/firebase/firebase_firestore.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../../../../core/utils/app_strings.dart';
 import '../../domain/entities/user.dart';
+import '../../domain/usecases/get_current_users.dart';
+import '../../domain/usecases/submit_otp.dart';
+import '../../domain/usecases/submit_phone.dart';
+import '../../domain/usecases/update_about.dart';
+import '../../domain/usecases/update_image.dart';
+import '../../domain/usecases/update_name.dart';
+
 part 'authentication_state.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
@@ -55,34 +56,58 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     SubmitPhoneParams params = SubmitPhoneParams(
       phone: phone,
       country: country,
-      verificationCompleted: (
-        auth.PhoneAuthCredential phoneAuthCredential,
-      ) async {
-        debugPrint('Verification Completed');
-        try {
-          emit(SignInWithCredintialLoadingState());
-          await auth.FirebaseAuth.instance.signInWithCredential(
-            phoneAuthCredential,
-          );
-          await storeInstance.setUser(uId: authInstance.currentUser.uid);
-          sharedPreferences.setString(
-            AppStrings.token,
-            authInstance.currentUser.uid,
-          );
-          await getCurrentUser();
-        } catch (error) {
-          debugPrint('ERROR WHEN SIGNINGIN WITH CREDENTIAL');
-        }
-      },
+      verificationCompleted: verificationCompleted,
+      verificationFailed: verificationFailed,
+      codeSent: codeSent,
+      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
     );
     final response = await submitPhoneUseCase(params);
-
     response.fold(
       (failure) => emit(SubmitPhoneNumberErrorState(_mapFailureToMsg(failure))),
       (verificationMsg) {
         emit(SubmitPhoneNumberSuccessState(verificationMsg));
       },
     );
+  }
+
+  Future<void> verificationCompleted(
+    auth.PhoneAuthCredential phoneAuthCredential,
+  ) async {
+    debugPrint('Verification Completed');
+    try {
+      emit(SignInWithCredintialLoadingState());
+      await authInstance.signInWithCredential(
+        credential: phoneAuthCredential,
+      );
+      await storeInstance.setUser(
+        uId: authInstance.currentUser.uid,
+        phone: authInstance.currentUser.phoneNumber!,
+      );
+      await sharedPreferences.setString(
+        AppStrings.token,
+        authInstance.currentUser.uid,
+      );
+      await getCurrentUser();
+    } catch (error) {
+      debugPrint('ERROR WHEN SIGNINGIN WITH CREDENTIAL');
+    }
+  }
+
+  void verificationFailed(error) {
+    emit(VerificationFailedState(error.toString()));
+  }
+
+  Future<void> codeSent(String verificationId, int? resendToken) async {
+    await sharedPreferences.setString(
+      AppStrings.verificationId,
+      verificationId,
+    );
+  }
+
+  void codeAutoRetrievalTimeout(String verificationId) {
+    if (verificationId.isEmpty) {
+      emit(CodeAutoRetrievalTimeoutState());
+    }
   }
 
   late User currentUser;

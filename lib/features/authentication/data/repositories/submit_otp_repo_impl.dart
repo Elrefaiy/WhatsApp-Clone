@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:whatsapp_clone/core/errors/exceptions.dart';
-import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
-import 'package:whatsapp_clone/core/network/network_info.dart';
-import 'package:whatsapp_clone/core/usecase/usecase.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/submit_otp_repo.dart';
+
+import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/firebase/firebase_auth.dart';
+import '../../../../core/firebase/firebase_firestore.dart';
+import '../../../../core/network/network_info.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../../../../core/utils/app_strings.dart';
+import '../../domain/repositories/submit_otp_repo.dart';
 
 class SubmitOTPRepositoryImpl implements SubmitOTPRepository {
   final NetworkInfo networkInfo;
@@ -37,21 +37,10 @@ class SubmitOTPRepositoryImpl implements SubmitOTPRepository {
         final response = await authInstance.signInWithCredential(
           credential: credential,
         );
-
-        if (await userExist() == false) {
-          await storeInstance.set(
-            collection: 'users',
-            doc: authInstance.currentUser.uid,
-            body: UserModel(
-              name: 'User Name',
-              phone: authInstance.currentUser.phoneNumber!,
-              about: 'Hello, I am using Whatsapp',
-              image: 'image',
-              uId: authInstance.currentUser.uid,
-            ).toJson(),
-          );
-        }
-
+        await storeInstance.setUser(
+          uId: authInstance.currentUser.uid,
+          phone: authInstance.currentUser.phoneNumber!,
+        );
         sharedPreferences.setString(
           AppStrings.token,
           authInstance.currentUser.uid,
@@ -63,16 +52,5 @@ class SubmitOTPRepositoryImpl implements SubmitOTPRepository {
     } else {
       throw const NoInternetConnectionException();
     }
-  }
-
-  Future<bool> userExist() async {
-    bool exist = false;
-    final users = await storeInstance.getAllUsers();
-    for (var element in users) {
-      if (element['uId'] == authInstance.currentUser.uid) {
-        exist = true;
-      }
-    }
-    return exist;
   }
 }

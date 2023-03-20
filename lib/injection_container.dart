@@ -205,7 +205,7 @@ Future<void> init() async {
 
   // authentication
   sl.registerLazySingleton<GetCurrentUserRemoteDataSource>(
-    () => GetCurrentUserRemoteDataSourceImpl(
+    () => GetCurrentUserRemoteDataImpl(
       authInstance: sl(),
       storeInstance: sl(),
     ),

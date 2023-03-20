@@ -18,7 +18,6 @@ abstract class FirebaseAuthConsumer {
 
 class FirebaseAuthConsumerImpl implements FirebaseAuthConsumer {
   final FirebaseAuth instance;
-
   FirebaseAuthConsumerImpl({required this.instance});
 
   @override

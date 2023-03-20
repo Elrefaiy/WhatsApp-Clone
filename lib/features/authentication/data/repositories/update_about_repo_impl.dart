@@ -1,10 +1,11 @@
-import 'package:whatsapp_clone/core/errors/exceptions.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
-import 'package:whatsapp_clone/core/network/network_info.dart';
-import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/update_about_repo.dart';
+
+import '../../../../core/errors/exceptions.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/firebase/firebase_auth.dart';
+import '../../../../core/firebase/firebase_firestore.dart';
+import '../../../../core/network/network_info.dart';
+import '../../domain/repositories/update_about_repo.dart';
 
 class UpdateAboutReposoryImpl implements UpdateAboutRepository {
   final NetworkInfo networkInfo;
@@ -23,7 +24,7 @@ class UpdateAboutReposoryImpl implements UpdateAboutRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        final response = await storeInstance.update(
+        final response = await storeInstance.updateUserData(
           collection: 'users',
           doc: authInstance.currentUser.uid,
           body: {
