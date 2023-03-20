@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:intl/intl.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/message.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
@@ -143,33 +144,6 @@ class ChatScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                // Expanded(
-                //   child: ListView.separated(
-                //     controller: AppCubit.get(context).chatController,
-                //     itemBuilder: (context, index) {
-                //       var message = AppCubit.get(context).messages[index];
-                //       if (message.recieverId !=
-                //           AppCubit.get(context).user['uId']) {
-                //         return myMesseageItem(
-                //           context: context,
-                //           content: message.message,
-                //           time: message.time,
-                //         );
-                //       } else {
-                //         return friendMessageItem(
-                //           context: context,
-                //           content: message.message,
-                //           time: message.time,
-                //         );
-                //       }
-                //     },
-                //     separatorBuilder: (context, index) => const SizedBox(
-                //       height: 5,
-                //     ),
-                //     itemCount: AppCubit.get(context).messages.length,
-                //   ),
-                // ),
-
                 const SizedBox(
                   height: 10,
                 ),
@@ -212,18 +186,18 @@ class ChatScreen extends StatelessWidget {
                                 ),
                                 onFieldSubmitted: (text) {
                                   if (messageController.text.isNotEmpty) {
-                                    // AppCubit.get(context).sendMessage(
-                                    //   content: messageController.text,
-                                    //   time: DateTime.now().toString().substring(
-                                    //         11,
-                                    //         16,
-                                    //       ),
-                                    //   date: DateFormat.yMMMd()
-                                    //       .format(DateTime.now())
-                                    //       .toString(),
-                                    //   dateTime: DateTime.now().toString(),
-                                    //   receiverId: model.uId,
-                                    // );
+                                    HomeCubit.get(context).sendTextMessage(
+                                      message: messageController.text,
+                                      time: DateTime.now().toString().substring(
+                                            11,
+                                            16,
+                                          ),
+                                      date: DateFormat.yMMMd()
+                                          .format(DateTime.now())
+                                          .toString(),
+                                      dateTime: DateTime.now().toString(),
+                                      receiverId: model.uId,
+                                    );
                                   }
                                 },
                               ),

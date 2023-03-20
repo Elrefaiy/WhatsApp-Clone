@@ -25,6 +25,8 @@ class SubmitPhoneNumberErrorState extends AuthenticationState {
   List<Object> get props => [error];
 }
 
+class SignInWithCredintialLoadingState extends AuthenticationState {}
+
 class SignInLoadingState extends AuthenticationState {}
 
 class SignInSuccessState extends AuthenticationState {}

@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:whatsapp_clone/features/home/data/models/message_model.dart';
 
+import '../../features/authentication/data/models/user_model.dart';
+
 abstract class FirebaseFirestoreConsumer {
+  Future<bool> setUser({required String uId});
   Future<Map<String, dynamic>> getUser({required String uId});
   Future<List<Map<String, dynamic>>> getAllUsers();
   Stream<List<MessageModel>> getChatMessages({
@@ -122,5 +126,25 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
       }
       return messages;
     });
+  }
+
+  @override
+  Future<bool> setUser({required String uId}) async {
+    final users = await getAllUsers();
+    for (var element in users) {
+      if (element['uId'] == uId) {
+        return false;
+      }
+    }
+    await instance.collection('users').doc(uId).set(
+          UserModel(
+            name: 'User Name',
+            phone: FirebaseAuth.instance.currentUser!.phoneNumber!,
+            about: 'Hello, I am using Whatsapp',
+            image: 'image',
+            uId: uId,
+          ).toJson(),
+        );
+    return true;
   }
 }

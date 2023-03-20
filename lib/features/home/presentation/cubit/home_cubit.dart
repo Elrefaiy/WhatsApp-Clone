@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/core/errors/failures.dart';
@@ -68,9 +67,11 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
+  late Stream<List<Message>> curruntChatMessages;
   Stream<List<Message>> getChatMessages(String receiverId) {
     emit(GetChatMessagesLoadingState());
-    return getChatMessagesUseCase.call(receiverId);
+    curruntChatMessages = getChatMessagesUseCase.call(receiverId);
+    return curruntChatMessages;
   }
 
   String _mapFailureToMsg(Failure failure) {

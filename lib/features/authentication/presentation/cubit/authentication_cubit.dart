@@ -1,12 +1,15 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:whatsapp_clone/core/errors/failures.dart';
+import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
+import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
 import 'package:whatsapp_clone/core/usecase/usecase.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
@@ -15,10 +18,13 @@ import 'package:whatsapp_clone/features/authentication/domain/usecases/submit_ph
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_about.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
 import 'package:whatsapp_clone/features/authentication/domain/usecases/update_name.dart';
+import '../../data/models/user_model.dart';
 import '../../domain/entities/user.dart';
 part 'authentication_state.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
+  final FirebaseAuthConsumer authInstance;
+  final FirebaseFirestoreConsumer storeInstance;
   final SubmitPhoneUseCase submitPhoneUseCase;
   final SubmitOTPUseCase submitOTPUseCase;
   final GetCurrentUserUseCase getCurrentUserUseCase;
@@ -28,6 +34,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   final SharedPreferences sharedPreferences;
 
   AuthenticationCubit({
+    required this.authInstance,
+    required this.storeInstance,
     required this.submitPhoneUseCase,
     required this.submitOTPUseCase,
     required this.getCurrentUserUseCase,
@@ -47,6 +55,25 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     SubmitPhoneParams params = SubmitPhoneParams(
       phone: phone,
       country: country,
+      verificationCompleted: (
+        auth.PhoneAuthCredential phoneAuthCredential,
+      ) async {
+        debugPrint('Verification Completed');
+        try {
+          emit(SignInWithCredintialLoadingState());
+          await auth.FirebaseAuth.instance.signInWithCredential(
+            phoneAuthCredential,
+          );
+          await storeInstance.setUser(uId: authInstance.currentUser.uid);
+          sharedPreferences.setString(
+            AppStrings.token,
+            authInstance.currentUser.uid,
+          );
+          await getCurrentUser();
+        } catch (error) {
+          debugPrint('ERROR WHEN SIGNINGIN WITH CREDENTIAL');
+        }
+      },
     );
     final response = await submitPhoneUseCase(params);
 

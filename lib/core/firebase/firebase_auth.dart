@@ -30,7 +30,7 @@ class FirebaseAuthConsumerImpl implements FirebaseAuthConsumer {
     required codeSent,
     required codeAutoRetrievalTimeout,
   }) async {
-    instance.verifyPhoneNumber(
+    await instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       timeout: timeout,
       verificationCompleted: verificationCompleted,
@@ -47,11 +47,11 @@ class FirebaseAuthConsumerImpl implements FirebaseAuthConsumer {
 
   @override
   Future signInWithCredential({required PhoneAuthCredential credential}) async {
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    await instance.signInWithCredential(credential);
   }
 
   @override
   Future signOut() async {
-    await FirebaseAuth.instance.signOut();
+    await instance.signOut();
   }
 }

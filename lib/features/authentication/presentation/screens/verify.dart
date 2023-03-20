@@ -18,7 +18,8 @@ class VerifyingScreen extends StatelessWidget {
 
     return BlocConsumer<AuthenticationCubit, AuthenticationState>(
       listener: (context, state) {
-        if (state is SignInLoadingState) {
+        if (state is SignInLoadingState ||
+            state is SignInWithCredintialLoadingState) {
           AppConstants.showLoadingDialog(context);
         } else if (state is GetUserSuccessState) {
           Navigator.pop(context);

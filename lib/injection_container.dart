@@ -4,56 +4,60 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_storage.dart';
-import 'package:whatsapp_clone/features/authentication/data/datasources/get_current_user_local.dart';
-import 'package:whatsapp_clone/features/authentication/data/datasources/get_current_user_remote.dart';
-import 'package:whatsapp_clone/features/authentication/data/repositories/get_current_user_repo_impl.dart';
-import 'package:whatsapp_clone/features/authentication/data/repositories/submit_otp_repo_impl.dart';
-import 'package:whatsapp_clone/features/authentication/data/repositories/submit_phone_repo_impl.dart';
-import 'package:whatsapp_clone/features/authentication/data/repositories/update_about_repo_impl.dart';
-import 'package:whatsapp_clone/features/authentication/data/repositories/update_image_repository_impl.dart';
-import 'package:whatsapp_clone/features/authentication/data/repositories/update_name_repo_impl.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/get_current_user_repo.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/submit_otp_repo.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/submit_phone_repo.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/update_about_repo.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/update_image_repo.dart';
-import 'package:whatsapp_clone/features/authentication/domain/repositories/update_name_repo.dart';
-import 'package:whatsapp_clone/features/authentication/domain/usecases/get_current_users.dart';
-import 'package:whatsapp_clone/features/authentication/domain/usecases/update_about.dart';
-import 'package:whatsapp_clone/features/authentication/domain/usecases/update_image.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/chats/get_all_users_local.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/chats/get_all_users_remote.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/chats/get_chat_messages_local.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/chats/get_chat_messages_remote.dart';
-import 'package:whatsapp_clone/features/home/data/repositories/chats/get_all_users_repo_impl.dart';
-import 'package:whatsapp_clone/features/home/data/repositories/chats/get_chat_messages_repo_impl.dart';
-import 'package:whatsapp_clone/features/home/data/repositories/chats/send_text_message_repo_impl.dart';
-import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_all_users_repo.dart';
-import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_chat_messages_repo.dart';
-import 'package:whatsapp_clone/features/home/domain/repositories/chats/send_text_message_repo.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_all_users.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_chat_messages.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/chats/send_text_message.dart';
-import 'package:whatsapp_clone/features/settings/data/repositories/logout_repo_impl.dart';
-import 'package:whatsapp_clone/features/settings/domain/repositories/logout_repository.dart';
-import 'package:whatsapp_clone/features/settings/domain/usecases/logout.dart';
+
+import 'core/firebase/firebase_auth.dart';
+import 'core/firebase/firebase_firestore.dart';
+import 'core/firebase/firebase_storage.dart';
 import 'core/network/network_info.dart';
+import 'features/authentication/data/datasources/get_current_user_local.dart';
+import 'features/authentication/data/datasources/get_current_user_remote.dart';
+import 'features/authentication/data/repositories/get_current_user_repo_impl.dart';
+import 'features/authentication/data/repositories/submit_otp_repo_impl.dart';
+import 'features/authentication/data/repositories/submit_phone_repo_impl.dart';
+import 'features/authentication/data/repositories/update_about_repo_impl.dart';
+import 'features/authentication/data/repositories/update_image_repository_impl.dart';
+import 'features/authentication/data/repositories/update_name_repo_impl.dart';
+import 'features/authentication/domain/repositories/get_current_user_repo.dart';
+import 'features/authentication/domain/repositories/submit_otp_repo.dart';
+import 'features/authentication/domain/repositories/submit_phone_repo.dart';
+import 'features/authentication/domain/repositories/update_about_repo.dart';
+import 'features/authentication/domain/repositories/update_image_repo.dart';
+import 'features/authentication/domain/repositories/update_name_repo.dart';
+import 'features/authentication/domain/usecases/get_current_users.dart';
 import 'features/authentication/domain/usecases/submit_otp.dart';
 import 'features/authentication/domain/usecases/submit_phone.dart';
+import 'features/authentication/domain/usecases/update_about.dart';
+import 'features/authentication/domain/usecases/update_image.dart';
 import 'features/authentication/domain/usecases/update_name.dart';
 import 'features/authentication/presentation/cubit/authentication_cubit.dart';
+import 'features/home/data/datasources/chats/get_all_users_local.dart';
+import 'features/home/data/datasources/chats/get_all_users_remote.dart';
+import 'features/home/data/datasources/chats/get_chat_messages_remote.dart';
+import 'features/home/data/repositories/chats/get_all_users_repo_impl.dart';
+import 'features/home/data/repositories/chats/get_chat_messages_repo_impl.dart';
+import 'features/home/data/repositories/chats/send_text_message_repo_impl.dart';
+import 'features/home/domain/repositories/chats/get_all_users_repo.dart';
+import 'features/home/domain/repositories/chats/get_chat_messages_repo.dart';
+import 'features/home/domain/repositories/chats/send_text_message_repo.dart';
+import 'features/home/domain/usecases/chats/get_all_users.dart';
+import 'features/home/domain/usecases/chats/get_chat_messages.dart';
+import 'features/home/domain/usecases/chats/send_text_message.dart';
 import 'features/home/presentation/cubit/home_cubit.dart';
+import 'features/settings/data/repositories/logout_repo_impl.dart';
+import 'features/settings/domain/repositories/logout_repository.dart';
+import 'features/settings/domain/usecases/logout.dart';
 import 'features/settings/presentation/cubit/settings_cubit.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   //! Blocs
+
+  // authentication
   sl.registerFactory<AuthenticationCubit>(
     () => AuthenticationCubit(
+      authInstance: sl(),
+      storeInstance: sl(),
       submitPhoneUseCase: sl(),
       submitOTPUseCase: sl(),
       getCurrentUserUseCase: sl(),
@@ -63,6 +67,8 @@ Future<void> init() async {
       sharedPreferences: sl(),
     ),
   );
+
+  // home
   sl.registerFactory<HomeCubit>(
     () => HomeCubit(
       getAllUsersUseCase: sl(),
@@ -71,6 +77,7 @@ Future<void> init() async {
     ),
   );
 
+  // settings
   sl.registerFactory<SettingsCubit>(
     () => SettingsCubit(
       logoutUseCase: sl(),
@@ -226,11 +233,6 @@ Future<void> init() async {
       storeInstance: sl(),
     ),
   );
-  sl.registerLazySingleton<GetChatMessagesLocalDataSource>(
-    () => GetChatMessagesLocalDataImpl(
-      sharedPreferences: sl(),
-    ),
-  );
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(
@@ -248,7 +250,9 @@ Future<void> init() async {
   //!Externals
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
-  sl.registerLazySingleton(() => InternetConnectionCheckerPlus());
+  sl.registerLazySingleton(
+    () => InternetConnectionCheckerPlus(),
+  );
   sl.registerLazySingleton(() => FirebaseAuth.instance);
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => FirebaseStorage.instance);

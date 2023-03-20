@@ -30,7 +30,7 @@ class SubmitPhoneRepositoryImpl implements SubmitPhoneRepository {
         await instance.verifyPhoneNumber(
           phoneNumber: '+${params.country}${params.phone}',
           timeout: const Duration(seconds: 30),
-          verificationCompleted: verificationCompleted,
+          verificationCompleted: params.verificationCompleted,
           verificationFailed: verificationFailed,
           codeSent: codeSent,
           codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
@@ -44,15 +44,15 @@ class SubmitPhoneRepositoryImpl implements SubmitPhoneRepository {
     }
   }
 
-  void verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
-    debugPrint('Verification Completed');
-    // try {
-    //   await instance.signInWithCredential(credential: phoneAuthCredential);
-    //   debugPrint('SIGNING_IN_SUCCESSFULLY ${phoneAuthCredential.smsCode}');
-    // } catch (error) {
-    //   debugPrint('ERROR WHEN SIGNINGIN WITH CREDENTIAL');
-    // }
-  }
+  // void verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
+  //   debugPrint('Verification Completed');
+  //   // try {
+  //   //   await instance.signInWithCredential(credential: phoneAuthCredential);
+  //   //   debugPrint('SIGNING_IN_SUCCESSFULLY ${phoneAuthCredential.smsCode}');
+  //   // } catch (error) {
+  //   //   debugPrint('ERROR WHEN SIGNINGIN WITH CREDENTIAL');
+  //   // }
+  // }
 
   void verificationFailed(error) {
     throw VerificationException(error);
