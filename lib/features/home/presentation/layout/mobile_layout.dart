@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
+import 'package:whatsapp_clone/features/home/presentation/screens/all_chats.dart';
 import 'package:whatsapp_clone/features/home/presentation/widgets/floating_action_boutton.dart';
 import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_settings.dart';
@@ -42,9 +43,7 @@ class _MobileLayoutState extends State<MobileLayout>
             body: TabBarView(
               controller: controller,
               children: const <Widget>[
-                Center(
-                  child: Text('Chats'),
-                ),
+                AllChats(),
                 Center(
                   child: Text('Status'),
                 ),

@@ -58,3 +58,18 @@ class SubmitOTPParams extends Equatable {
   @override
   List<Object?> get props => [verificationId, otpCode];
 }
+
+class GetMessagesParams extends Equatable {
+  final String name;
+  final String image;
+  final String uId;
+
+  const GetMessagesParams({
+    required this.name,
+    required this.image,
+    required this.uId,
+  });
+
+  @override
+  List<Object?> get props => [name, image, uId];
+}

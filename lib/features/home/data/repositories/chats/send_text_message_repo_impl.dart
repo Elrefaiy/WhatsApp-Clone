@@ -1,11 +1,12 @@
-import 'package:whatsapp_clone/core/errors/exceptions.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
-import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
-import 'package:whatsapp_clone/core/network/network_info.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/message.dart';
-import 'package:whatsapp_clone/core/errors/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:whatsapp_clone/features/home/domain/repositories/chats/send_text_message_repo.dart';
+
+import '../../../../../core/errors/exceptions.dart';
+import '../../../../../core/errors/failures.dart';
+import '../../../../../core/firebase/firebase_auth.dart';
+import '../../../../../core/firebase/firebase_firestore.dart';
+import '../../../../../core/network/network_info.dart';
+import '../../../domain/entities/message.dart';
+import '../../../domain/repositories/chats/send_text_message_repo.dart';
 
 class SendTextMessageRepositoryImpl implements SendTextMessageRepository {
   final FirebaseFirestoreConsumer storeInstance;
@@ -31,6 +32,14 @@ class SendTextMessageRepositoryImpl implements SendTextMessageRepository {
           doc2: message.recieverId,
           collection3: 'messages',
           body: message.toMap(),
+        );
+        await storeInstance.updateContactData(
+          uId: authInstance.currentUser.uid,
+          reciverId: message.recieverId,
+          body: {
+            'lastMessage': message.message,
+            'dateTime': message.dateTime,
+          },
         );
         return (Right(response));
       } on ServerException {

@@ -53,3 +53,19 @@ class GetChatMessagesErrorState extends HomeState {
   @override
   List<Object> get props => [error];
 }
+
+class GetAllChatsLoadingState extends HomeState {}
+
+class GetAllChatsSuccessState extends HomeState {
+  final List<Contact> contacts;
+  const GetAllChatsSuccessState(this.contacts);
+  @override
+  List<Object> get props => [contacts];
+}
+
+class GetAllChatsErrorState extends HomeState {
+  final String error;
+  const GetAllChatsErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}

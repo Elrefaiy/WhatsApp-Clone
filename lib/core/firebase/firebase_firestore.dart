@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../features/authentication/data/models/user_model.dart';
+import '../../features/home/data/models/contact_model.dart';
 import '../../features/home/data/models/message_model.dart';
 
 abstract class FirebaseFirestoreConsumer {
@@ -20,9 +21,25 @@ abstract class FirebaseFirestoreConsumer {
     required String recieverId,
   });
 
+  Future<dynamic> setContact({
+    required String uId,
+    required String reciverId,
+    required Map<String, dynamic> body,
+  });
+
+  Future<List<ContactModel>> getAllChats({
+    required String uId,
+  });
+
   Future<dynamic> updateUserData({
     required String collection,
     required String doc,
+    required Map<String, dynamic> body,
+  });
+
+  Future<dynamic> updateContactData({
+    required String uId,
+    required String reciverId,
     required Map<String, dynamic> body,
   });
 
@@ -58,13 +75,15 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
         .add(body)
         .then(
       (value) {
-        instance
-            .collection(collection1)
-            .doc(doc2)
-            .collection(collection2)
-            .doc(doc1)
-            .collection(collection3)
-            .add(body);
+        if (doc1 != doc2) {
+          instance
+              .collection(collection1)
+              .doc(doc2)
+              .collection(collection2)
+              .doc(doc1)
+              .collection(collection3)
+              .add(body);
+        }
       },
     );
   }
@@ -76,6 +95,20 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
     required Map<String, dynamic> body,
   }) async {
     await instance.collection(collection).doc(doc).update(body);
+  }
+
+  @override
+  Future updateContactData({
+    required String uId,
+    required String reciverId,
+    required Map<String, dynamic> body,
+  }) async {
+    await instance
+        .collection('users')
+        .doc(uId)
+        .collection('chats')
+        .doc(reciverId)
+        .update(body);
   }
 
   @override
@@ -142,5 +175,37 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
           ).toJson(),
         );
     return true;
+  }
+
+  @override
+  Future<List<ContactModel>> getAllChats({
+    required String uId,
+  }) async {
+    List<ContactModel> allContacts = [];
+    await instance
+        .collection('users')
+        .doc(uId)
+        .collection('chats')
+        .get()
+        .then((value) {
+      for (var element in value.docs) {
+        allContacts.add(ContactModel.fromJson(element.data()));
+      }
+    });
+    return allContacts;
+  }
+
+  @override
+  Future setContact({
+    required String uId,
+    required String reciverId,
+    required Map<String, dynamic> body,
+  }) async {
+    return await instance
+        .collection('users')
+        .doc(uId)
+        .collection('chats')
+        .doc(reciverId)
+        .set(body);
   }
 }

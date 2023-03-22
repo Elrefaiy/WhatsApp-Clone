@@ -1,5 +1,8 @@
-import 'package:whatsapp_clone/features/home/domain/entities/contact.dart';
+import 'package:dartz/dartz.dart';
+
+import '../../../../../core/errors/failures.dart';
+import '../../entities/contact.dart';
 
 abstract class GetChatsRepository {
-  Stream<List<Contact>> getAllChats();
+  Future<Either<Failure, List<Contact>>> getAllChats();
 }

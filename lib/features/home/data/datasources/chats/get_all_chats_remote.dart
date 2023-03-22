@@ -1,19 +1,25 @@
-import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
-import 'package:whatsapp_clone/features/home/data/models/contact_model.dart';
+import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
+
+import '../../../../../core/firebase/firebase_firestore.dart';
+import '../../models/contact_model.dart';
 
 abstract class GetAllChatsRemoteDataSource {
-  Stream<List<ContactModel>> getAllchats();
+  Future<List<ContactModel>> getAllchats();
 }
 
 class GetAllChatsRemoteDataSourceImpl implements GetAllChatsRemoteDataSource {
-  final FirebaseFirestoreConsumer storeConsumer;
-
-  GetAllChatsRemoteDataSourceImpl({required this.storeConsumer});
+  final FirebaseFirestoreConsumer storeInstance;
+  final FirebaseAuthConsumer authInstance;
+  GetAllChatsRemoteDataSourceImpl({
+    required this.storeInstance,
+    required this.authInstance,
+  });
 
   @override
-  Stream<List<ContactModel>> getAllchats() {
-    throw UnimplementedError();
+  Future<List<ContactModel>> getAllchats() {
+    final response = storeInstance.getAllChats(
+      uId: authInstance.currentUser.uid,
+    );
+    return response;
   }
 }
-
-// users -> currentUserId -> chats -> reciever['contact']

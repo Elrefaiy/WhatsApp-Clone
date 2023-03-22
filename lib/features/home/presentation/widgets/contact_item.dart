@@ -13,7 +13,11 @@ class ContactItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        HomeCubit.get(context).getChatMessages(user.uId);
+        HomeCubit.get(context).getChatMessages(
+          image: user.image,
+          name: user.name,
+          uId: user.uId,
+        );
         Navigator.pushNamed(
           context,
           Routes.chat,

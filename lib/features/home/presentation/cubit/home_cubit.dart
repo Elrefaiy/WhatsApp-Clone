@@ -1,21 +1,28 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_clone/core/errors/failures.dart';
-import 'package:whatsapp_clone/core/usecase/usecase.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/message.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_all_users.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_chat_messages.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/chats/send_text_message.dart';
+
+import '../../../../core/errors/failures.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../../../../core/utils/app_strings.dart';
+import '../../domain/entities/contact.dart';
+import '../../domain/entities/message.dart';
+import '../../domain/entities/user.dart';
+import '../../domain/usecases/chats/get_all_users.dart';
+import '../../domain/usecases/chats/get_chat_messages.dart';
+import '../../domain/usecases/chats/get_chats.dart';
+import '../../domain/usecases/chats/send_text_message.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
+  final GetChatsUseCase getChatsUseCase;
   final GetAllUsersUseCase getAllUsersUseCase;
   final SendTextMessageUseCase sendTextMessageUseCase;
   final GetChatMessagesUseCase getChatMessagesUseCase;
   HomeCubit({
+    required this.getChatsUseCase,
     required this.getAllUsersUseCase,
     required this.sendTextMessageUseCase,
     required this.getChatMessagesUseCase,
@@ -45,6 +52,16 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
+  User searchUser(uid) {
+    late User user;
+    for (var element in allUsers) {
+      if (element.uId == uid) {
+        user = element;
+      }
+    }
+    return user;
+  }
+
 // Chats
   Future<void> sendTextMessage({
     required String message,
@@ -62,19 +79,42 @@ class HomeCubit extends Cubit<HomeState> {
       recieverId: receiverId,
     );
     final response = await sendTextMessageUseCase.call(msg);
-    emit(
-      response.fold(
-        (failure) => SendTextMessageErrorState(_mapFailureToMsg(failure)),
-        (right) => SendTextMessageSuccessState(),
-      ),
+
+    response.fold(
+      (failure) => emit(SendTextMessageErrorState(_mapFailureToMsg(failure))),
+      (right) {
+        emit(SendTextMessageSuccessState());
+      },
     );
   }
 
   late Stream<List<Message>> curruntChatMessages;
-  Stream<List<Message>> getChatMessages(String receiverId) {
+  Stream<List<Message>> getChatMessages({
+    required String uId,
+    required String name,
+    required String image,
+  }) {
     emit(GetChatMessagesLoadingState());
-    curruntChatMessages = getChatMessagesUseCase.call(receiverId);
+    GetMessagesParams params = GetMessagesParams(
+      name: name,
+      image: image,
+      uId: uId,
+    );
+    curruntChatMessages = getChatMessagesUseCase.call(params);
     return curruntChatMessages;
+  }
+
+  List<Contact> allContacts = [];
+  Future<void> getAllChats() async {
+    emit(GetAllChatsLoadingState());
+    final response = await getChatsUseCase.call(NoParams());
+    response.fold(
+      (failure) => emit(GetAllChatsErrorState(_mapFailureToMsg(failure))),
+      (contacts) {
+        allContacts = contacts;
+        emit(GetAllChatsSuccessState(contacts));
+      },
+    );
   }
 
   String _mapFailureToMsg(Failure failure) {

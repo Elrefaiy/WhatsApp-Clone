@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/core/widgets/image_view.dart';
+import 'package:whatsapp_clone/features/home/domain/entities/contact.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
 import 'package:whatsapp_clone/features/home/presentation/layout/layout.dart';
 import 'package:whatsapp_clone/features/home/presentation/screens/all_users_screen.dart';

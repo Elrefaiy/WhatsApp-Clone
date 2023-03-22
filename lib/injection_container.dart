@@ -4,6 +4,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:whatsapp_clone/features/home/data/datasources/chats/get_all_chats_remote.dart';
+import 'package:whatsapp_clone/features/home/data/repositories/chats/get_chats_repo_impl.dart';
+import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_chats_repo.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_chats.dart';
 
 import 'core/firebase/firebase_auth.dart';
 import 'core/firebase/firebase_firestore.dart';
@@ -71,6 +75,7 @@ Future<void> init() async {
   // home
   sl.registerFactory<HomeCubit>(
     () => HomeCubit(
+      getChatsUseCase: sl(),
       getAllUsersUseCase: sl(),
       sendTextMessageUseCase: sl(),
       getChatMessagesUseCase: sl(),
@@ -116,6 +121,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<GetChatMessagesUseCase>(
     () => GetChatMessagesUseCase(getChatMessagesRepository: sl()),
+  );
+  sl.registerLazySingleton<GetChatsUseCase>(
+    () => GetChatsUseCase(getChatsRepository: sl()),
   );
 
   // settings
@@ -191,6 +199,12 @@ Future<void> init() async {
       remoteDataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<GetChatsRepository>(
+    () => GetChatsRepositoryImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
 
   // settings
   sl.registerLazySingleton<LogoutRepository>(
@@ -231,6 +245,12 @@ Future<void> init() async {
     () => GetChatMessagesRemoteDataImpl(
       authInstance: sl(),
       storeInstance: sl(),
+    ),
+  );
+  sl.registerLazySingleton<GetAllChatsRemoteDataSource>(
+    () => GetAllChatsRemoteDataSourceImpl(
+      storeInstance: sl(),
+      authInstance: sl(),
     ),
   );
 
