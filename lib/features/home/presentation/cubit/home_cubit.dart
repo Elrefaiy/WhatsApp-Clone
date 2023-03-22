@@ -111,6 +111,11 @@ class HomeCubit extends Cubit<HomeState> {
     response.fold(
       (failure) => emit(GetAllChatsErrorState(_mapFailureToMsg(failure))),
       (contacts) {
+        contacts.sort(
+          (a, b) => DateTime.parse(b.dateTime).compareTo(
+            DateTime.parse(a.dateTime),
+          ),
+        );
         allContacts = contacts;
         emit(GetAllChatsSuccessState(contacts));
       },

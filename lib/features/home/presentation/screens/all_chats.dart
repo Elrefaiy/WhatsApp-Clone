@@ -16,13 +16,12 @@ class AllChats extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return ListView.separated(
+        return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) => ChatWidget(
             contact: HomeCubit.get(context).allContacts[index],
           ),
-          separatorBuilder: (context, index) => const SizedBox(height: 15),
           itemCount: HomeCubit.get(context).allContacts.length,
         );
       },
