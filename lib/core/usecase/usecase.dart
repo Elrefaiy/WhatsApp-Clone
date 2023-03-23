@@ -73,3 +73,16 @@ class GetMessagesParams extends Equatable {
   @override
   List<Object?> get props => [name, image, uId];
 }
+
+class AddTextStatusParams extends Equatable {
+  final String status;
+  final int color;
+
+  const AddTextStatusParams({
+    required this.status,
+    required this.color,
+  });
+
+  @override
+  List<Object?> get props => [status, color];
+}

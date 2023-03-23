@@ -5,6 +5,11 @@ import '../../features/home/data/models/contact_model.dart';
 import '../../features/home/data/models/message_model.dart';
 
 abstract class FirebaseFirestoreConsumer {
+  Future<dynamic> addStatus({
+    required String uId,
+    required Map<String, dynamic> body,
+  });
+
   Future<bool> setUser({
     required String uId,
     required String phone,
@@ -207,5 +212,17 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
         .collection('chats')
         .doc(reciverId)
         .set(body);
+  }
+
+  @override
+  Future addStatus({
+    required String uId,
+    required Map<String, dynamic> body,
+  }) async {
+    return await instance
+        .collection('users')
+        .doc(uId)
+        .collection('status')
+        .add(body);
   }
 }

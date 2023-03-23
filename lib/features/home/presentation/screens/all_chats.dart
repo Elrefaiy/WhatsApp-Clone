@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/features/home/presentation/widgets/endtoend_encrypted.dart';
 
 import '../cubit/home_cubit.dart';
 import '../widgets/chat_item.dart';
@@ -16,13 +17,21 @@ class AllChats extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) => ChatWidget(
-            contact: HomeCubit.get(context).allContacts[index],
-          ),
-          itemCount: HomeCubit.get(context).allContacts.length,
+        return Column(
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => ChatWidget(
+                contact: HomeCubit.get(context).allContacts[index],
+              ),
+              itemCount: HomeCubit.get(context).allContacts.length,
+            ),
+            Divider(
+              color: Colors.blueGrey.withOpacity(.5),
+            ),
+            const EndToEndWidget(feature: 'messages'),
+          ],
         );
       },
     );

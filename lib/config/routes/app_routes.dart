@@ -13,6 +13,8 @@ import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_pro
 import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_settings.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/screens/welcome.dart';
 
+import '../../features/home/presentation/screens/add_text_status_screen.dart';
+
 class Routes {
   static const String welcome = '/';
   static const String home = '/home';
@@ -101,12 +103,12 @@ class AppRoutes {
       //       return MobileStatusScreen(models: models);
       //     },
       //   );
-      // case Routes.addTextStatus:
-      //   return MaterialPageRoute(
-      //     builder: (context) {
-      //       return const AddTextStatusScreen();
-      //     },
-      //   );
+      case Routes.addTextStatus:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const AddTextStatusScreen();
+          },
+        );
       default:
         throw const RoutesException('this route is undefiened!');
     }

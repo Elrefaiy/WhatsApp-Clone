@@ -1,7 +1,7 @@
-import 'dart:math';
-
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/status/add_text_status.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/usecase/usecase.dart';
@@ -21,11 +21,13 @@ class HomeCubit extends Cubit<HomeState> {
   final GetAllUsersUseCase getAllUsersUseCase;
   final SendTextMessageUseCase sendTextMessageUseCase;
   final GetChatMessagesUseCase getChatMessagesUseCase;
+  final AddTextStatusUseCase addTextStatusUseCase;
   HomeCubit({
     required this.getChatsUseCase,
     required this.getAllUsersUseCase,
     required this.sendTextMessageUseCase,
     required this.getChatMessagesUseCase,
+    required this.addTextStatusUseCase,
   }) : super(HomeInitial());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -63,6 +65,8 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
 // Chats
+  final chatController = ScrollController();
+
   Future<void> sendTextMessage({
     required String message,
     required String time,
@@ -83,6 +87,7 @@ class HomeCubit extends Cubit<HomeState> {
     response.fold(
       (failure) => emit(SendTextMessageErrorState(_mapFailureToMsg(failure))),
       (right) {
+        chatController.jumpTo(chatController.position.maxScrollExtent);
         emit(SendTextMessageSuccessState());
       },
     );
@@ -119,6 +124,24 @@ class HomeCubit extends Cubit<HomeState> {
         allContacts = contacts;
         emit(GetAllChatsSuccessState(contacts));
       },
+    );
+  }
+
+  Future<void> addTextStatus({
+    required String status,
+    required int color,
+  }) async {
+    emit(AddTextStatusLoadingState());
+    final params = AddTextStatusParams(
+      status: status,
+      color: color,
+    );
+    final response = await addTextStatusUseCase.call(params);
+    emit(
+      response.fold(
+        (failure) => AddTextStatusErrorState(_mapFailureToMsg(failure)),
+        (right) => AddTextStatusSuccessState(),
+      ),
     );
   }
 

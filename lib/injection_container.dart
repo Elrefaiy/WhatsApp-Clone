@@ -4,10 +4,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/chats/get_all_chats_remote.dart';
-import 'package:whatsapp_clone/features/home/data/repositories/chats/get_chats_repo_impl.dart';
-import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_chats_repo.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_chats.dart';
 
 import 'core/firebase/firebase_auth.dart';
 import 'core/firebase/firebase_firestore.dart';
@@ -34,18 +30,25 @@ import 'features/authentication/domain/usecases/update_about.dart';
 import 'features/authentication/domain/usecases/update_image.dart';
 import 'features/authentication/domain/usecases/update_name.dart';
 import 'features/authentication/presentation/cubit/authentication_cubit.dart';
+import 'features/home/data/datasources/chats/get_all_chats_remote.dart';
 import 'features/home/data/datasources/chats/get_all_users_local.dart';
 import 'features/home/data/datasources/chats/get_all_users_remote.dart';
 import 'features/home/data/datasources/chats/get_chat_messages_remote.dart';
 import 'features/home/data/repositories/chats/get_all_users_repo_impl.dart';
 import 'features/home/data/repositories/chats/get_chat_messages_repo_impl.dart';
+import 'features/home/data/repositories/chats/get_chats_repo_impl.dart';
 import 'features/home/data/repositories/chats/send_text_message_repo_impl.dart';
+import 'features/home/data/repositories/status/add_text_status_repo_impl.dart';
 import 'features/home/domain/repositories/chats/get_all_users_repo.dart';
 import 'features/home/domain/repositories/chats/get_chat_messages_repo.dart';
+import 'features/home/domain/repositories/chats/get_chats_repo.dart';
 import 'features/home/domain/repositories/chats/send_text_message_repo.dart';
+import 'features/home/domain/repositories/status/add_text_status_repo.dart';
 import 'features/home/domain/usecases/chats/get_all_users.dart';
 import 'features/home/domain/usecases/chats/get_chat_messages.dart';
+import 'features/home/domain/usecases/chats/get_chats.dart';
 import 'features/home/domain/usecases/chats/send_text_message.dart';
+import 'features/home/domain/usecases/status/add_text_status.dart';
 import 'features/home/presentation/cubit/home_cubit.dart';
 import 'features/settings/data/repositories/logout_repo_impl.dart';
 import 'features/settings/domain/repositories/logout_repository.dart';
@@ -79,6 +82,7 @@ Future<void> init() async {
       getAllUsersUseCase: sl(),
       sendTextMessageUseCase: sl(),
       getChatMessagesUseCase: sl(),
+      addTextStatusUseCase: sl(),
     ),
   );
 
@@ -124,6 +128,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<GetChatsUseCase>(
     () => GetChatsUseCase(getChatsRepository: sl()),
+  );
+  sl.registerLazySingleton<AddTextStatusUseCase>(
+    () => AddTextStatusUseCase(addTextStatusRepository: sl()),
   );
 
   // settings
@@ -202,6 +209,13 @@ Future<void> init() async {
   sl.registerLazySingleton<GetChatsRepository>(
     () => GetChatsRepositoryImpl(
       remoteDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  sl.registerLazySingleton<AddTextStatusRepository>(
+    () => AddTextStatusRepositoryImpl(
+      authInstance: sl(),
+      storeInstance: sl(),
       networkInfo: sl(),
     ),
   );

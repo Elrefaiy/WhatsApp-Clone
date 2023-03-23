@@ -3,16 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-import 'package:whatsapp_clone/core/utils/app_colors.dart';
-import 'package:whatsapp_clone/core/utils/app_constants.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/message.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
-import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
-import 'package:whatsapp_clone/features/home/presentation/widgets/freind_message_item.dart';
-import 'package:whatsapp_clone/features/home/presentation/widgets/my_message_item.dart';
-import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_constants.dart';
+import '../../../../core/utils/app_strings.dart';
+import '../../../authentication/presentation/cubit/authentication_cubit.dart';
+import '../../../settings/presentation/cubit/settings_cubit.dart';
+import '../../domain/entities/message.dart';
+import '../../domain/entities/user.dart';
+import '../cubit/home_cubit.dart';
+import '../widgets/freind_message_item.dart';
+import '../widgets/my_message_item.dart';
 
 class ChatScreen extends StatelessWidget {
   final User model;
@@ -99,7 +99,7 @@ class ChatScreen extends StatelessWidget {
                     stream: HomeCubit.get(context).curruntChatMessages,
                     builder: (context, snapshot) {
                       return ListView.separated(
-                        // controller: AppCubit.get(context).chatController,
+                        controller: HomeCubit.get(context).chatController,
                         itemBuilder: (context, index) {
                           if (snapshot.data![index].recieverId !=
                               AuthenticationCubit.get(context)

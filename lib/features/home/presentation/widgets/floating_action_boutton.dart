@@ -28,7 +28,12 @@ class FAB extends StatelessWidget {
           children: [
             FloatingActionButton(
               heroTag: null,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  Routes.addTextStatus,
+                );
+              },
               mini: true,
               backgroundColor: Colors.blueGrey[100],
               child: Icon(

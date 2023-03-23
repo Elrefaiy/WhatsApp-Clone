@@ -69,3 +69,14 @@ class GetAllChatsErrorState extends HomeState {
   @override
   List<Object> get props => [error];
 }
+
+class AddTextStatusLoadingState extends HomeState {}
+
+class AddTextStatusSuccessState extends HomeState {}
+
+class AddTextStatusErrorState extends HomeState {
+  final String error;
+  const AddTextStatusErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}

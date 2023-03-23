@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../domain/entities/contact.dart';
-import '../../domain/entities/user.dart';
 import '../cubit/home_cubit.dart';
 
 class ChatWidget extends StatelessWidget {
@@ -62,7 +61,7 @@ class ChatWidget extends StatelessWidget {
                       Expanded(
                         child: Text(
                           contact.name,
-                          style: Theme.of(context).textTheme.headline2,
+                          style: Theme.of(context).textTheme.bodyText1,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
