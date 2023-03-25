@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/core/errors/exceptions.dart';
 import 'package:whatsapp_clone/core/widgets/image_view.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/contact.dart';
+import 'package:whatsapp_clone/features/home/domain/entities/status.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
 import 'package:whatsapp_clone/features/home/presentation/layout/layout.dart';
 import 'package:whatsapp_clone/features/home/presentation/screens/all_users_screen.dart';
@@ -14,6 +15,7 @@ import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_set
 import 'package:whatsapp_clone/features/authentication/presentation/screens/welcome.dart';
 
 import '../../features/home/presentation/screens/add_text_status_screen.dart';
+import '../../features/home/presentation/screens/status_screen.dart';
 
 class Routes {
   static const String welcome = '/';
@@ -96,13 +98,13 @@ class AppRoutes {
             return ChatScreen(model: model);
           },
         );
-      // case Routes.status:
-      //   return MaterialPageRoute(
-      //     builder: (context) {
-      //       final models = settings.arguments as List<StatusModel>;
-      //       return MobileStatusScreen(models: models);
-      //     },
-      //   );
+      case Routes.status:
+        return MaterialPageRoute(
+          builder: (context) {
+            final status = settings.arguments as List<Status>;
+            return StatusScreen(status: status);
+          },
+        );
       case Routes.addTextStatus:
         return MaterialPageRoute(
           builder: (context) {

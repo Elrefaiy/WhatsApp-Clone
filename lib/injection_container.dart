@@ -34,21 +34,25 @@ import 'features/home/data/datasources/chats/get_all_chats_remote.dart';
 import 'features/home/data/datasources/chats/get_all_users_local.dart';
 import 'features/home/data/datasources/chats/get_all_users_remote.dart';
 import 'features/home/data/datasources/chats/get_chat_messages_remote.dart';
+import 'features/home/data/datasources/status/get_status_remote.dart';
 import 'features/home/data/repositories/chats/get_all_users_repo_impl.dart';
 import 'features/home/data/repositories/chats/get_chat_messages_repo_impl.dart';
 import 'features/home/data/repositories/chats/get_chats_repo_impl.dart';
 import 'features/home/data/repositories/chats/send_text_message_repo_impl.dart';
 import 'features/home/data/repositories/status/add_text_status_repo_impl.dart';
+import 'features/home/data/repositories/status/get_status_repo_impl.dart';
 import 'features/home/domain/repositories/chats/get_all_users_repo.dart';
 import 'features/home/domain/repositories/chats/get_chat_messages_repo.dart';
 import 'features/home/domain/repositories/chats/get_chats_repo.dart';
 import 'features/home/domain/repositories/chats/send_text_message_repo.dart';
 import 'features/home/domain/repositories/status/add_text_status_repo.dart';
+import 'features/home/domain/repositories/status/get_status_repo.dart';
 import 'features/home/domain/usecases/chats/get_all_users.dart';
 import 'features/home/domain/usecases/chats/get_chat_messages.dart';
 import 'features/home/domain/usecases/chats/get_chats.dart';
 import 'features/home/domain/usecases/chats/send_text_message.dart';
 import 'features/home/domain/usecases/status/add_text_status.dart';
+import 'features/home/domain/usecases/status/get_status.dart';
 import 'features/home/presentation/cubit/home_cubit.dart';
 import 'features/settings/data/repositories/logout_repo_impl.dart';
 import 'features/settings/domain/repositories/logout_repository.dart';
@@ -83,6 +87,7 @@ Future<void> init() async {
       sendTextMessageUseCase: sl(),
       getChatMessagesUseCase: sl(),
       addTextStatusUseCase: sl(),
+      getStatusUseCase: sl(),
     ),
   );
 
@@ -131,6 +136,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<AddTextStatusUseCase>(
     () => AddTextStatusUseCase(addTextStatusRepository: sl()),
+  );
+  sl.registerLazySingleton<GetStatusUseCase>(
+    () => GetStatusUseCase(getStatusRepository: sl()),
   );
 
   // settings
@@ -219,6 +227,12 @@ Future<void> init() async {
       networkInfo: sl(),
     ),
   );
+  sl.registerLazySingleton<GetStatusRepository>(
+    () => GetStatusRepositoryImpl(
+      remoteDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
 
   // settings
   sl.registerLazySingleton<LogoutRepository>(
@@ -265,6 +279,11 @@ Future<void> init() async {
     () => GetAllChatsRemoteDataSourceImpl(
       storeInstance: sl(),
       authInstance: sl(),
+    ),
+  );
+  sl.registerLazySingleton<GetStatusRemoteDataSource>(
+    () => GetStatusRemoteDataSourceImpl(
+      storeInstance: sl(),
     ),
   );
 

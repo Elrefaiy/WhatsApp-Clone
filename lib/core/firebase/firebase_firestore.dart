@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:whatsapp_clone/features/home/data/models/status_model.dart';
 
 import '../../features/authentication/data/models/user_model.dart';
 import '../../features/home/data/models/contact_model.dart';
@@ -8,6 +9,9 @@ abstract class FirebaseFirestoreConsumer {
   Future<dynamic> addStatus({
     required String uId,
     required Map<String, dynamic> body,
+  });
+  Future<Map<String, List<StatusModel>>> getStatus({
+    required List<String> uId,
   });
 
   Future<bool> setUser({
@@ -224,5 +228,30 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
         .doc(uId)
         .collection('status')
         .add(body);
+  }
+
+  @override
+  Future<Map<String, List<StatusModel>>> getStatus({
+    required List<String> uId,
+  }) async {
+    Map<String, List<StatusModel>> status = {};
+    for (var element in uId) {
+      await instance
+          .collection('users')
+          .doc(element)
+          .collection('status')
+          .orderBy('dateTime')
+          .get()
+          .then(
+        (value) {
+          List<StatusModel> userStatus = [];
+          for (var status in value.docs) {
+            userStatus.add(StatusModel.fromJson(status.data()));
+          }
+          status.addAll({element: userStatus});
+        },
+      );
+    }
+    return status;
   }
 }

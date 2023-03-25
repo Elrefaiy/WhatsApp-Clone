@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/features/home/domain/entities/status.dart';
 import 'package:whatsapp_clone/features/home/domain/usecases/status/add_text_status.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/status/get_status.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/usecase/usecase.dart';
@@ -22,12 +24,14 @@ class HomeCubit extends Cubit<HomeState> {
   final SendTextMessageUseCase sendTextMessageUseCase;
   final GetChatMessagesUseCase getChatMessagesUseCase;
   final AddTextStatusUseCase addTextStatusUseCase;
+  final GetStatusUseCase getStatusUseCase;
   HomeCubit({
     required this.getChatsUseCase,
     required this.getAllUsersUseCase,
     required this.sendTextMessageUseCase,
     required this.getChatMessagesUseCase,
     required this.addTextStatusUseCase,
+    required this.getStatusUseCase,
   }) : super(HomeInitial());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -37,6 +41,15 @@ class HomeCubit extends Cubit<HomeState> {
   void changeIndex(index) {
     emit(HomeInitial());
     currentIndex = index;
+    switch (index) {
+      case 0:
+        getAllChats();
+        break;
+      case 1:
+        getStatus();
+        break;
+      default:
+    }
     emit(ChangeCurrentIndexState());
   }
 
@@ -44,7 +57,6 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> getAllUsers() async {
     emit(GetAllUsersLoadingState());
     final response = await getAllUsersUseCase.call(NoParams());
-
     response.fold(
       (failure) => emit(GetAllUsersErrorState(_mapFailureToMsg(failure))),
       (users) {
@@ -127,6 +139,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
+// Status
   Future<void> addTextStatus({
     required String status,
     required int color,
@@ -143,6 +156,25 @@ class HomeCubit extends Cubit<HomeState> {
         (right) => AddTextStatusSuccessState(),
       ),
     );
+    getStatus();
+  }
+
+  Map<String, List<Status>> allStatus = {};
+  Future<void> getStatus() async {
+    if (allUsers.isEmpty) {
+      await getAllUsers();
+    }
+    emit(GetAllStatusLoadingState());
+    List<String> usersId = [];
+    for (var user in allUsers) {
+      usersId.add(user.uId);
+    }
+    final response = await getStatusUseCase.call(usersId);
+    response.fold(
+      (failure) => null,
+      (status) => allStatus = status,
+    );
+    emit(GetAllStatusSuccessState());
   }
 
   String _mapFailureToMsg(Failure failure) {

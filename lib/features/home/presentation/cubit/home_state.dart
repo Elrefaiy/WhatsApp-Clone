@@ -80,3 +80,14 @@ class AddTextStatusErrorState extends HomeState {
   @override
   List<Object> get props => [error];
 }
+
+class GetAllStatusLoadingState extends HomeState {}
+
+class GetAllStatusSuccessState extends HomeState {}
+
+class GetAllStatusErrorState extends HomeState {
+  final String error;
+  const GetAllStatusErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}
