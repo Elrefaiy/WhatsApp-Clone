@@ -1,8 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:whatsapp_clone/core/errors/exceptions.dart';
 
+import '../../../../../core/errors/exceptions.dart';
 import '../../../../../core/errors/failures.dart';
-import '../../../../../core/firebase/firebase_auth.dart';
 import '../../../../../core/network/network_info.dart';
 import '../../../domain/entities/contact.dart';
 import '../../../domain/repositories/chats/get_chats_repo.dart';

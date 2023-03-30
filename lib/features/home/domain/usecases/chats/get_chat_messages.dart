@@ -1,6 +1,7 @@
-import 'package:whatsapp_clone/core/usecase/usecase.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/message.dart';
-import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_chat_messages_repo.dart';
+import '../../../../../core/params/params.dart';
+import '../../../../../core/usecase/usecase.dart';
+import '../../entities/message.dart';
+import '../../repositories/chats/get_chat_messages_repo.dart';
 
 class GetChatMessagesUseCase
     implements StreamUseCase<List<Message>, GetMessagesParams> {

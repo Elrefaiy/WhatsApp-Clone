@@ -16,7 +16,10 @@ import '../widgets/my_message_item.dart';
 
 class ChatScreen extends StatelessWidget {
   final User model;
-  const ChatScreen({required this.model, super.key});
+  const ChatScreen({
+    required this.model,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -184,10 +187,10 @@ class ChatScreen extends StatelessWidget {
                             ),
                             IconButton(
                               onPressed: () {
-                                // AppCubit.get(context).getMessageImage(
-                                //   context,
-                                //   model.uId,
-                                // );
+                                HomeCubit.get(context).getGalleryImage(
+                                  context: context,
+                                  recieverId: model.uId,
+                                );
                               },
                               icon: const Icon(
                                 Icons.camera_alt,

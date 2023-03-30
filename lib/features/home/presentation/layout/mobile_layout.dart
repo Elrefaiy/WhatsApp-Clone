@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
@@ -37,7 +38,16 @@ class _MobileLayoutState extends State<MobileLayout>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocConsumer<HomeCubit, HomeState>(
+      listener: (context, state) {
+        if (state is CropStatusImageSuccessState) {
+          Navigator.pushNamed(
+            context,
+            Routes.addImageStatus,
+            arguments: state.image,
+          );
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           body: NestedScrollView(

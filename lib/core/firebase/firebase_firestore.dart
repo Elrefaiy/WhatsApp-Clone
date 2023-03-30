@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:whatsapp_clone/features/home/data/models/status_model.dart';
 
 import '../../features/authentication/data/models/user_model.dart';
 import '../../features/home/data/models/contact_model.dart';
 import '../../features/home/data/models/message_model.dart';
+import '../../features/home/data/models/status_model.dart';
 
 abstract class FirebaseFirestoreConsumer {
   Future<dynamic> addStatus({

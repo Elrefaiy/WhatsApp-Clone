@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
+
+import 'app_strings.dart';
 
 class AppConstants {
   static showSnackBar({

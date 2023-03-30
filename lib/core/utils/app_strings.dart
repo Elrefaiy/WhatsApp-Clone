@@ -1,5 +1,7 @@
 class AppStrings {
   static const appName = 'WhatsApp';
+  static const webInitial =
+      'send and receive messages without keeping your phone online.\nUse WhatsApp on up to 4 linked devices and 1 phone at the same time.';
 
   //! Failure Messages
   static const loginWarning =
@@ -13,6 +15,8 @@ class AppStrings {
   static const noUserImage = '$assetImages/user-avatar.jpg';
   static const chatDark = '$assetImages/chat-dark.jpg';
   static const chatLight = '$assetImages/chat-light.jpg';
+  static const webDark = '$assetImages/web-dark.jpg';
+  static const webLight = '$assetImages/web-light.jpg';
 
   //! SharedPreferences Keys
   static const verificationId = 'CACHED_VERIFICATION_ID';

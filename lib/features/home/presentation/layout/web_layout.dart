@@ -1,463 +1,422 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../core/utils/app_strings.dart';
+import '../../../../core/utils/media_query.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_constants.dart';
+import '../../../authentication/presentation/cubit/authentication_cubit.dart';
+import '../../../settings/presentation/cubit/settings_cubit.dart';
+import '../../domain/entities/message.dart';
+import '../cubit/home_cubit.dart';
+import '../widgets/freind_message_item.dart';
+import '../widgets/my_message_item.dart';
+import '../widgets/web_chat_item.dart';
 
 class WebLayout extends StatelessWidget {
-  final UserModel model;
-  const WebLayout({required this.model, super.key});
+  const WebLayout({super.key});
+
+  Container cotactsBuilder(BuildContext context) {
+    return Container(
+      width: context.width >= 560 ? 410 : 300,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          right: BorderSide(
+            width: 1,
+            color: Colors.blueGrey.withOpacity(.2),
+          ),
+        ),
+      ),
+      child: Column(
+        children: [
+          Container(
+            height: 54,
+            color: AppColors.c6(),
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+            ),
+            child: Row(
+              children: [
+                AppConstants.userImage(
+                  radius: 35,
+                  image: AuthenticationCubit.get(context).currentUser.image,
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {},
+                  icon: const FaIcon(
+                    FontAwesomeIcons.users,
+                    size: 16,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.data_usage_rounded,
+                    size: 20,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.chat,
+                    size: 20,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.more_vert,
+                    size: 20,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 5,
+            ),
+            width: 410,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 34,
+                    padding: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      color: AppColors.c6(),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.search,
+                            color: Colors.blueGrey,
+                            size: 18,
+                          ),
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            style: Theme.of(context).textTheme.bodyText2,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Search or start new chat',
+                              hintStyle: Theme.of(context).textTheme.bodyText2,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                const FaIcon(
+                  FontAwesomeIcons.bars,
+                  color: Colors.blueGrey,
+                  size: 14,
+                ),
+              ],
+            ),
+          ),
+          Divider(
+            color: Colors.blueGrey.withOpacity(.2),
+            thickness: 1,
+            height: 1,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (context, index) => WebChatItem(
+                contact: HomeCubit.get(context).allContacts[index],
+              ),
+              itemCount: 1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget initalChat(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: SettingsCubit.get(context).isDark
+              ? const Color(0xff212E36)
+              : AppColors.c6(),
+          border: Border(
+            bottom: BorderSide(
+              width: 8,
+              color: AppColors.c2(),
+            ),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image(
+              image: AssetImage(
+                SettingsCubit.get(context).isDark
+                    ? AppStrings.webDark
+                    : AppStrings.webLight,
+              ),
+            ),
+            const SizedBox(height: 30),
+            Text(
+              'WhatsApp Web',
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 30,
+                  ),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              AppStrings.webInitial,
+              style: Theme.of(context).textTheme.bodyText2,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 80),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const FaIcon(
+                  FontAwesomeIcons.lock,
+                  size: 14,
+                  color: Colors.blueGrey,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  'End-to-end encrypted',
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget chatWidget(context) {
+    final messageController = TextEditingController();
+
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              SettingsCubit.get(context).isDark
+                  ? AppStrings.chatDark
+                  : AppStrings.chatLight,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 54,
+              color: AppColors.c6(),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 10,
+              ),
+              child: Row(
+                children: [
+                  AppConstants.userImage(
+                    radius: 24,
+                    image: HomeCubit.get(context).currentContact!.image,
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: Text(
+                      HomeCubit.get(context).currentContact!.name,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.search,
+                      size: 20,
+                      color: Colors.blueGrey,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.more_vert,
+                      size: 20,
+                      color: Colors.blueGrey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: StreamBuilder<List<Message>>(
+                stream: HomeCubit.get(context).curruntChatMessages,
+                builder: (context, snapshot) {
+                  return ListView.separated(
+                    controller: HomeCubit.get(context).chatController,
+                    itemBuilder: (context, index) {
+                      if (snapshot.data![index].recieverId !=
+                          AuthenticationCubit.get(context).currentUser.uId) {
+                        return MyMessageWidget(
+                          content: snapshot.data![index].message,
+                          time: snapshot.data![index].time,
+                        );
+                      } else {
+                        return FriendMessageWidget(
+                          content: snapshot.data![index].message,
+                          time: snapshot.data![index].time,
+                        );
+                      }
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 5,
+                    ),
+                    itemCount: snapshot.data!.length,
+                  );
+                },
+              ),
+            ),
+            Container(
+              color: AppColors.c6(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const FaIcon(
+                      FontAwesomeIcons.faceGrinWide,
+                      color: Colors.blueGrey,
+                      size: 22,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const FaIcon(
+                      FontAwesomeIcons.paperclip,
+                      size: 18,
+                      color: Colors.blueGrey,
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 38,
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 10,
+                      ),
+                      padding: const EdgeInsets.only(
+                        bottom: 15,
+                        left: 20,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextFormField(
+                        controller: messageController,
+                        style: Theme.of(context).textTheme.bodyText2,
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Type a message',
+                          hintStyle: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        onFieldSubmitted: (text) {
+                          if (messageController.text.isNotEmpty) {
+                            HomeCubit.get(context).sendTextMessage(
+                              message: messageController.text,
+                              time: DateTime.now().toString().substring(
+                                    11,
+                                    16,
+                                  ),
+                              date: DateFormat.yMMMd()
+                                  .format(DateTime.now())
+                                  .toString(),
+                              dateTime: DateTime.now().toString(),
+                              receiverId:
+                                  HomeCubit.get(context).currentContact!.uId,
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      if (messageController.text.isNotEmpty) {
+                        HomeCubit.get(context).sendTextMessage(
+                          message: messageController.text,
+                          time: DateTime.now().toString().substring(11, 16),
+                          date: DateFormat.yMMMd()
+                              .format(DateTime.now())
+                              .toString(),
+                          dateTime: DateTime.now().toString(),
+                          receiverId:
+                              HomeCubit.get(context).currentContact!.uId,
+                        );
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.send,
+                      color: Colors.blueGrey,
+                      size: 26,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
-    // return BlocBuilder<AppCubit, AppStates>(
-    //   builder: (context, state) {
-    //     var messageController = TextEditingController();
-    //     List users = AppCubit.get(context).users;
-
-    //     return Scaffold(
-    //       body: Row(
-    //         children: [
-    //           Container(
-    //             width: 410,
-    //             decoration: BoxDecoration(
-    //               color: Colors.white,
-    //               border: Border(
-    //                 right: BorderSide(
-    //                   width: 1,
-    //                   color: Colors.blueGrey.withOpacity(.2),
-    //                 ),
-    //               ),
-    //             ),
-    //             child: Column(
-    //               children: [
-    //                 Container(
-    //                   height: 54,
-    //                   color: AppColors.c6(),
-    //                   padding: const EdgeInsets.symmetric(
-    //                     vertical: 10,
-    //                   ),
-    //                   child: Row(
-    //                     children: [
-    //                       const CircleAvatar(
-    //                         radius: 35,
-    //                         child: ClipOval(
-    //                           child: Image(
-    //                             image: AssetImage(
-    //                               'assets/images/user-avatar.jpg',
-    //                             ),
-    //                             fit: BoxFit.cover,
-    //                           ),
-    //                         ),
-    //                       ),
-    //                       const Spacer(),
-    //                       IconButton(
-    //                         onPressed: () {},
-    //                         icon: const FaIcon(
-    //                           FontAwesomeIcons.users,
-    //                           size: 16,
-    //                           color: Colors.blueGrey,
-    //                         ),
-    //                       ),
-    //                       IconButton(
-    //                         onPressed: () {},
-    //                         icon: const Icon(
-    //                           Icons.data_usage_rounded,
-    //                           size: 20,
-    //                           color: Colors.blueGrey,
-    //                         ),
-    //                       ),
-    //                       IconButton(
-    //                         onPressed: () {},
-    //                         icon: const Icon(
-    //                           Icons.chat,
-    //                           size: 20,
-    //                           color: Colors.blueGrey,
-    //                         ),
-    //                       ),
-    //                       IconButton(
-    //                         onPressed: () {},
-    //                         icon: const Icon(
-    //                           Icons.more_vert,
-    //                           size: 20,
-    //                           color: Colors.blueGrey,
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 ),
-    //                 Container(
-    //                   padding: const EdgeInsets.symmetric(
-    //                     horizontal: 15,
-    //                     vertical: 5,
-    //                   ),
-    //                   width: 410,
-    //                   child: Row(
-    //                     children: [
-    //                       Expanded(
-    //                         child: Container(
-    //                             height: 34,
-    //                             padding: const EdgeInsets.only(bottom: 10),
-    //                             decoration: BoxDecoration(
-    //                               color: AppColors.c6(),
-    //                               borderRadius: BorderRadius.circular(
-    //                                 5,
-    //                               ),
-    //                             ),
-    //                             child: Row(
-    //                               children: [
-    //                                 IconButton(
-    //                                   onPressed: () {},
-    //                                   icon: const Icon(
-    //                                     Icons.search,
-    //                                     color: Colors.blueGrey,
-    //                                     size: 18,
-    //                                   ),
-    //                                 ),
-    //                                 Expanded(
-    //                                   child: TextFormField(
-    //                                     style: Theme.of(context)
-    //                                         .textTheme
-    //                                         .bodyText2,
-    //                                     decoration: InputDecoration(
-    //                                       border: InputBorder.none,
-    //                                       hintText: 'Search or start new chat',
-    //                                       hintStyle: Theme.of(context)
-    //                                           .textTheme
-    //                                           .bodyText2,
-    //                                     ),
-    //                                   ),
-    //                                 ),
-    //                               ],
-    //                             )),
-    //                       ),
-    //                       const SizedBox(
-    //                         width: 15,
-    //                       ),
-    //                       const FaIcon(
-    //                         FontAwesomeIcons.bars,
-    //                         color: Colors.blueGrey,
-    //                         size: 14,
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 ),
-    //                 Divider(
-    //                   color: Colors.blueGrey.withOpacity(.2),
-    //                   thickness: 1,
-    //                   height: 1,
-    //                 ),
-    //                 Expanded(
-    //                   child: ListView.builder(
-    //                     itemBuilder: (context, index) =>
-    //                         webChatItem(context, users[index]),
-    //                     itemCount: 1,
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //           //////////////////////////
-    //           AppCubit.get(context).messages.isEmpty
-    //               ? Expanded(
-    //                   child: Container(
-    //                     decoration: BoxDecoration(
-    //                       color: SettingsCubit.get(context).isDark
-    //                           ? const Color(0xff212E36)
-    //                           : AppColors.c6(),
-    //                       border: Border(
-    //                         bottom: BorderSide(
-    //                           width: 8,
-    //                           color: AppColors.c2(),
-    //                         ),
-    //                       ),
-    //                     ),
-    //                     child: Column(
-    //                       mainAxisAlignment: MainAxisAlignment.center,
-    //                       children: [
-    //                         Image(
-    //                           image: AssetImage(
-    //                             SettingsCubit.get(context).isDark
-    //                                 ? 'assets/images/web-dark.jpg'
-    //                                 : 'assets/images/web-light.jpg',
-    //                           ),
-    //                         ),
-    //                         const SizedBox(height: 30),
-    //                         Text(
-    //                           'WhatsApp Web',
-    //                           style: Theme.of(context)
-    //                               .textTheme
-    //                               .headline2!
-    //                               .copyWith(
-    //                                 fontWeight: FontWeight.w400,
-    //                                 fontSize: 30,
-    //                               ),
-    //                         ),
-    //                         const SizedBox(height: 20),
-    //                         Text(
-    //                           'send and receive messages without keeping your phone online.\nUse WhatsApp on up to 4 linked devices and 1 phone at the same time.',
-    //                           style: Theme.of(context).textTheme.bodyText2,
-    //                           textAlign: TextAlign.center,
-    //                         ),
-    //                         const SizedBox(height: 80),
-    //                         Row(
-    //                           mainAxisAlignment: MainAxisAlignment.center,
-    //                           children: [
-    //                             const FaIcon(
-    //                               FontAwesomeIcons.lock,
-    //                               size: 14,
-    //                               color: Colors.blueGrey,
-    //                             ),
-    //                             const SizedBox(
-    //                               width: 5,
-    //                             ),
-    //                             Text(
-    //                               'End-to-end encrypted',
-    //                               style: Theme.of(context)
-    //                                   .textTheme
-    //                                   .bodyText2!
-    //                                   .copyWith(
-    //                                     fontSize: 11,
-    //                                   ),
-    //                             ),
-    //                           ],
-    //                         ),
-    //                       ],
-    //                     ),
-    //                   ),
-    //                 )
-    //               : Expanded(
-    //                   child: Container(
-    //                     decoration: BoxDecoration(
-    //                       image: DecorationImage(
-    //                         image: AssetImage(
-    //                           SettingsCubit.get(context).isDark
-    //                               ? 'assets/images/chat-dark.jpg'
-    //                               : 'assets/images/chat-light.jpg',
-    //                         ),
-    //                         fit: BoxFit.cover,
-    //                       ),
-    //                     ),
-    //                     child: Column(
-    //                       children: [
-    //                         Container(
-    //                           height: 54,
-    //                           color: AppColors.c6(),
-    //                           padding: const EdgeInsets.symmetric(
-    //                             horizontal: 15,
-    //                             vertical: 10,
-    //                           ),
-    //                           child: Row(
-    //                             children: [
-    //                               CircleAvatar(
-    //                                 child: model.image == 'image'
-    //                                     ? const ClipOval(
-    //                                         child: Image(
-    //                                           image: AssetImage(
-    //                                             'assets/images/user-avatar.jpg',
-    //                                           ),
-    //                                           fit: BoxFit.cover,
-    //                                         ),
-    //                                       )
-    //                                     : ClipOval(
-    //                                         child: Image(
-    //                                           image: NetworkImage(
-    //                                             model.image,
-    //                                           ),
-    //                                           fit: BoxFit.cover,
-    //                                         ),
-    //                                       ),
-    //                               ),
-    //                               const SizedBox(
-    //                                 width: 15,
-    //                               ),
-    //                               Expanded(
-    //                                 child: Text(
-    //                                   model.name,
-    //                                   style:
-    //                                       Theme.of(context).textTheme.bodyText1,
-    //                                 ),
-    //                               ),
-    //                               IconButton(
-    //                                 onPressed: () {},
-    //                                 icon: const Icon(
-    //                                   Icons.search,
-    //                                   size: 20,
-    //                                   color: Colors.blueGrey,
-    //                                 ),
-    //                               ),
-    //                               IconButton(
-    //                                 onPressed: () {},
-    //                                 icon: const Icon(
-    //                                   Icons.more_vert,
-    //                                   size: 20,
-    //                                   color: Colors.blueGrey,
-    //                                 ),
-    //                               ),
-    //                             ],
-    //                           ),
-    //                         ),
-    //                         const SizedBox(
-    //                           height: 20,
-    //                         ),
-    //                         if (AppCubit.get(context).messages.isNotEmpty)
-    //                           Container(
-    //                             padding: const EdgeInsets.symmetric(
-    //                               horizontal: 10,
-    //                               vertical: 8,
-    //                             ),
-    //                             decoration: BoxDecoration(
-    //                               color: SettingsCubit.get(context).isDark
-    //                                   ? AppColors.c4()
-    //                                   : Colors.white,
-    //                               borderRadius: BorderRadius.circular(12),
-    //                             ),
-    //                             child: Text(
-    //                               AppCubit.get(context).messages.first.date,
-    //                               style: Theme.of(context).textTheme.bodyText2,
-    //                             ),
-    //                           ),
-    //                         Expanded(
-    //                           child: ListView.separated(
-    //                             itemBuilder: (context, index) {
-    //                               var message =
-    //                                   AppCubit.get(context).messages[index];
-    //                               if (message.recieverId !=
-    //                                   AppCubit.get(context).user['uId']) {
-    //                                 return myMesseageItem(
-    //                                   context: context,
-    //                                   content: message.message,
-    //                                   time: message.time,
-    //                                 );
-    //                               } else {
-    //                                 return friendMessageItem(
-    //                                   context: context,
-    //                                   content: message.message,
-    //                                   time: message.time,
-    //                                 );
-    //                               }
-    //                             },
-    //                             separatorBuilder: (context, index) =>
-    //                                 const SizedBox(
-    //                               height: 5,
-    //                             ),
-    //                             itemCount:
-    //                                 AppCubit.get(context).messages.length,
-    //                           ),
-    //                         ),
-    //                         Container(
-    //                           color: AppColors.c6(),
-    //                           child: Row(
-    //                             mainAxisSize: MainAxisSize.min,
-    //                             children: [
-    //                               const SizedBox(
-    //                                 width: 10,
-    //                               ),
-    //                               IconButton(
-    //                                 onPressed: () {},
-    //                                 icon: const FaIcon(
-    //                                   FontAwesomeIcons.faceGrinWide,
-    //                                   color: Colors.blueGrey,
-    //                                   size: 22,
-    //                                 ),
-    //                               ),
-    //                               IconButton(
-    //                                 onPressed: () {},
-    //                                 icon: const FaIcon(
-    //                                   FontAwesomeIcons.paperclip,
-    //                                   size: 18,
-    //                                   color: Colors.blueGrey,
-    //                                 ),
-    //                               ),
-    //                               Expanded(
-    //                                 child: Container(
-    //                                   height: 38,
-    //                                   margin: const EdgeInsets.symmetric(
-    //                                     vertical: 8,
-    //                                     horizontal: 10,
-    //                                   ),
-    //                                   padding: const EdgeInsets.only(
-    //                                     bottom: 15,
-    //                                     left: 20,
-    //                                   ),
-    //                                   decoration: BoxDecoration(
-    //                                     color: Colors.white,
-    //                                     borderRadius: BorderRadius.circular(10),
-    //                                   ),
-    //                                   child: TextFormField(
-    //                                     controller: messageController,
-    //                                     style: Theme.of(context)
-    //                                         .textTheme
-    //                                         .bodyText2,
-    //                                     keyboardType: TextInputType.multiline,
-    //                                     decoration: const InputDecoration(
-    //                                       border: InputBorder.none,
-    //                                       hintText: 'Type a message',
-    //                                       hintStyle: TextStyle(
-    //                                         fontSize: 12,
-    //                                         color: Colors.grey,
-    //                                       ),
-    //                                     ),
-    //                                     onFieldSubmitted: (text) {
-    //                                       if (messageController
-    //                                           .text.isNotEmpty) {
-    //                                         AppCubit.get(context).sendMessage(
-    //                                           content: messageController.text,
-    //                                           time: DateTime.now()
-    //                                               .toString()
-    //                                               .substring(
-    //                                                 11,
-    //                                                 16,
-    //                                               ),
-    //                                           date: DateFormat.yMMMd()
-    //                                               .format(DateTime.now())
-    //                                               .toString(),
-    //                                           dateTime:
-    //                                               DateTime.now().toString(),
-    //                                           receiverId: model.uId,
-    //                                         );
-    //                                       }
-    //                                     },
-    //                                   ),
-    //                                 ),
-    //                               ),
-    //                               IconButton(
-    //                                 onPressed: () {
-    //                                   if (messageController.text.isNotEmpty) {
-    //                                     AppCubit.get(context).sendMessage(
-    //                                       content: messageController.text,
-    //                                       time: DateTime.now()
-    //                                           .toString()
-    //                                           .substring(
-    //                                             11,
-    //                                             16,
-    //                                           ),
-    //                                       date: DateFormat.yMMMd()
-    //                                           .format(DateTime.now())
-    //                                           .toString(),
-    //                                       dateTime: DateTime.now().toString(),
-    //                                       receiverId: model.uId,
-    //                                     );
-    //                                   }
-    //                                 },
-    //                                 icon: const Icon(
-    //                                   Icons.send,
-    //                                   color: Colors.blueGrey,
-    //                                   size: 26,
-    //                                 ),
-    //                               ),
-    //                               const SizedBox(
-    //                                 width: 10,
-    //                               ),
-    //                             ],
-    //                           ),
-    //                         ),
-    //                       ],
-    //                     ),
-    //                   ),
-    //                 ),
-    //         ],
-    //       ),
-    //     );
-    //   },
-    // );
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: Row(
+            children: [
+              cotactsBuilder(context),
+              HomeCubit.get(context).currentContact == null
+                  ? initalChat(context)
+                  : chatWidget(context),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

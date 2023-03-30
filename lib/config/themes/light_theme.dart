@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:whatsapp_clone/core/utils/app_colors.dart';
+
+import '../../core/utils/app_colors.dart';
 
 ThemeData lightTheme() {
   return ThemeData(

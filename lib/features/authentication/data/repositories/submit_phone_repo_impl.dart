@@ -5,7 +5,7 @@ import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/firebase/firebase_auth.dart';
 import '../../../../core/network/network_info.dart';
-import '../../../../core/usecase/usecase.dart';
+import '../../../../core/params/params.dart';
 import '../../domain/repositories/submit_phone_repo.dart';
 
 class SubmitPhoneRepositoryImpl implements SubmitPhoneRepository {

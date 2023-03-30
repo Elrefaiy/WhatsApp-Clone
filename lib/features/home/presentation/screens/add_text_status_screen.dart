@@ -12,7 +12,7 @@ class AddTextStatusScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {
-        if (state is AddTextStatusSuccessState) {
+        if (state is AddStatusSuccessState) {
           Navigator.pop(context);
         }
       },

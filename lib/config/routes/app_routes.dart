@@ -1,21 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/core/errors/exceptions.dart';
-import 'package:whatsapp_clone/core/widgets/image_view.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/contact.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/status.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
-import 'package:whatsapp_clone/features/home/presentation/layout/layout.dart';
-import 'package:whatsapp_clone/features/home/presentation/screens/all_users_screen.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/screens/login.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/screens/profile_info.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/screens/verify.dart';
-import 'package:whatsapp_clone/features/home/presentation/screens/chat_screen.dart';
-import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_profile.dart';
-import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_settings.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/screens/welcome.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/features/home/presentation/screens/add_image_status_screen.dart';
+
+import '../../core/errors/exceptions.dart';
+import '../../core/widgets/image_view.dart';
+import '../../features/authentication/presentation/screens/login.dart';
+import '../../features/authentication/presentation/screens/profile_info.dart';
+import '../../features/authentication/presentation/screens/verify.dart';
+import '../../features/authentication/presentation/screens/welcome.dart';
+import '../../features/home/domain/entities/status.dart';
+import '../../features/home/domain/entities/user.dart';
+import '../../features/home/presentation/layout/layout.dart';
 import '../../features/home/presentation/screens/add_text_status_screen.dart';
+import '../../features/home/presentation/screens/all_users_screen.dart';
+import '../../features/home/presentation/screens/chat_screen.dart';
 import '../../features/home/presentation/screens/status_screen.dart';
+import '../../features/settings/presentation/screens/mobile_profile.dart';
+import '../../features/settings/presentation/screens/mobile_settings.dart';
 
 class Routes {
   static const String welcome = '/';
@@ -30,6 +32,7 @@ class Routes {
   static const String chat = '/chat';
   static const String status = '/status';
   static const String addTextStatus = '/add_text_status';
+  static const String addImageStatus = '/add_image_status';
 }
 
 class AppRoutes {
@@ -109,6 +112,13 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) {
             return const AddTextStatusScreen();
+          },
+        );
+      case Routes.addImageStatus:
+        return MaterialPageRoute(
+          builder: (context) {
+            final image = settings.arguments as File;
+            return AddImageStatusScreen(image: image);
           },
         );
       default:

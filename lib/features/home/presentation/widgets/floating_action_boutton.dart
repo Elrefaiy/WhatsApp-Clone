@@ -44,7 +44,9 @@ class FAB extends StatelessWidget {
             const SizedBox(height: 10),
             FloatingActionButton(
               heroTag: null,
-              onPressed: () {},
+              onPressed: () {
+                HomeCubit.get(context).getStatusImage(context);
+              },
               backgroundColor: AppColors.c2(),
               child: const Icon(Icons.camera_alt),
             ),

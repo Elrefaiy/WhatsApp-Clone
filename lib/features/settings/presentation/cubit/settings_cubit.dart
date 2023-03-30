@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:whatsapp_clone/core/errors/failures.dart';
-import 'package:whatsapp_clone/core/usecase/usecase.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/features/settings/domain/usecases/logout.dart';
+
+import '../../../../core/errors/failures.dart';
+import '../../../../core/params/params.dart';
+import '../../../../core/utils/app_strings.dart';
+import '../../domain/usecases/logout.dart';
 
 part 'settings_state.dart';
 

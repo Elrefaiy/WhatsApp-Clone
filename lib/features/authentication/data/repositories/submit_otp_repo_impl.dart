@@ -7,7 +7,7 @@ import '../../../../core/errors/failures.dart';
 import '../../../../core/firebase/firebase_auth.dart';
 import '../../../../core/firebase/firebase_firestore.dart';
 import '../../../../core/network/network_info.dart';
-import '../../../../core/usecase/usecase.dart';
+import '../../../../core/params/params.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../domain/repositories/submit_otp_repo.dart';
 

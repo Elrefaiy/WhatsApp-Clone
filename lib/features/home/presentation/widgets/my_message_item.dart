@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/core/utils/app_colors.dart';
-import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
+
+import '../../../../config/routes/app_routes.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/widgets/image_view.dart';
+import '../../../settings/presentation/cubit/settings_cubit.dart';
 
 class MyMessageWidget extends StatelessWidget {
   final String content;
@@ -54,18 +57,18 @@ class MyMessageWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                   child: content.contains(
-                          'https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-61959.appspot.com')
+                    'https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-61959.appspot.com',
+                  )
                       ? GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => ImageViewScreen(
-                            //       image: content,
-                            //       name: 'Media View',
-                            //     ),
-                            //   ),
-                            // );
+                            Navigator.pushNamed(
+                              context,
+                              Routes.imageView,
+                              arguments: ImageViewArgs(
+                                name: 'Media View',
+                                image: content,
+                              ),
+                            );
                           },
                           child: Container(
                             width: double.infinity,

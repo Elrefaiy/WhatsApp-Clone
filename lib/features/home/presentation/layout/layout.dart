@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_clone/features/authentication/data/models/user_model.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
-import 'package:whatsapp_clone/features/home/presentation/layout/mobile_layout.dart';
-import 'package:whatsapp_clone/features/home/presentation/layout/web_layout.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
+import '../../../authentication/presentation/cubit/authentication_cubit.dart';
+import 'web_layout.dart';
+import 'mobile_layout.dart';
 
 class Layout extends StatelessWidget {
   const Layout({super.key});
@@ -14,15 +14,7 @@ class Layout extends StatelessWidget {
     return BlocBuilder<AuthenticationCubit, AuthenticationState>(
       builder: (context, state) {
         if (kIsWeb) {
-          return const WebLayout(
-            model: UserModel(
-              name: 'test user',
-              phone: '01111111111',
-              image: 'image',
-              about: 'about',
-              uId: 'testuid',
-            ),
-          );
+          return const WebLayout();
         } else {
           return const MobileLayout();
         }

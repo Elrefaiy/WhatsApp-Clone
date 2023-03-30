@@ -38,19 +38,25 @@ import 'features/home/data/datasources/status/get_status_remote.dart';
 import 'features/home/data/repositories/chats/get_all_users_repo_impl.dart';
 import 'features/home/data/repositories/chats/get_chat_messages_repo_impl.dart';
 import 'features/home/data/repositories/chats/get_chats_repo_impl.dart';
+import 'features/home/data/repositories/chats/send_image_message_repo_impl.dart';
 import 'features/home/data/repositories/chats/send_text_message_repo_impl.dart';
+import 'features/home/data/repositories/status/add_image_status_repo_impl.dart';
 import 'features/home/data/repositories/status/add_text_status_repo_impl.dart';
 import 'features/home/data/repositories/status/get_status_repo_impl.dart';
 import 'features/home/domain/repositories/chats/get_all_users_repo.dart';
 import 'features/home/domain/repositories/chats/get_chat_messages_repo.dart';
 import 'features/home/domain/repositories/chats/get_chats_repo.dart';
+import 'features/home/domain/repositories/chats/send_image_message_repo.dart';
 import 'features/home/domain/repositories/chats/send_text_message_repo.dart';
+import 'features/home/domain/repositories/status/add_image_status_repo.dart';
 import 'features/home/domain/repositories/status/add_text_status_repo.dart';
 import 'features/home/domain/repositories/status/get_status_repo.dart';
 import 'features/home/domain/usecases/chats/get_all_users.dart';
 import 'features/home/domain/usecases/chats/get_chat_messages.dart';
 import 'features/home/domain/usecases/chats/get_chats.dart';
+import 'features/home/domain/usecases/chats/send_image_message.dart';
 import 'features/home/domain/usecases/chats/send_text_message.dart';
+import 'features/home/domain/usecases/status/add_image_status.dart';
 import 'features/home/domain/usecases/status/add_text_status.dart';
 import 'features/home/domain/usecases/status/get_status.dart';
 import 'features/home/presentation/cubit/home_cubit.dart';
@@ -87,7 +93,9 @@ Future<void> init() async {
       sendTextMessageUseCase: sl(),
       getChatMessagesUseCase: sl(),
       addTextStatusUseCase: sl(),
+      sendImageMessageUseCase: sl(),
       getStatusUseCase: sl(),
+      addImageStatusUseCase: sl(),
     ),
   );
 
@@ -139,6 +147,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<GetStatusUseCase>(
     () => GetStatusUseCase(getStatusRepository: sl()),
+  );
+  sl.registerLazySingleton<SendImageMessageUseCase>(
+    () => SendImageMessageUseCase(sendImageMessageRepository: sl()),
+  );
+  sl.registerLazySingleton<AddImageStatusUseCase>(
+    () => AddImageStatusUseCase(addImageStatusRepository: sl()),
   );
 
   // settings
@@ -230,6 +244,22 @@ Future<void> init() async {
   sl.registerLazySingleton<GetStatusRepository>(
     () => GetStatusRepositoryImpl(
       remoteDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  sl.registerLazySingleton<SendImageMessageRepository>(
+    () => SendImageMessageRepositoryImpl(
+      authInstance: sl(),
+      storageInstance: sl(),
+      storeInstance: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  sl.registerLazySingleton<AddImageStatusRepository>(
+    () => AddImageStatusRepositoryImpl(
+      authInstance: sl(),
+      storageInstance: sl(),
+      storeInstance: sl(),
       networkInfo: sl(),
     ),
   );

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../../core/errors/failures.dart';
+import '../../../../../core/params/params.dart';
 import '../../../../../core/usecase/usecase.dart';
 import '../../entities/contact.dart';
 import '../../repositories/chats/get_chats_repo.dart';

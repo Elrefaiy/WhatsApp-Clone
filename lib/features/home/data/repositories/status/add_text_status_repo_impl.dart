@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:whatsapp_clone/features/home/data/models/status_model.dart';
 
 import '../../../../../core/errors/exceptions.dart';
 import '../../../../../core/errors/failures.dart';
 import '../../../../../core/firebase/firebase_auth.dart';
 import '../../../../../core/firebase/firebase_firestore.dart';
 import '../../../../../core/network/network_info.dart';
-import '../../../../../core/usecase/usecase.dart';
+import '../../../../../core/params/params.dart';
 import '../../../domain/repositories/status/add_text_status_repo.dart';
+import '../../models/status_model.dart';
 
 class AddTextStatusRepositoryImpl implements AddTextStatusRepository {
   final NetworkInfo networkInfo;

@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/firebase/firebase_auth.dart';
 import '../../../../core/firebase/firebase_firestore.dart';
-import '../../../../core/usecase/usecase.dart';
+import '../../../../core/params/params.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/usecases/get_current_users.dart';

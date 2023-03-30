@@ -1,6 +1,6 @@
 import '../../../../../core/firebase/firebase_auth.dart';
 import '../../../../../core/firebase/firebase_firestore.dart';
-import '../../../../../core/usecase/usecase.dart';
+import '../../../../../core/params/params.dart';
 import '../../models/contact_model.dart';
 import '../../models/message_model.dart';
 

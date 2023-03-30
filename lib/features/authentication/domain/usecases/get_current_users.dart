@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failures.dart';
+import '../../../../core/params/params.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../entities/user.dart';
 import '../repositories/get_current_user_repo.dart';

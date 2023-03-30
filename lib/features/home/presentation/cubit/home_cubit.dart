@@ -1,20 +1,26 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/status.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/status/add_text_status.dart';
-import 'package:whatsapp_clone/features/home/domain/usecases/status/get_status.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/errors/failures.dart';
-import '../../../../core/usecase/usecase.dart';
+import '../../../../core/params/params.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../domain/entities/contact.dart';
 import '../../domain/entities/message.dart';
+import '../../domain/entities/status.dart';
 import '../../domain/entities/user.dart';
 import '../../domain/usecases/chats/get_all_users.dart';
 import '../../domain/usecases/chats/get_chat_messages.dart';
 import '../../domain/usecases/chats/get_chats.dart';
+import '../../domain/usecases/chats/send_image_message.dart';
 import '../../domain/usecases/chats/send_text_message.dart';
+import '../../domain/usecases/status/add_image_status.dart';
+import '../../domain/usecases/status/add_text_status.dart';
+import '../../domain/usecases/status/get_status.dart';
 
 part 'home_state.dart';
 
@@ -25,6 +31,8 @@ class HomeCubit extends Cubit<HomeState> {
   final GetChatMessagesUseCase getChatMessagesUseCase;
   final AddTextStatusUseCase addTextStatusUseCase;
   final GetStatusUseCase getStatusUseCase;
+  final SendImageMessageUseCase sendImageMessageUseCase;
+  final AddImageStatusUseCase addImageStatusUseCase;
   HomeCubit({
     required this.getChatsUseCase,
     required this.getAllUsersUseCase,
@@ -32,6 +40,8 @@ class HomeCubit extends Cubit<HomeState> {
     required this.getChatMessagesUseCase,
     required this.addTextStatusUseCase,
     required this.getStatusUseCase,
+    required this.sendImageMessageUseCase,
+    required this.addImageStatusUseCase,
   }) : super(HomeInitial());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -105,7 +115,66 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  late Stream<List<Message>> curruntChatMessages;
+  File fileImage = File('');
+  ImagePicker picker = ImagePicker();
+  dynamic pickedFile;
+
+  Future<void> getGalleryImage({
+    required context,
+    required String recieverId,
+  }) async {
+    pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedFile != null) {
+      fileImage = File(pickedFile.path);
+      cropImage(
+        context: context,
+        recieverId: recieverId,
+      );
+    }
+  }
+
+  Future<void> cropImage({
+    required context,
+    required String recieverId,
+  }) async {
+    CroppedFile? croppedImage = await ImageCropper().cropImage(
+      sourcePath: pickedFile.path,
+      uiSettings: [
+        AndroidUiSettings(
+          statusBarColor: Colors.black,
+          toolbarColor: Colors.black,
+          hideBottomControls: true,
+          toolbarWidgetColor: Colors.white,
+          lockAspectRatio: false,
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    );
+    if (croppedImage != null) {
+      emit(SendImageMessageLoadingState());
+      fileImage = File(croppedImage.path);
+      ImageMessageParams params = ImageMessageParams(
+        image: fileImage,
+        recieverId: recieverId,
+      );
+      final response = await sendImageMessageUseCase(params);
+      emit(
+        response.fold(
+          (failure) => SendImageMessageErrorState(_mapFailureToMsg(failure)),
+          (right) => SendImageMessageSuccessState(),
+        ),
+      );
+    }
+  }
+
+  Stream<List<Message>> curruntChatMessages = const Stream.empty();
   Stream<List<Message>> getChatMessages({
     required String uId,
     required String name,
@@ -122,6 +191,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   List<Contact> allContacts = [];
+  Contact? currentContact;
   Future<void> getAllChats() async {
     emit(GetAllChatsLoadingState());
     final response = await getChatsUseCase.call(NoParams());
@@ -144,7 +214,7 @@ class HomeCubit extends Cubit<HomeState> {
     required String status,
     required int color,
   }) async {
-    emit(AddTextStatusLoadingState());
+    emit(AddStatusLoadingState());
     final params = AddTextStatusParams(
       status: status,
       color: color,
@@ -152,8 +222,65 @@ class HomeCubit extends Cubit<HomeState> {
     final response = await addTextStatusUseCase.call(params);
     emit(
       response.fold(
-        (failure) => AddTextStatusErrorState(_mapFailureToMsg(failure)),
-        (right) => AddTextStatusSuccessState(),
+        (failure) => AddStatusErrorState(_mapFailureToMsg(failure)),
+        (right) => AddStatusSuccessState(),
+      ),
+    );
+    getStatus();
+  }
+
+  Future<void> getStatusImage(context) async {
+    pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (pickedFile != null) {
+      fileImage = File(pickedFile.path);
+      cropStatusImage(context);
+    }
+  }
+
+  Future<void> cropStatusImage(context) async {
+    CroppedFile? croppedImage = await ImageCropper().cropImage(
+      sourcePath: pickedFile.path,
+      uiSettings: [
+        AndroidUiSettings(
+          statusBarColor: Colors.black,
+          toolbarColor: Colors.black,
+          hideBottomControls: true,
+          toolbarWidgetColor: Colors.white,
+          lockAspectRatio: false,
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+        ),
+        WebUiSettings(
+          context: context,
+        ),
+      ],
+    );
+    if (croppedImage != null) {
+      emit(CropStatusImageSuccessState(File(croppedImage.path)));
+    } else {
+      emit(CropStatusImageErrorState());
+    }
+  }
+
+  final captionController = TextEditingController();
+
+  Future<void> addImageStatus({
+    required File image,
+    required String caption,
+  }) async {
+    emit(AddStatusLoadingState());
+    final params = ImageStatusParams(
+      image: image,
+      caption: caption,
+    );
+    final response = await addImageStatusUseCase.call(params);
+    emit(
+      response.fold(
+        (failure) => AddStatusErrorState(_mapFailureToMsg(failure)),
+        (right) => AddStatusSuccessState(),
       ),
     );
     getStatus();

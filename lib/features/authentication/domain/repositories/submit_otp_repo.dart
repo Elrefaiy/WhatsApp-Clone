@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failures.dart';
-import '../../../../core/usecase/usecase.dart';
+import '../../../../core/params/params.dart';
 
 abstract class SubmitOTPRepository {
   Future<Either<Failure, dynamic>> submitOTP({

@@ -1,7 +1,7 @@
-import 'package:whatsapp_clone/core/usecase/usecase.dart';
-import 'package:whatsapp_clone/features/home/data/datasources/chats/get_chat_messages_remote.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/message.dart';
-import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_chat_messages_repo.dart';
+import '../../../../../core/params/params.dart';
+import '../../../domain/entities/message.dart';
+import '../../../domain/repositories/chats/get_chat_messages_repo.dart';
+import '../../datasources/chats/get_chat_messages_remote.dart';
 
 class GetChatMessagesRepositoryImpl implements GetChatMessagesRepository {
   final GetChatMessagesRemoteDataSource remoteDataSource;

@@ -3,6 +3,8 @@ import 'package:dartz/dartz.dart';
 import 'package:whatsapp_clone/core/usecase/usecase.dart';
 import 'package:whatsapp_clone/features/settings/domain/repositories/logout_repository.dart';
 
+import '../../../../core/params/params.dart';
+
 class LogoutUseCase implements UseCase<dynamic, NoParams> {
   final LogoutRepository logoutRepository;
   LogoutUseCase({required this.logoutRepository});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
+
+import '../utils/app_strings.dart';
 
 class ImageViewScreen extends StatelessWidget {
   final ImageViewArgs args;

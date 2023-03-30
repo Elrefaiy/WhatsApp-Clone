@@ -70,13 +70,13 @@ class GetAllChatsErrorState extends HomeState {
   List<Object> get props => [error];
 }
 
-class AddTextStatusLoadingState extends HomeState {}
+class AddStatusLoadingState extends HomeState {}
 
-class AddTextStatusSuccessState extends HomeState {}
+class AddStatusSuccessState extends HomeState {}
 
-class AddTextStatusErrorState extends HomeState {
+class AddStatusErrorState extends HomeState {
   final String error;
-  const AddTextStatusErrorState(this.error);
+  const AddStatusErrorState(this.error);
   @override
   List<Object> get props => [error];
 }
@@ -88,6 +88,26 @@ class GetAllStatusSuccessState extends HomeState {}
 class GetAllStatusErrorState extends HomeState {
   final String error;
   const GetAllStatusErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}
+
+class CropStatusImageSuccessState extends HomeState {
+  final File image;
+  const CropStatusImageSuccessState(this.image);
+  @override
+  List<Object> get props => [image];
+}
+
+class CropStatusImageErrorState extends HomeState {}
+
+class SendImageMessageLoadingState extends HomeState {}
+
+class SendImageMessageSuccessState extends HomeState {}
+
+class SendImageMessageErrorState extends HomeState {
+  final String error;
+  const SendImageMessageErrorState(this.error);
   @override
   List<Object> get props => [error];
 }
