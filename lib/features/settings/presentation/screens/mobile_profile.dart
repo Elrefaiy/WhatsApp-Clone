@@ -33,7 +33,7 @@ class MobileProfile extends StatelessWidget {
         var nameController = TextEditingController();
         var aboutController = TextEditingController();
 
-        nameController.text = user.name;
+        nameController.text = user!.name;
         aboutController.text = user.about;
         return Scaffold(
           key: scaffoldKey,

@@ -22,7 +22,7 @@ class WhatsApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => di.sl<HomeCubit>()
-            ..getStatus()
+            ..getStatus(context)
             ..getAllChats(),
         ),
         BlocProvider(

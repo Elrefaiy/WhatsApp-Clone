@@ -106,7 +106,7 @@ class ChatScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           if (snapshot.data![index].recieverId !=
                               AuthenticationCubit.get(context)
-                                  .currentUser
+                                  .currentUser!
                                   .uId) {
                             return MyMessageWidget(
                               content: snapshot.data![index].message,

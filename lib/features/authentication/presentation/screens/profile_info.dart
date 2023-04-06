@@ -33,7 +33,7 @@ class ProfileInfoScreen extends StatelessWidget {
       builder: (context, state) {
         final nameController = TextEditingController();
         final currentUser = AuthenticationCubit.get(context).currentUser;
-        nameController.text = currentUser.name;
+        nameController.text = currentUser!.name;
         Widget bodyBuilder() {
           return Center(
             child: Padding(

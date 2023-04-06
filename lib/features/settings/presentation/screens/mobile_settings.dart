@@ -57,7 +57,7 @@ class MobileSettingsScreen extends StatelessWidget {
                         tag: 'Profile',
                         child: AppConstants.userImage(
                           radius: 35,
-                          image: user.image,
+                          image: user!.image,
                         ),
                       ),
                       const SizedBox(width: 20),

@@ -92,6 +92,8 @@ class GetAllStatusErrorState extends HomeState {
   List<Object> get props => [error];
 }
 
+class ChangeStatusColorState extends HomeState {}
+
 class CropStatusImageSuccessState extends HomeState {
   final File image;
   const CropStatusImageSuccessState(this.image);

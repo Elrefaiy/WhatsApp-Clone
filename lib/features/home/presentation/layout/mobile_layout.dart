@@ -4,6 +4,7 @@ import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_colors.dart';
 import 'package:whatsapp_clone/core/utils/app_strings.dart';
 import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
+import 'package:whatsapp_clone/features/home/presentation/screens/all_calls.dart';
 import 'package:whatsapp_clone/features/home/presentation/screens/all_chats.dart';
 import 'package:whatsapp_clone/features/home/presentation/screens/all_status.dart';
 import 'package:whatsapp_clone/features/home/presentation/widgets/floating_action_boutton.dart';
@@ -25,7 +26,7 @@ class _MobileLayoutState extends State<MobileLayout>
   void initState() {
     controller = TabController(length: 3, vsync: this);
     controller.addListener(() {
-      HomeCubit.get(context).changeIndex(controller.index);
+      HomeCubit.get(context).changeIndex(controller.index, context);
     });
     super.initState();
   }
@@ -56,9 +57,7 @@ class _MobileLayoutState extends State<MobileLayout>
               children: const <Widget>[
                 AllChats(),
                 AllStatus(),
-                Center(
-                  child: Text('Calls'),
-                ),
+                AllCalls(),
               ],
             ),
             headerSliverBuilder: (BuildContext context, bool isScrolled) {

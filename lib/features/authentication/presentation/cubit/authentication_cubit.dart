@@ -110,7 +110,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  late User currentUser;
+  User? currentUser;
 
   Future<void> submitOTP({
     required String otpCode,
@@ -131,6 +131,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   }
 
   Future<void> getCurrentUser() async {
+    emit(GetUserLoadingState());
     final response = await getCurrentUserUseCase(NoParams());
     response.fold(
       (failure) => emit(GetUserErrorState(_mapFailureToMsg(failure))),

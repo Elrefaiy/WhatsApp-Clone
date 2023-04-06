@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/params/params.dart';
 import '../../../../core/utils/app_strings.dart';
+import '../../../authentication/presentation/cubit/authentication_cubit.dart';
 import '../../domain/entities/contact.dart';
 import '../../domain/entities/message.dart';
 import '../../domain/entities/status.dart';
@@ -48,7 +49,7 @@ class HomeCubit extends Cubit<HomeState> {
 
 // Layout
   int currentIndex = 0;
-  void changeIndex(index) {
+  void changeIndex(index, context) {
     emit(HomeInitial());
     currentIndex = index;
     switch (index) {
@@ -56,7 +57,7 @@ class HomeCubit extends Cubit<HomeState> {
         getAllChats();
         break;
       case 1:
-        getStatus();
+        getStatus(context);
         break;
       default:
     }
@@ -210,9 +211,28 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
 // Status
+
+  List<int> statusColor = <int>[
+    0xffD9A537,
+    0xffDA6C55,
+    0xffB78479,
+    0xffC692DD,
+    0xffFE7E6B,
+    0xff81DF78,
+    0xff60CBEA,
+  ];
+
+  int currentColor = 0xffD9A537;
+  changeStatusColor(int color) {
+    emit(HomeInitial());
+    currentColor = color;
+    emit(ChangeStatusColorState());
+  }
+
   Future<void> addTextStatus({
     required String status,
     required int color,
+    required context,
   }) async {
     emit(AddStatusLoadingState());
     final params = AddTextStatusParams(
@@ -226,7 +246,7 @@ class HomeCubit extends Cubit<HomeState> {
         (right) => AddStatusSuccessState(),
       ),
     );
-    getStatus();
+    getStatus(context);
   }
 
   Future<void> getStatusImage(context) async {
@@ -267,10 +287,8 @@ class HomeCubit extends Cubit<HomeState> {
 
   final captionController = TextEditingController();
 
-  Future<void> addImageStatus({
-    required File image,
-    required String caption,
-  }) async {
+  Future<void> addImageStatus(
+      {required File image, required String caption, required context}) async {
     emit(AddStatusLoadingState());
     final params = ImageStatusParams(
       image: image,
@@ -283,11 +301,13 @@ class HomeCubit extends Cubit<HomeState> {
         (right) => AddStatusSuccessState(),
       ),
     );
-    getStatus();
+    getStatus(context);
   }
 
-  Map<String, List<Status>> allStatus = {};
-  Future<void> getStatus() async {
+  List<Status> myStatus = [];
+  Map<String, List<Status>> contactsStatus = {};
+  List<String> statusId = [];
+  Future<void> getStatus(context) async {
     if (allUsers.isEmpty) {
       await getAllUsers();
     }
@@ -299,7 +319,20 @@ class HomeCubit extends Cubit<HomeState> {
     final response = await getStatusUseCase.call(usersId);
     response.fold(
       (failure) => null,
-      (status) => allStatus = status,
+      (status) {
+        status.forEach(
+          (key, value) {
+            if (value != []) {
+              if (key == AuthenticationCubit.get(context).currentUser!.uId) {
+                myStatus = value;
+              } else {
+                contactsStatus.addAll({key: value});
+                statusId.add(key);
+              }
+            }
+          },
+        );
+      },
     );
     emit(GetAllStatusSuccessState());
   }

@@ -116,6 +116,7 @@ class AddImageStatusScreen extends StatelessWidget {
                           image: image,
                           caption:
                               HomeCubit.get(context).captionController.text,
+                          context: context,
                         );
                       },
                       icon: const Icon(

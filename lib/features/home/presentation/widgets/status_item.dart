@@ -1,9 +1,9 @@
 import 'package:dashed_circle/dashed_circle.dart';
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/config/routes/app_routes.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/status.dart';
 
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../domain/entities/status.dart';
 
 class StatusWidget extends StatelessWidget {
   final List<Status> status;

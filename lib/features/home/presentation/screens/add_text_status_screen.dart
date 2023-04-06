@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,7 +21,7 @@ class AddTextStatusScreen extends StatelessWidget {
       builder: (context, state) {
         var textController = TextEditingController();
         return Scaffold(
-          backgroundColor: Colors.teal,
+          backgroundColor: Color(HomeCubit.get(context).currentColor),
           body: Column(
             children: [
               const SizedBox(
@@ -50,7 +52,11 @@ class AddTextStatusScreen extends StatelessWidget {
                     icon: const Icon(Icons.palette),
                     color: Colors.white,
                     iconSize: 22,
-                    onPressed: () {},
+                    onPressed: () {
+                      HomeCubit.get(context).changeStatusColor(
+                        HomeCubit.get(context).statusColor[Random().nextInt(7)],
+                      );
+                    },
                   ),
                 ],
               ),
@@ -123,7 +129,8 @@ class AddTextStatusScreen extends StatelessWidget {
                         onPressed: () {
                           HomeCubit.get(context).addTextStatus(
                             status: textController.text,
-                            color: 0xff008069,
+                            color: HomeCubit.get(context).currentColor,
+                            context: context,
                           );
                         },
                         icon: const Icon(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/utils/app_constants.dart';
+import '../../../../core/widgets/image_view.dart';
 import '../../domain/entities/contact.dart';
 import '../cubit/home_cubit.dart';
 
@@ -35,15 +36,14 @@ class ChatWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     // builder: (context) => ImageViewScreen(
-                //     //   image: model.image,
-                //     //   name: model.name,
-                //     // ),
-                //   ),
-                // );
+                Navigator.pushNamed(
+                  context,
+                  Routes.imageView,
+                  arguments: ImageViewArgs(
+                    name: contact.name,
+                    image: contact.image,
+                  ),
+                );
               },
               child: AppConstants.userImage(
                 radius: 28,
@@ -77,9 +77,13 @@ class ChatWidget extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Icon(
-                        Icons.done_all,
-                        color: Colors.blue,
+                      Icon(
+                        contact.lastMessage == 'Picture'
+                            ? Icons.image
+                            : Icons.done_all,
+                        color: contact.lastMessage == 'Picture'
+                            ? Colors.blueGrey
+                            : Colors.blue,
                         size: 18,
                       ),
                       const SizedBox(

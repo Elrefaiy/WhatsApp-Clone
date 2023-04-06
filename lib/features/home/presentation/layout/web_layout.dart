@@ -42,7 +42,7 @@ class WebLayout extends StatelessWidget {
               children: [
                 AppConstants.userImage(
                   radius: 35,
-                  image: AuthenticationCubit.get(context).currentUser.image,
+                  image: AuthenticationCubit.get(context).currentUser!.image,
                 ),
                 const Spacer(),
                 IconButton(
@@ -278,7 +278,7 @@ class WebLayout extends StatelessWidget {
                     controller: HomeCubit.get(context).chatController,
                     itemBuilder: (context, index) {
                       if (snapshot.data![index].recieverId !=
-                          AuthenticationCubit.get(context).currentUser.uId) {
+                          AuthenticationCubit.get(context).currentUser!.uId) {
                         return MyMessageWidget(
                           content: snapshot.data![index].message,
                           time: snapshot.data![index].time,

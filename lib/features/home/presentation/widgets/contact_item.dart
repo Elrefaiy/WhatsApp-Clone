@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/config/routes/app_routes.dart';
 import 'package:whatsapp_clone/core/utils/app_constants.dart';
+import 'package:whatsapp_clone/core/widgets/image_view.dart';
 import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
 import 'package:whatsapp_clone/features/home/domain/entities/user.dart';
 import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
@@ -32,7 +33,16 @@ class ContactItem extends StatelessWidget {
         child: Row(
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  Routes.imageView,
+                  arguments: ImageViewArgs(
+                    name: user.name,
+                    image: user.image,
+                  ),
+                );
+              },
               child: AppConstants.userImage(
                 radius: 22,
                 image: user.image,
@@ -45,7 +55,8 @@ class ContactItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    user.uId == AuthenticationCubit.get(context).currentUser.uId
+                    user.uId ==
+                            AuthenticationCubit.get(context).currentUser!.uId
                         ? '${user.phone} (You)'
                         : user.name,
                     style: Theme.of(context).textTheme.headline2,
@@ -54,7 +65,10 @@ class ContactItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    user.about,
+                    user.uId ==
+                            AuthenticationCubit.get(context).currentUser!.uId
+                        ? 'Message yourself'
+                        : user.about,
                     maxLines: 1,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),

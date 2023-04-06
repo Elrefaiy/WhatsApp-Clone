@@ -47,6 +47,8 @@ class SignInErrorState extends AuthenticationState {
   List<Object> get props => [error];
 }
 
+class GetUserLoadingState extends AuthenticationState {}
+
 class GetUserSuccessState extends AuthenticationState {
   final User user;
   const GetUserSuccessState(this.user);

@@ -56,7 +56,7 @@ class FAB extends StatelessWidget {
         return FloatingActionButton(
           onPressed: () {},
           backgroundColor: AppColors.c2(),
-          child: const Icon(Icons.call),
+          child: const Icon(Icons.add_call),
         );
     }
   }
