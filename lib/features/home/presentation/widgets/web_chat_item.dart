@@ -24,7 +24,11 @@ class WebChatItem extends StatelessWidget {
         );
       },
       child: Container(
-        color: AppColors.c6(),
+        color: HomeCubit.get(context).currentContact != null
+            ? HomeCubit.get(context).currentContact!.uId == contact.uId
+                ? AppColors.c5().withOpacity(.1)
+                : Colors.transparent
+            : Colors.transparent,
         padding: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 10,

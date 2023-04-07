@@ -22,7 +22,8 @@ class WebLayout extends StatelessWidget {
     return Container(
       width: context.width >= 560 ? 410 : 300,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color:
+            SettingsCubit.get(context).isDark ? AppColors.c3() : Colors.white,
         border: Border(
           right: BorderSide(
             width: 1,
@@ -34,7 +35,9 @@ class WebLayout extends StatelessWidget {
         children: [
           Container(
             height: 54,
-            color: AppColors.c6(),
+            color: SettingsCubit.get(context).isDark
+                ? AppColors.c4()
+                : AppColors.c6(),
             padding: const EdgeInsets.symmetric(
               vertical: 10,
             ),
@@ -42,39 +45,51 @@ class WebLayout extends StatelessWidget {
               children: [
                 AppConstants.userImage(
                   radius: 35,
-                  image: AuthenticationCubit.get(context).currentUser!.image,
+                  image: AuthenticationCubit.get(context).currentUser != null
+                      ? AuthenticationCubit.get(context).currentUser!.image
+                      : 'image',
                 ),
                 const Spacer(),
                 IconButton(
                   onPressed: () {},
-                  icon: const FaIcon(
+                  icon: FaIcon(
                     FontAwesomeIcons.users,
                     size: 16,
-                    color: Colors.blueGrey,
+                    color: SettingsCubit.get(context).isDark
+                        ? Colors.blueGrey[200]
+                        : Colors.blueGrey,
                   ),
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.data_usage_rounded,
                     size: 20,
-                    color: Colors.blueGrey,
+                    color: SettingsCubit.get(context).isDark
+                        ? Colors.blueGrey[200]
+                        : Colors.blueGrey,
                   ),
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.chat,
                     size: 20,
-                    color: Colors.blueGrey,
+                    color: SettingsCubit.get(context).isDark
+                        ? Colors.blueGrey[200]
+                        : Colors.blueGrey,
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
+                  onPressed: () {
+                    SettingsCubit.get(context).changeMode();
+                  },
+                  icon: Icon(
                     Icons.more_vert,
                     size: 20,
-                    color: Colors.blueGrey,
+                    color: SettingsCubit.get(context).isDark
+                        ? Colors.blueGrey[200]
+                        : Colors.blueGrey,
                   ),
                 ),
               ],
@@ -93,7 +108,9 @@ class WebLayout extends StatelessWidget {
                     height: 34,
                     padding: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
-                      color: AppColors.c6(),
+                      color: SettingsCubit.get(context).isDark
+                          ? AppColors.c7()
+                          : AppColors.c6(),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Row(
@@ -123,9 +140,11 @@ class WebLayout extends StatelessWidget {
                 const SizedBox(
                   width: 15,
                 ),
-                const FaIcon(
+                FaIcon(
                   FontAwesomeIcons.bars,
-                  color: Colors.blueGrey,
+                  color: SettingsCubit.get(context).isDark
+                      ? Colors.blueGrey[200]
+                      : Colors.blueGrey,
                   size: 14,
                 ),
               ],
@@ -141,7 +160,7 @@ class WebLayout extends StatelessWidget {
               itemBuilder: (context, index) => WebChatItem(
                 contact: HomeCubit.get(context).allContacts[index],
               ),
-              itemCount: 1,
+              itemCount: HomeCubit.get(context).allContacts.length,
             ),
           ),
         ],
@@ -230,7 +249,9 @@ class WebLayout extends StatelessWidget {
           children: [
             Container(
               height: 54,
-              color: AppColors.c6(),
+              color: SettingsCubit.get(context).isDark
+                  ? AppColors.c4()
+                  : AppColors.c6(),
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
                 vertical: 10,
@@ -250,18 +271,22 @@ class WebLayout extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.search,
                       size: 20,
-                      color: Colors.blueGrey,
+                      color: SettingsCubit.get(context).isDark
+                          ? Colors.blueGrey[200]
+                          : Colors.blueGrey,
                     ),
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.more_vert,
                       size: 20,
-                      color: Colors.blueGrey,
+                      color: SettingsCubit.get(context).isDark
+                          ? Colors.blueGrey[200]
+                          : Colors.blueGrey,
                     ),
                   ),
                 ],
@@ -270,36 +295,45 @@ class WebLayout extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Expanded(
-              child: StreamBuilder<List<Message>>(
-                stream: HomeCubit.get(context).curruntChatMessages,
-                builder: (context, snapshot) {
-                  return ListView.separated(
-                    controller: HomeCubit.get(context).chatController,
-                    itemBuilder: (context, index) {
-                      if (snapshot.data![index].recieverId !=
-                          AuthenticationCubit.get(context).currentUser!.uId) {
-                        return MyMessageWidget(
-                          content: snapshot.data![index].message,
-                          time: snapshot.data![index].time,
-                        );
-                      } else {
-                        return FriendMessageWidget(
-                          content: snapshot.data![index].message,
-                          time: snapshot.data![index].time,
-                        );
-                      }
-                    },
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 5,
-                    ),
-                    itemCount: snapshot.data!.length,
-                  );
-                },
+            if (HomeCubit.get(context).curruntChatMessages != null)
+              Expanded(
+                child: StreamBuilder<List<Message>>(
+                  stream: HomeCubit.get(context).curruntChatMessages,
+                  builder: (context, snapshot) {
+                    if (snapshot.data != null) {
+                      return ListView.separated(
+                        controller: HomeCubit.get(context).chatController,
+                        itemBuilder: (context, index) {
+                          if (snapshot.data![index].recieverId !=
+                              AuthenticationCubit.get(context)
+                                  .currentUser!
+                                  .uId) {
+                            return MyMessageWidget(
+                              content: snapshot.data![index].message,
+                              time: snapshot.data![index].time,
+                            );
+                          } else {
+                            return FriendMessageWidget(
+                              content: snapshot.data![index].message,
+                              time: snapshot.data![index].time,
+                            );
+                          }
+                        },
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 5,
+                        ),
+                        itemCount: snapshot.data!.length,
+                      );
+                    } else {
+                      return const Spacer();
+                    }
+                  },
+                ),
               ),
-            ),
             Container(
-              color: AppColors.c6(),
+              color: SettingsCubit.get(context).isDark
+                  ? AppColors.c7()
+                  : AppColors.c6(),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -308,18 +342,27 @@ class WebLayout extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: const FaIcon(
+                    icon: FaIcon(
                       FontAwesomeIcons.faceGrinWide,
-                      color: Colors.blueGrey,
+                      color: SettingsCubit.get(context).isDark
+                          ? Colors.blueGrey[200]
+                          : Colors.blueGrey,
                       size: 22,
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
-                    icon: const FaIcon(
+                    onPressed: () {
+                      HomeCubit.get(context).getGalleryImage(
+                        context: context,
+                        recieverId: HomeCubit.get(context).currentContact!.uId,
+                      );
+                    },
+                    icon: FaIcon(
                       FontAwesomeIcons.paperclip,
                       size: 18,
-                      color: Colors.blueGrey,
+                      color: SettingsCubit.get(context).isDark
+                          ? Colors.blueGrey[200]
+                          : Colors.blueGrey,
                     ),
                   ),
                   Expanded(
@@ -334,7 +377,9 @@ class WebLayout extends StatelessWidget {
                         left: 20,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: SettingsCubit.get(context).isDark
+                            ? AppColors.c8()
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextFormField(
@@ -384,9 +429,11 @@ class WebLayout extends StatelessWidget {
                         );
                       }
                     },
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.send,
-                      color: Colors.blueGrey,
+                      color: SettingsCubit.get(context).isDark
+                          ? Colors.blueGrey[200]
+                          : Colors.blueGrey,
                       size: 26,
                     ),
                   ),

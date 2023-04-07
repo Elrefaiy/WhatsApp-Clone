@@ -40,12 +40,7 @@ class SendTextMessageErrorState extends HomeState {
 
 class GetChatMessagesLoadingState extends HomeState {}
 
-class GetChatMessagesSuccessState extends HomeState {
-  final Stream<List<Message>> messages;
-  const GetChatMessagesSuccessState(this.messages);
-  @override
-  List<Object> get props => [messages];
-}
+class GetChatMessagesSuccessState extends HomeState {}
 
 class GetChatMessagesErrorState extends HomeState {
   final String error;

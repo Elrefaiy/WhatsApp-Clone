@@ -36,6 +36,11 @@ class MyMessageWidget extends StatelessWidget {
             ),
           ),
           Container(
+            width: content.contains(
+              'https://firebasestorage.googleapis.com/v0/b/whatsapp-clone-61959.appspot.com',
+            )
+                ? 300
+                : null,
             margin: const EdgeInsets.only(
               right: 15,
               left: 100,

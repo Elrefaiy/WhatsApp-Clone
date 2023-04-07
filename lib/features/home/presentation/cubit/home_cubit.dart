@@ -155,6 +155,9 @@ class HomeCubit extends Cubit<HomeState> {
         ),
         WebUiSettings(
           context: context,
+          enableResize: true,
+          enableZoom: true,
+          enableOrientation: true,
         ),
       ],
     );
@@ -175,8 +178,8 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Stream<List<Message>> curruntChatMessages = const Stream.empty();
-  Stream<List<Message>> getChatMessages({
+  Stream<List<Message>>? curruntChatMessages;
+  Stream<List<Message>>? getChatMessages({
     required String uId,
     required String name,
     required String image,
@@ -188,6 +191,13 @@ class HomeCubit extends Cubit<HomeState> {
       uId: uId,
     );
     curruntChatMessages = getChatMessagesUseCase.call(params);
+    if (curruntChatMessages != null) {
+      curruntChatMessages!.listen(
+        (event) {
+          chatController.jumpTo(chatController.position.maxScrollExtent);
+        },
+      );
+    }
     return curruntChatMessages;
   }
 

@@ -7,4 +7,6 @@ class AppColors {
   static Color c4() => const Color(0xff233138);
   static Color c5() => const Color(0xff8696A0);
   static Color c6() => const Color(0xfff0f2f5);
+  static Color c7() => const Color(0xff202C33);
+  static Color c8() => const Color(0xff2A3942);
 }
