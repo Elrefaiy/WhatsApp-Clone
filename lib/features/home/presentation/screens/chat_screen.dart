@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:whatsapp_clone/config/routes/app_routes.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_constants.dart';
@@ -23,19 +24,7 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HomeCubit, HomeState>(
-      listener: (context, state) {
-        // if (state is GetChatMediaSuccessState) {
-        //   Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => MediaViewScreen(
-        //         name: model.name,
-        //       ),
-        //     ),
-        //   );
-        // }
-      },
+    return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         var messageController = TextEditingController();
 
@@ -53,16 +42,7 @@ class ChatScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => UserInfoScreen(
-                      //       userModel: model,
-                      //     ),
-                      //   ),
-                      // );
-                    },
+                    onTap: () {},
                     child: Text(
                       model.name,
                       maxLines: 1,
@@ -72,7 +52,13 @@ class ChatScreen extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    // AppCubit.get(context).getChatMedia(model.uId);
+                    HomeCubit.get(context).getChatMedia(
+                      recieverId: model.uId,
+                    );
+                    Navigator.pushNamed(
+                      context,
+                      Routes.chatMedia,
+                    );
                   },
                   icon: const Icon(
                     Icons.more_vert,
@@ -157,6 +143,7 @@ class ChatScreen extends StatelessWidget {
                             ),
                             Expanded(
                               child: TextFormField(
+                                style: Theme.of(context).textTheme.bodyText1,
                                 controller: messageController,
                                 keyboardType: TextInputType.multiline,
                                 decoration: const InputDecoration(

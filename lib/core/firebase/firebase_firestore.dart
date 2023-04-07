@@ -6,10 +6,16 @@ import '../../features/home/data/models/message_model.dart';
 import '../../features/home/data/models/status_model.dart';
 
 abstract class FirebaseFirestoreConsumer {
+  Future<List<MessageModel>> getChatMedia({
+    required String uId,
+    required String recieverId,
+  });
+
   Future<dynamic> addStatus({
     required String uId,
     required Map<String, dynamic> body,
   });
+
   Future<Map<String, List<StatusModel>>> getStatus({
     required List<String> uId,
   });
@@ -253,5 +259,28 @@ class FirebaseFirestoreConsumerImpl implements FirebaseFirestoreConsumer {
       );
     }
     return status;
+  }
+
+  @override
+  Future<List<MessageModel>> getChatMedia({
+    required String uId,
+    required String recieverId,
+  }) async {
+    List<MessageModel> media = [];
+    await instance
+        .collection('users')
+        .doc(uId)
+        .collection('chats')
+        .doc(recieverId)
+        .collection('media')
+        .get()
+        .then(
+      (value) {
+        for (var element in value.docs) {
+          media.add(MessageModel.fromJson(element.data()));
+        }
+      },
+    );
+    return media;
   }
 }

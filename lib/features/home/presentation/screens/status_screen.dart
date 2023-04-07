@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:story_view/story_view.dart';
-import 'package:whatsapp_clone/features/home/domain/entities/status.dart';
+
+import '../../domain/entities/status.dart';
 
 class StatusScreen extends StatelessWidget {
   final List<Status> status;

@@ -108,3 +108,14 @@ class SendImageMessageErrorState extends HomeState {
   @override
   List<Object> get props => [error];
 }
+
+class GetChatMediaLoadingState extends HomeState {}
+
+class GetChatMediaSuccessState extends HomeState {}
+
+class GetChatMediaErrorState extends HomeState {
+  final String error;
+  const GetChatMediaErrorState(this.error);
+  @override
+  List<Object> get props => [error];
+}

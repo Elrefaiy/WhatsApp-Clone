@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_chat_media.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/params/params.dart';
@@ -34,6 +35,7 @@ class HomeCubit extends Cubit<HomeState> {
   final GetStatusUseCase getStatusUseCase;
   final SendImageMessageUseCase sendImageMessageUseCase;
   final AddImageStatusUseCase addImageStatusUseCase;
+  final GetChatMediaUseCase getChatMediaUseCase;
   HomeCubit({
     required this.getChatsUseCase,
     required this.getAllUsersUseCase,
@@ -43,6 +45,7 @@ class HomeCubit extends Cubit<HomeState> {
     required this.getStatusUseCase,
     required this.sendImageMessageUseCase,
     required this.addImageStatusUseCase,
+    required this.getChatMediaUseCase,
   }) : super(HomeInitial());
 
   static HomeCubit get(context) => BlocProvider.of(context);
@@ -220,6 +223,21 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
+  List<Message> media = [];
+  Future<void> getChatMedia({
+    required String recieverId,
+  }) async {
+    emit(GetChatMediaLoadingState());
+    final response = await getChatMediaUseCase.call(recieverId);
+    response.fold(
+      (failure) => emit(GetChatMediaErrorState(_mapFailureToMsg(failure))),
+      (media) {
+        this.media = media;
+        emit(GetChatMediaSuccessState());
+      },
+    );
+  }
+
 // Status
 
   List<int> statusColor = <int>[
@@ -332,12 +350,13 @@ class HomeCubit extends Cubit<HomeState> {
       (status) {
         status.forEach(
           (key, value) {
-            if (value != []) {
+            if (value.isNotEmpty) {
               if (key == AuthenticationCubit.get(context).currentUser!.uId) {
                 myStatus = value;
               } else {
-                contactsStatus.addAll({key: value});
+                contactsStatus[key] = value;
                 statusId.add(key);
+                print(contactsStatus);
               }
             }
           },

@@ -97,7 +97,7 @@ class AllStatus extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                if (HomeCubit.get(context).myStatus != []) {
+                if (HomeCubit.get(context).myStatus.isNotEmpty) {
                   Navigator.pushNamed(
                     context,
                     Routes.status,
@@ -161,7 +161,7 @@ class AllStatus extends StatelessWidget {
                 ),
               ),
             ),
-            if (HomeCubit.get(context).contactsStatus != {})
+            if (HomeCubit.get(context).contactsStatus.isNotEmpty)
               ListView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,

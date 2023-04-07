@@ -32,7 +32,7 @@ class SendImageMessageRepositoryImpl implements SendImageMessageRepository {
         final response = await storageInstance.upload(
           file: params.image,
           path:
-              'media/${authInstance.currentUser.uid}_to_$params.recieverId/${Uri.file(params.image.path).pathSegments.last}',
+              'media/${authInstance.currentUser.uid}_to_${params.recieverId}/${Uri.file(params.image.path).pathSegments.last}',
           function: (value) {
             storeInstance.addMessage(
               collection1: 'users',
@@ -40,6 +40,20 @@ class SendImageMessageRepositoryImpl implements SendImageMessageRepository {
               collection2: 'chats',
               doc2: params.recieverId,
               collection3: 'messages',
+              body: MessageModel(
+                message: value,
+                time: DateTime.now().toString().substring(11, 16),
+                date: DateFormat.yMMMd().format(DateTime.now()).toString(),
+                dateTime: DateTime.now().toString(),
+                recieverId: params.recieverId,
+              ).toJson(),
+            );
+            storeInstance.addMessage(
+              collection1: 'users',
+              doc1: authInstance.currentUser.uid,
+              collection2: 'chats',
+              doc2: params.recieverId,
+              collection3: 'media',
               body: MessageModel(
                 message: value,
                 time: DateTime.now().toString().substring(11, 16),
@@ -58,6 +72,7 @@ class SendImageMessageRepositoryImpl implements SendImageMessageRepository {
             'dateTime': DateTime.now().toString(),
           },
         );
+
         return (Right(response));
       } on ServerException {
         return Left(ServerFailure());

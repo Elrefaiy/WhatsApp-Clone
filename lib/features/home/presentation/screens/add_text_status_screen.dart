@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
 
 import '../../../../core/utils/app_colors.dart';
+import '../cubit/home_cubit.dart';
 
 class AddTextStatusScreen extends StatelessWidget {
   const AddTextStatusScreen({super.key});

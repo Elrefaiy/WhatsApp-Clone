@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_clone/config/routes/app_routes.dart';
-import 'package:whatsapp_clone/core/utils/app_colors.dart';
-import 'package:whatsapp_clone/core/utils/app_strings.dart';
-import 'package:whatsapp_clone/features/home/presentation/cubit/home_cubit.dart';
-import 'package:whatsapp_clone/features/home/presentation/screens/all_calls.dart';
-import 'package:whatsapp_clone/features/home/presentation/screens/all_chats.dart';
-import 'package:whatsapp_clone/features/home/presentation/screens/all_status.dart';
-import 'package:whatsapp_clone/features/home/presentation/widgets/floating_action_boutton.dart';
-import 'package:whatsapp_clone/features/settings/presentation/cubit/settings_cubit.dart';
-import 'package:whatsapp_clone/features/settings/presentation/screens/mobile_settings.dart';
+
+import '../../../../config/routes/app_routes.dart';
+import '../../../../core/utils/app_colors.dart';
+import '../../../../core/utils/app_strings.dart';
+import '../../../settings/presentation/cubit/settings_cubit.dart';
+import '../../../settings/presentation/screens/mobile_settings.dart';
+import '../cubit/home_cubit.dart';
+import '../screens/all_calls.dart';
+import '../screens/all_chats.dart';
+import '../screens/all_status.dart';
+import '../widgets/floating_action_boutton.dart';
 
 class MobileLayout extends StatefulWidget {
   const MobileLayout({super.key});
@@ -25,9 +26,11 @@ class _MobileLayoutState extends State<MobileLayout>
   @override
   void initState() {
     controller = TabController(length: 3, vsync: this);
-    controller.addListener(() {
-      HomeCubit.get(context).changeIndex(controller.index, context);
-    });
+    controller.addListener(
+      () {
+        HomeCubit.get(context).changeIndex(controller.index, context);
+      },
+    );
     super.initState();
   }
 

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/features/home/presentation/screens/add_image_status_screen.dart';
 
 import '../../core/errors/exceptions.dart';
 import '../../core/widgets/image_view.dart';
@@ -12,9 +11,11 @@ import '../../features/authentication/presentation/screens/welcome.dart';
 import '../../features/home/domain/entities/status.dart';
 import '../../features/home/domain/entities/user.dart';
 import '../../features/home/presentation/layout/layout.dart';
+import '../../features/home/presentation/screens/add_image_status_screen.dart';
 import '../../features/home/presentation/screens/add_text_status_screen.dart';
 import '../../features/home/presentation/screens/all_users_screen.dart';
 import '../../features/home/presentation/screens/chat_screen.dart';
+import '../../features/home/presentation/screens/media_view.dart';
 import '../../features/home/presentation/screens/status_screen.dart';
 import '../../features/settings/presentation/screens/mobile_profile.dart';
 import '../../features/settings/presentation/screens/mobile_settings.dart';
@@ -27,6 +28,7 @@ class Routes {
   static const String profileInfo = '/profile_info';
   static const String contacts = '/contacts';
   static const String imageView = '/image_view';
+  static const String chatMedia = '/chat_media';
   static const String profile = '/profile';
   static const String settings = '/settings';
   static const String chat = '/chat';
@@ -119,6 +121,12 @@ class AppRoutes {
           builder: (context) {
             final image = settings.arguments as File;
             return AddImageStatusScreen(image: image);
+          },
+        );
+      case Routes.chatMedia:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const MediaViewScreen();
           },
         );
       default:

@@ -4,6 +4,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:whatsapp_clone/features/home/data/repositories/chats/get_chat_media_repo_impl.dart';
+import 'package:whatsapp_clone/features/home/domain/repositories/chats/get_chat_media_repo.dart';
+import 'package:whatsapp_clone/features/home/domain/usecases/chats/get_chat_media.dart';
 
 import 'core/firebase/firebase_auth.dart';
 import 'core/firebase/firebase_firestore.dart';
@@ -96,6 +99,7 @@ Future<void> init() async {
       sendImageMessageUseCase: sl(),
       getStatusUseCase: sl(),
       addImageStatusUseCase: sl(),
+      getChatMediaUseCase: sl(),
     ),
   );
 
@@ -153,6 +157,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<AddImageStatusUseCase>(
     () => AddImageStatusUseCase(addImageStatusRepository: sl()),
+  );
+  sl.registerLazySingleton<GetChatMediaUseCase>(
+    () => GetChatMediaUseCase(getChatMediaRepository: sl()),
   );
 
   // settings
@@ -259,6 +266,13 @@ Future<void> init() async {
     () => AddImageStatusRepositoryImpl(
       authInstance: sl(),
       storageInstance: sl(),
+      storeInstance: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  sl.registerLazySingleton<GetChatMediaRepository>(
+    () => GetChatMediaRepositoryImpl(
+      authInstance: sl(),
       storeInstance: sl(),
       networkInfo: sl(),
     ),

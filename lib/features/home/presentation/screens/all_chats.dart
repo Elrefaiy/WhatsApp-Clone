@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_clone/features/home/presentation/widgets/endtoend_encrypted.dart';
 
 import '../cubit/home_cubit.dart';
 import '../widgets/chat_item.dart';
+import '../widgets/endtoend_encrypted.dart';
 
 class AllChats extends StatelessWidget {
   const AllChats({super.key});
