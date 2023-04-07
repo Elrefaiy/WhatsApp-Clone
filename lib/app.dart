@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsapp_clone/config/routes/app_routes.dart';
-import 'package:whatsapp_clone/features/authentication/presentation/cubit/authentication_cubit.dart';
+import 'config/routes/app_routes.dart';
+import 'features/authentication/presentation/cubit/authentication_cubit.dart';
 import 'config/themes/dark_theme.dart';
 import 'config/themes/light_theme.dart';
 import 'features/home/presentation/cubit/home_cubit.dart';

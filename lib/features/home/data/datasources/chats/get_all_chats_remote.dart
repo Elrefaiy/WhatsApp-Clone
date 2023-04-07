@@ -1,5 +1,4 @@
-import 'package:whatsapp_clone/core/firebase/firebase_auth.dart';
-
+import '../../../../../core/firebase/firebase_auth.dart';
 import '../../../../../core/firebase/firebase_firestore.dart';
 import '../../models/contact_model.dart';
 

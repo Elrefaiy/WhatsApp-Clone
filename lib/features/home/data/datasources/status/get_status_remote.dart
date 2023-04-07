@@ -1,5 +1,5 @@
-import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
-import 'package:whatsapp_clone/features/home/data/models/status_model.dart';
+import '../../../../../core/firebase/firebase_firestore.dart';
+import '../../models/status_model.dart';
 
 abstract class GetStatusRemoteDataSource {
   Future<Map<String, List<StatusModel>>> getStatus({

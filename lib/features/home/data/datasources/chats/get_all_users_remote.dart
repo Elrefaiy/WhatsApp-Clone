@@ -1,5 +1,5 @@
-import 'package:whatsapp_clone/core/firebase/firebase_firestore.dart';
-import 'package:whatsapp_clone/features/home/data/models/user_model.dart';
+import '../../../../../core/firebase/firebase_firestore.dart';
+import '../../models/user_model.dart';
 
 abstract class GetAllUsersRemoteDataSource {
   Future<List<UserModel>> getAllUsers();

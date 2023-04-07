@@ -56,9 +56,6 @@ flutter_icons:
     generate: true
     image_path: "assets/icons/icon.png"
 
-#flutter pub run flutter_native_splash:create
-#flutter pub run flutter_launcher_icons:main
-
 dev_dependencies:
   flutter_lints: ^2.0.1
   flutter_test:
